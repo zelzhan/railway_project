@@ -2,12 +2,22 @@ package test;
 
 import main.Graph;
 import main.Vertex;
+import static org.junit.Assert.assertTrue;
 
-public class Test {
+import org.junit.Before;
+import org.junit.Test;
 
-    public static void main(String [ ] args)
-    {
-        Graph graph = new Graph();
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class TestGraph {
+
+    Graph graph;
+
+    @Before
+    public void setUp() {
+        graph = new Graph();
         graph.addVertex("A");
         graph.addVertex("B");
         graph.addVertex("C");
@@ -33,7 +43,26 @@ public class Test {
 
         Vertex v1 = new Vertex("A");
         Vertex v2 = new Vertex("G");
+    }
 
-        graph.printAllPaths("A", "G");
+    @Test
+    public void test_remove_edge() {
+        graph.removeEdge("A", "K");
+    }
+
+    @Test
+    public void test_remove_vertex() {
+        graph.removeVertex("B");
+    }
+
+    @Test
+    public void test_print() {
+        graph.printAllPaths("C", "H");
+    }
+
+    @Test
+    public void test_get_adjacent() {
+        List<String> adjacents = new ArrayList<>(Arrays.asList("A", "F", "E"));
+        assertTrue("C is adjacent to D", graph.getAdjVertices("C").equals(adjacents));
     }
 }
