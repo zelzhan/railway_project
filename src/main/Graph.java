@@ -1,18 +1,17 @@
+package main;
+
 import java.util.*;
 
-class Graph {
+public class Graph {
     private Map<String, List<String>> adjVertices;
 
     public Graph () {
-
         adjVertices = new HashMap<>();
-
     }
 
-    void addEdge(String label1, String label2) {
+    public void addEdge(String label1, String label2) {
         adjVertices.get(label1).add(label2);
         adjVertices.get(label2).add(label1);
-
     }
 
     void removeEdge(String label1, String label2) {
@@ -28,7 +27,7 @@ class Graph {
         return adjVertices.get(label);
     }
 
-    void addVertex(String label) {
+    public void addVertex(String label) {
         adjVertices.putIfAbsent(label, new ArrayList<>());
     }
 
@@ -37,8 +36,6 @@ class Graph {
         adjVertices.values().stream().forEach(e -> e.remove(v));
         adjVertices.remove(new Vertex(label));
     }
-
-
 
     public void printAllPaths(String s, String d)
     {

@@ -1,3 +1,8 @@
+package test;
+
+import main.Graph;
+import main.Vertex;
+
 public class Test {
 
     public static void main(String [ ] args)
