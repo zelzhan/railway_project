@@ -1,10 +1,15 @@
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +68,18 @@ public class RailwayService extends HttpServlet {
         Gson gs = new Gson();
         return Response.ok(gs.toJson("heelo")).build();
     }
+
+    @GET
+    @Path("/redirect")
+    @Produces("text/html")
+    public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
+        String myJsfPage = "/index.html";
+        String contextPath = request.getContextPath();
+        response.sendRedirect(contextPath + myJsfPage);
+        return Response.status(Response.Status.ACCEPTED).build();
+    }
+
+
 
 
 }
