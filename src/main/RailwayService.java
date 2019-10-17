@@ -1,3 +1,5 @@
+package main;
+
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServlet;
@@ -43,7 +45,6 @@ public class RailwayService extends HttpServlet {
         graph.addEdge("G", "K");
 
         graph.printAllPaths("A", "G");
-
     }
 
     @GET
@@ -63,6 +64,7 @@ public class RailwayService extends HttpServlet {
 
         return Response.ok(gson.toJson(params)).build();
     }
+
     @GET
     public Response getSmth(){
         Gson gs = new Gson();
@@ -78,8 +80,4 @@ public class RailwayService extends HttpServlet {
         response.sendRedirect(contextPath + myJsfPage);
         return Response.status(Response.Status.ACCEPTED).build();
     }
-
-
-
-
 }
