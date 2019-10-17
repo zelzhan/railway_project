@@ -1,3 +1,5 @@
+package main;
+
 import java.text.CollationElementIterator;
 import java.util.*;
 

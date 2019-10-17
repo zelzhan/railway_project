@@ -67,6 +67,10 @@ create table if not exists schedule(
 	train_id bigint(20) not null,
 	station_i bigint(20) not null,
     station_f bigint(20) not null,
+    departure_time date not null,
+	arrival_time date not null,
+	exact_timei varchar(255) not null,
+	exact_timef varchar(255) not null,
 	foreign key (train_id) references train(id),
 	foreign key (station_i) references station(id),
     foreign key (station_f) references station(id)
@@ -95,6 +99,7 @@ insert into manager (id) values (201122333);
 
 insert into train (id, capacity, name1) values (560, 200, 'Tulpar01');
 insert into train (id, capacity, name1) values (561, 123, 'Tulpar02');
+insert into train (id, capacity, name1) values (562, 123, 'Tulpar03');
 
 insert into station (id,name) values (1,'Almaty');
 insert into station (id,name) values (2,'Astana');
@@ -106,14 +111,21 @@ insert into station (id,name) values (6,'Moskva');
 insert into station (id,name) values (7,'Tashkent');
 insert into station (id,name) values (8,'Semey');
 insert into station (id,name) values (9,'Aktau');
+insert into station (id, name) values (10, 'Kyzylorda');
 
 -- Moskva -> Aktobe -> Astana -> Karaganda -> Shymkent
-insert into schedule (route_id, train_id, station_i, station_f) values (1,561, 6, 5);
-insert into schedule (route_id, train_id, station_i, station_f) values (1, 561, 5, 2);
-insert into schedule (route_id, train_id, station_i, station_f) values (1, 561, 2, 4);
-insert into schedule (route_id, train_id, station_i, station_f) values (1, 561, 4, 3);
+insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (1,561, 6, 5, '2038-01-12', '2038-01-19 ', '03:14:07', '03:14:07');
+insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (1, 561, 5, 2, '2038-01-12 ', '2038-01-19 ', '03:14:07', '03:14:07');
+insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (1, 561, 2, 4, '2038-01-12 ', '2038-01-19 ', '03:14:07', '03:14:07');
+insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (1, 561, 4, 3, '2038-01-12 ', '2038-01-19 ', '03:14:07', '03:14:07');
 
 -- Semey -> Almaty -> Shymkent -> Tashkent
-insert into schedule (route_id, train_id, station_i, station_f) values (2, 560, 8, 1);
-insert into schedule (route_id, train_id, station_i, station_f) values (2, 560, 1, 3);
-insert into schedule (route_id, train_id, station_i, station_f) values (2, 560, 3, 7);
+insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (2, 560, 8, 1, '2038-01-19 ', '2038-01-19', '03:14:07', '03:14:07');
+insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (2, 560, 1, 3, '2038-01-19', '2038-01-19 ', '03:14:07', '03:14:07');
+insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (2, 560, 3, 7, '2038-01-19 ', '2038-01-19', '03:14:07', '03:14:07');
+
+-- MOskva-- Aktau -- Kyzylorda -- Almaty -- Shymkent
+insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (3, 562, 6, 9, '2038-01-19 ', '2038-01-19 ', '03:14:07', '03:14:07');
+insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (3, 562, 9, 10, '2038-01-19 ', '2038-01-19', '03:14:07', '03:14:07');
+insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (3, 562, 10, 1, '2038-01-19 ', '2038-01-19', '03:14:07', '03:14:07');
+insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (2, 562, 1, 3, '2038-01-19 ', '2038-01-19 ', '03:14:07', '03:14:07');

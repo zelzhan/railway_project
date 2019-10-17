@@ -1,3 +1,5 @@
+package main;
+
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServlet;
@@ -10,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import java.io.*;
+import java.security.acl.Group;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +32,6 @@ class Route {
         this.date = date;
     }
 }
-
 
 @Path("/items")
 public class RailwayService extends HttpServlet {
@@ -77,6 +79,15 @@ public class RailwayService extends HttpServlet {
 
         System.out.println("Connecting database...");
         try {
+            try {
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,19 +118,23 @@ public class RailwayService extends HttpServlet {
     @Path("{depart}/{dest}/{date}")
     public Response getData(@PathParam("depart") String depart,
                             @PathParam("dest") String dest,
-                            @PathParam("date") int date) {
+                            @PathParam("date") String date) {
 
 
         // get the list of items from Database
 
-
+        depart = '"' + depart + '"';
+        dest = '"' + dest + '"';
+        date = '"' + date + '"';
 
         List<Route> params = new ArrayList();
         try {
             Statement st = connection.createStatement();
-            ResultSet res = st.executeQuery("select * from schedule");
+            ResultSet res = st.executeQuery("select * from (select distinct t2.name1 as d, t1.name1 as f, s1.exact_timei, s2.exact_timef from schedule s1, schedule s2, station d1, station d2, train t1, train t2 where  d1.name = " + depart + " and s1.departure_time = " + date + "  and d1.id = s1.station_i and s1.train_id = t1.id and d2.id = s2.station_f  and d2.name = " + dest + " and s2.train_id = t2.id) t where t.d = t.f");
             while(res.next()) {
-                System.out.println(res.getString(1));
+                Route route = new Route(depart, dest, res.getString(1), res.getString(3));
+                System.out.println(route.train_id);
+                params.add(route);
             }
 
         } catch (SQLException e) {
