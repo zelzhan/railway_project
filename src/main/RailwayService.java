@@ -1,5 +1,3 @@
-package main;
-
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServlet;
@@ -11,60 +9,129 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
+import java.io.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+
+class Route {
+    String dep;
+    String des;
+    String train_id;
+    String date;
+
+    public Route(String dep, String des, String train_id, String date) {
+        this.dep = dep;
+        this.des = des;
+        this.train_id = train_id;
+        this.date = date;
+    }
+}
 
 
 @Path("/items")
 public class RailwayService extends HttpServlet {
+    Graph graph;
+    Connection connection;
 
     public RailwayService() {
-        Graph graph = new Graph();
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-        graph.addVertex("D");
-        graph.addVertex("E");
-        graph.addVertex("F");
-        graph.addVertex("G");
-        graph.addVertex("H");
-        graph.addVertex("K");
+        graph = new Graph();
+        graph.addVertex("6");
+        graph.addVertex("5");
+        graph.addVertex("2");
+        graph.addVertex("4");
+        graph.addVertex("3");
+        graph.addVertex("8");
+        graph.addVertex("1");
+        graph.addVertex("3");
+        graph.addVertex("7");
+        graph.addVertex("10");
+        graph.addVertex("9");
 
-        graph.addEdge("A", "K");
-        graph.addEdge("A", "B");
-        graph.addEdge("A", "D");
-        graph.addEdge("A", "C");
-        graph.addEdge("A", "E");
-        graph.addEdge("B", "D");
-        graph.addEdge("C", "F");
-        graph.addEdge("C", "E");
-        graph.addEdge("D", "H");
-        graph.addEdge("H", "F");
-        graph.addEdge("H", "G");
-        graph.addEdge("G", "K");
+        graph.addEdge("6", "5");
+        graph.addEdge("5", "2");
+        graph.addEdge("2", "4");
+        graph.addEdge("4", "3");
+        graph.addEdge("3", "7");
+        graph.addEdge("3", "1");
+        graph.addEdge("6", "9");
+        graph.addEdge("9", "10");
+        graph.addEdge("10", "1");
+        graph.addEdge("1", "8");
+//        graph.addEdge("1", "8");
+//        graph.addEdge("C", "E");
+//        graph.addEdge("D", "H");
+//        graph.addEdge("H", "F");
+//        graph.addEdge("H", "G");
+//        graph.addEdge("G", "K");
 
-        graph.printAllPaths("A", "G");
+        graph.printAllPaths("6", "1");
+
+
+
+        String url = "jdbc:mysql://localhost:3306/javabase";
+        String username = "java";
+        String password = "password";
+
+        System.out.println("Connecting database...");
+        try {
+            connection = DriverManager.getConnection(url, username, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            System.out.println("Database connected!");
+            File initialFile = new File("/home/stayal0ne/swe/Karina/railway_project/src/project.sql");
+            try {
+                InputStream targetStream = new FileInputStream(initialFile);
+                importSQL(connection, targetStream);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+
+//            ResultSet res = st.executeQuery("select * from schedule");
+//            while(res.next()) {
+//                System.out.println(res.getString(1));
+//            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+
+
     }
 
     @GET
-    @Path("{depart}/{dest}/{time}")
+    @Path("{depart}/{dest}/{date}")
     public Response getData(@PathParam("depart") String depart,
                             @PathParam("dest") String dest,
-                            @PathParam("time") int time) {
+                            @PathParam("date") int date) {
 
 
         // get the list of items from Database
 
-        List<Object> params = new ArrayList();
-        params.add(depart);
-        params.add(dest);
-        params.add(time);
-        Gson gson = new Gson();
 
+
+        List<Route> params = new ArrayList();
+        try {
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery("select * from schedule");
+            while(res.next()) {
+                System.out.println(res.getString(1));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+//        for (Route route : routes) {
+//            params.add(new Route);
+//        }
+        Gson gson = new Gson();
         return Response.ok(gson.toJson(params)).build();
     }
-
     @GET
     public Response getSmth(){
         Gson gs = new Gson();
@@ -80,4 +147,37 @@ public class RailwayService extends HttpServlet {
         response.sendRedirect(contextPath + myJsfPage);
         return Response.status(Response.Status.ACCEPTED).build();
     }
+
+
+    public static void importSQL(Connection conn, InputStream in) throws SQLException
+    {
+        Scanner s = new Scanner(in);
+        s.useDelimiter("(;(\r)?\n)|(--\n)");
+        Statement st = null;
+        try
+        {
+            st = conn.createStatement();
+            while (s.hasNext())
+            {
+                String line = s.next();
+                if (line.startsWith("/*!") && line.endsWith("*/"))
+                {
+                    int i = line.indexOf(' ');
+                    line = line.substring(i + 1, line.length() - " */".length());
+                }
+
+                if (line.trim().length() > 0)
+                {
+                    st.execute(line);
+                }
+            }
+        }
+        finally
+        {
+            if (st != null) st.close();
+        }
+    }
+
+
+
 }
