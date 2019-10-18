@@ -122,7 +122,9 @@ public class RailwayService extends HttpServlet {
 
 
         // get the list of items from Database
-
+        String departTemp = depart;
+        String destTemp = dest;
+        String dateTemp = date;
         depart = '"' + depart + '"';
         dest = '"' + dest + '"';
         date = '"' + date + '"';
@@ -132,7 +134,7 @@ public class RailwayService extends HttpServlet {
             Statement st = connection.createStatement();
             ResultSet res = st.executeQuery("select * from (select distinct t2.name1 as d, t1.name1 as f, s1.exact_timei, s2.exact_timef from schedule s1, schedule s2, station d1, station d2, train t1, train t2 where  d1.name = " + depart + " and s1.departure_time = " + date + "  and d1.id = s1.station_i and s1.train_id = t1.id and d2.id = s2.station_f  and d2.name = " + dest + " and s2.train_id = t2.id) t where t.d = t.f");
             while(res.next()) {
-                Route route = new Route(depart, dest, res.getString(1), res.getString(3));
+                Route route = new Route(departTemp, destTemp, res.getString(1), res.getString(3));
                 System.out.println(route.train_id);
                 params.add(route);
             }
