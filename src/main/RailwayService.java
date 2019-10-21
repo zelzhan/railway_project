@@ -101,12 +101,6 @@ public class RailwayService extends HttpServlet {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-
-
-//            ResultSet res = st.executeQuery("select * from schedule");
-//            while(res.next()) {
-//                System.out.println(res.getString(1));
-//            }
         } catch (SQLException e) {
             throw new IllegalStateException("Cannot connect the database!", e);
         }

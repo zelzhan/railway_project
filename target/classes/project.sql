@@ -121,7 +121,7 @@ insert into schedule (route_id, train_id, station_i, station_f, departure_time, 
 
 -- Semey -> Almaty -> Shymkent -> Tashkent
 insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (2, 560, 8, 1, '2038-01-19 ', '2038-01-19', '03:14:07', '03:14:07');
-insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (2, 560, 1, 3, '2038-01-19', '2038-01-19 ', '03:14:07', '03:14:07');
+insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (2, 560, 1, 3, '2038-01-19', '2038-01-19 ', '13:32:07', '03:14:07');
 insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (2, 560, 3, 7, '2038-01-19 ', '2038-01-19', '03:14:07', '03:14:07');
 
 -- MOskva-- Aktau -- Kyzylorda -- Almaty -- Shymkent

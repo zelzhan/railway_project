@@ -65,7 +65,12 @@ $(document).ready(function() {
 			success: function(data)
 			{
 
+				if (data === ""){
+					alert("Place doesn't exist");
+				}
+				alert(data);
 				updateRoute(JSON.parse(data));
+
 			},
 		});
 	});
