@@ -39,12 +39,7 @@ html, body {
 	margin: 15px;
 	padding: 15px;
 	border-radius: 12px;
-	opacity: 0.8;
  	background-color: #364042 ;
-}
-
-.form-div:hover {
-	opacity: 1;
 }
 	
 .form-group {
@@ -117,3 +112,51 @@ html, body {
 	color: #fff;
 }
 /* footer end */
+
+
+/* profile start */
+.row {
+	display: table;
+}
+
+.list-group-item{
+	border: 0 !important;
+	background-color: transparent !important;
+}
+
+.contact_list {
+	background-color: transparent !Important;
+}
+
+.list_of_tickets a {
+	color: #ffffff !important;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-family: 'Raleway', sans-serif;
+	line-height: 1.5;
+}
+
+.title{
+	text-align: center;
+	color: #ffffff;
+}
+
+.personal_details{
+	border-radius: 12px;
+	background-color: #364042;
+	padding: 15px;
+	color: #ffffff;
+}
+
+.tickets{
+	border-radius: 12px;
+	background-color: #364042;
+	padding: 15px;
+	margin-bottom: 20px;
+}
+.personal_details ul li{
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+}
+/* profile end*/
