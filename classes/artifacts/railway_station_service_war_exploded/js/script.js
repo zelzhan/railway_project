@@ -39,10 +39,8 @@ function sendFormRoute() {
 
 
 $(document).ready(function() {
-	// $("#search-route").on('click', function() {
-	// 	console.log('asd1');
-	// 		sendFormRoute();
-	// 	})
+
+
 
 	$("#routeForm").submit(function(e) {
 
@@ -64,7 +62,6 @@ $(document).ready(function() {
 			url: url,
 			success: function(data)
 			{
-
 				if (data === ""){
 					alert("Place doesn't exist");
 				}

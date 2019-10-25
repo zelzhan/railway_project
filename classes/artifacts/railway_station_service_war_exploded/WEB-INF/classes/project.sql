@@ -9,71 +9,71 @@ use javabase;
 
 drop table if exists registered_user;
 create table if not exists registered_user(
-	id bigint(20) primary key auto_increment,
-	login varchar(255) not null,
-	password varchar(512) not null,
-	phone bigint(20) not null,
-	unique(login)
+                                              id bigint(20) primary key auto_increment,
+                                              login varchar(255) not null,
+                                              password varchar(512) not null,
+                                              phone bigint(20) not null,
+                                              unique(login)
 );
 
 drop table if exists passenger;
 create table if not exists passenger(
-	id bigint(20) primary key auto_increment,
-	reservation_status tinyint(1) not null,
-	foreign key (id) references registered_user(id)
+                                        id bigint(20) primary key auto_increment,
+                                        reservation_status tinyint(1) not null,
+                                        foreign key (id) references registered_user(id)
 );
 
 drop table if exists manager;
 create table if not exists manager(
-	id bigint(20) primary key auto_increment,
-	foreign key(id) references registered_user(id)
+                                      id bigint(20) primary key auto_increment,
+                                      foreign key(id) references registered_user(id)
 );
 
 drop table if exists regular_employee;
 create table if not exists regular_employee(
-	id bigint(20) primary key auto_increment,
-    supervisor_id bigint(20) not null,
-	salary bigint(20) not null,
-    schedule varchar(255) not null,
-	foreign key(id) references registered_user(id),
-    foreign key (supervisor_id) references manager(id)
+                                               id bigint(20) primary key auto_increment,
+                                               supervisor_id bigint(20) not null,
+                                               salary bigint(20) not null,
+                                               schedule varchar(255) not null,
+                                               foreign key(id) references registered_user(id),
+                                               foreign key (supervisor_id) references manager(id)
 );
 
 drop table if exists agent;
 create table if not exists agent(
-	id bigint(20) primary key auto_increment,
-	foreign key(id) references regular_employee(id)
+                                    id bigint(20) primary key auto_increment,
+                                    foreign key(id) references regular_employee(id)
 );
 
 drop table if exists train;
 create table if not exists train(
-	id bigint(20) primary key auto_increment,
-	capacity int(20) not null,
-    name1 varchar(255) not null,
-	unique(name1)
+                                    id bigint(20) primary key auto_increment,
+                                    capacity int(20) not null,
+                                    name1 varchar(255) not null,
+                                    unique(name1)
 );
 
 drop table if exists station;
 create table if not exists station(
-	id bigint(20) primary key auto_increment,
-	name varchar(255) not null,
-	unique(name)
+                                      id bigint(20) primary key auto_increment,
+                                      name varchar(255) not null,
+                                      unique(name)
 );
 
 drop table if exists schedule;
 create table if not exists schedule(
-	id bigint(20) primary key auto_increment,
-    route_id bigint(20) not null,
-	train_id bigint(20) not null,
-	station_i bigint(20) not null,
-    station_f bigint(20) not null,
-    departure_time date not null,
-	arrival_time date not null,
-	exact_timei varchar(255) not null,
-	exact_timef varchar(255) not null,
-	foreign key (train_id) references train(id),
-	foreign key (station_i) references station(id),
-    foreign key (station_f) references station(id)
+                                       id bigint(20) primary key auto_increment,
+                                       route_id bigint(20) not null,
+                                       train_id bigint(20) not null,
+                                       station_i bigint(20) not null,
+                                       station_f bigint(20) not null,
+                                       departure_time date not null,
+                                       arrival_time date not null,
+                                       exact_timei varchar(255) not null,
+                                       exact_timef varchar(255) not null,
+                                       foreign key (train_id) references train(id),
+                                       foreign key (station_i) references station(id),
+                                       foreign key (station_f) references station(id)
 );
 --
 -- drop table if exists ticket;
