@@ -11,8 +11,10 @@ drop table if exists registered_user;
 create table if not exists registered_user(
                                               id bigint(20) primary key auto_increment,
                                               login varchar(255) not null,
+                                              first_name varchar(45) not null,
+                                              last_name varchar(45) not null,
                                               password varchar(512) not null,
-                                              phone bigint(20) not null,
+                                              phone varchar(20) not null,
                                               unique(login)
 );
 
@@ -93,8 +95,8 @@ create table if not exists schedule(
 -- );
 
 -- add some data
-insert into registered_user (id, login, password, phone) values (201521960, 'abyl', 'asdfg', 87057128700);
-insert into registered_user (id, login, password, phone) values (201122333, 'keno', 'qwerty', 87776665544);
+insert into registered_user (id, login, password, first_name, last_name, phone) values (201521960, 'abyl', 'asdfg', 'name', 'surname', '87057128700');
+insert into registered_user (id, login, password, first_name, last_name, phone) values (201122333, 'keno', 'qwerty', 'Kiano', 'Rift', '87776665544');
 insert into manager (id) values (201122333);
 
 insert into train (id, capacity, name1) values (560, 200, 'Tulpar01');

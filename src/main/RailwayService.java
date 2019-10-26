@@ -37,15 +37,16 @@ class Passenger {
     String email;
     String name;
     String password;
-//    ArrayList<Ticket> prevTickets = new ArrayList<>(); // Ticket class should be created
+    //    ArrayList<Ticket> prevTickets = new ArrayList<>(); // Ticket class should be created
     ArrayList<Object> nextTickets = new ArrayList<>();
 
-    public Passenger(String email, String name, String password){
+    public Passenger(String email, String name, String password) {
         this.email = email;
         this.name = name;
         this.password = password;
     }
 }
+
 @Path("/items")
 public class RailwayService extends HttpServlet {
     Graph graph;
@@ -86,10 +87,9 @@ public class RailwayService extends HttpServlet {
         graph.printAllPaths("6", "1");
 
 
-
-        String url = "jdbc:mysql://localhost:3306/javabase";
+        String url = "jdbc:mysql://localhost:3306/javabase?" + "useSSL=false";
         String username = "java";
-        String password = "Password123.";
+        String password = "password";
 
         System.out.println("Connecting database...");
         try {
@@ -108,7 +108,7 @@ public class RailwayService extends HttpServlet {
         }
         try {
             System.out.println("Database connected!");
-            File initialFile = new File("/home/sunnya/railway_project/src/project.sql");
+            File initialFile = new File("/Users/demezhanmarikov/IdeaProjects/railway_project/src/project.sql");
             try {
                 InputStream targetStream = new FileInputStream(initialFile);
                 importSQL(connection, targetStream);
@@ -118,8 +118,6 @@ public class RailwayService extends HttpServlet {
         } catch (SQLException e) {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
-
-
     }
 
     @GET
@@ -142,7 +140,7 @@ public class RailwayService extends HttpServlet {
             Statement st = connection.createStatement();
             ResultSet res = st.executeQuery("select * from (select distinct t2.name1 as d, t1.name1 as f, s1.exact_timei, s2.exact_timef from schedule s1, schedule s2, station d1, station d2, train t1, train t2 where  d1.name = " + depart + " and s1.departure_time = " + date + "  and d1.id = s1.station_i and s1.train_id = t1.id and d2.id = s2.station_f  and d2.name = " + dest + " and s2.train_id = t2.id) t where t.d = t.f");
 
-            while(res.next()) {
+            while (res.next()) {
                 Route route = new Route(departTemp, destTemp, res.getString(1), res.getString(3));
                 System.out.println(route.train_id);
                 params.add(route);
@@ -160,17 +158,20 @@ public class RailwayService extends HttpServlet {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("send")
-    public Response postListItem(@FormParam("email") String email, @FormParam("password") String password) {
+    public Response postListItem(@FormParam("email") String email, @FormParam("password") String password, @FormParam("phone") String phone,
+                                 @FormParam("firstName") String firstName, @FormParam("lastName") String lastName) {
         try {
-
             //Unique email should be inserted in the database
             Statement st = connection.createStatement();
             ResultSet res = st.executeQuery("SELECT EXISTS (select login from registered_user where login =\"" + email + "\")"); //sql query for checking an email for uniqueness
             res.next();
+            int id = 1000;
             System.out.println(res.getString(1));
-            if (res.getString(1).equals("0")){ //sql query to insert an email and password of the new user
-                st.executeQuery("insert into registered_user(login, password, FirstName,LastName, phone) VALUES ( \" + login, password, fName, lName, phone + \" )");
-            }else{
+            System.out.println(firstName);
+            System.out.println(lastName);
+            if (res.getString(1).equals("0")) { //sql query to insert an email and password of the new user
+                st.executeUpdate("INSERT INTO registered_user (login, first_name, last_name, password, phone) VALUES ( '" + email + "', '" + firstName + "', '" + lastName + "', '"  + password +  "', '" + phone + "')");
+            } else {
                 return Response.status(Response.Status.CONFLICT).build();
             }
 
@@ -185,7 +186,7 @@ public class RailwayService extends HttpServlet {
     //USER's PROFILE
     @GET
     @Path("/userProfile")
-    public Response userProfile(){
+    public Response userProfile() {
 
         try {
             Statement st = connection.createStatement();
@@ -218,35 +219,25 @@ public class RailwayService extends HttpServlet {
     }
 
 
-    public static void importSQL(Connection conn, InputStream in) throws SQLException
-    {
+    public static void importSQL(Connection conn, InputStream in) throws SQLException {
         Scanner s = new Scanner(in);
         s.useDelimiter("(;(\r)?\n)|(--\n)");
         Statement st = null;
-        try
-        {
+        try {
             st = conn.createStatement();
-            while (s.hasNext())
-            {
+            while (s.hasNext()) {
                 String line = s.next();
-                if (line.startsWith("/*!") && line.endsWith("*/"))
-                {
+                if (line.startsWith("/*!") && line.endsWith("*/")) {
                     int i = line.indexOf(' ');
                     line = line.substring(i + 1, line.length() - " */".length());
                 }
 
-                if (line.trim().length() > 0)
-                {
+                if (line.trim().length() > 0) {
                     st.execute(line);
                 }
             }
-        }
-        finally
-        {
+        } finally {
             if (st != null) st.close();
         }
     }
-
-
-
 }
