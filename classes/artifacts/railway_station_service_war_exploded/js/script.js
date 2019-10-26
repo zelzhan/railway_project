@@ -43,8 +43,6 @@ function register() {
     var firstName = $("#firstName").val();
     var lastName = $("#lastName").val();
 
-    alert(email + " " + password + " " + phone + " " + firstName + " " + lastName);
-
     $.post("/railway_station_service_war_exploded/services/items/send", {
         email: email,
         password: password,
@@ -52,8 +50,9 @@ function register() {
 		firstName: firstName,
 		lastName: lastName
     }, function () {
-    	console.log(firstName);
-    	console.log(lastName);
+    	alert("Registration is successful.")
+	}).fail( function () {
+		alert("Registration is not successful.")
 	});
 }
 

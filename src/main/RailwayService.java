@@ -165,10 +165,6 @@ public class RailwayService extends HttpServlet {
             Statement st = connection.createStatement();
             ResultSet res = st.executeQuery("SELECT EXISTS (select login from registered_user where login =\"" + email + "\")"); //sql query for checking an email for uniqueness
             res.next();
-            int id = 1000;
-            System.out.println(res.getString(1));
-            System.out.println(firstName);
-            System.out.println(lastName);
             if (res.getString(1).equals("0")) { //sql query to insert an email and password of the new user
                 st.executeUpdate("INSERT INTO registered_user (login, first_name, last_name, password, phone) VALUES ( '" + email + "', '" + firstName + "', '" + lastName + "', '"  + password +  "', '" + phone + "')");
             } else {
@@ -179,7 +175,6 @@ public class RailwayService extends HttpServlet {
             e.printStackTrace();
         }
 
-        Gson gson = new Gson();
         return Response.ok().build();
     }
 
