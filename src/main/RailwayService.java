@@ -108,7 +108,9 @@ public class RailwayService extends HttpServlet {
         }
         try {
             System.out.println("Database connected!");
+
             File initialFile = new File("/home/stayal0ne/swe/Karina/railway_project/src/project.sql");
+
             try {
                 InputStream targetStream = new FileInputStream(initialFile);
                 importSQL(connection, targetStream);
@@ -184,6 +186,7 @@ public class RailwayService extends HttpServlet {
     public Response userProfile() {
 
         try {
+            String tempEmail = "kjf";
             Statement st = connection.createStatement();
             //sql query for getting all personal info by email
             ResultSet res = st.executeQuery("select u.FirstName, u.LastName, u.phone, t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time >  now()");
