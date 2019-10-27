@@ -2,14 +2,13 @@
 function updateRoute(items) {
 	$("#table-table").html("");
 	$("#table-table").append("<div class=\"train-table\"><div class=\"container\"><table class=\"table table-dark\"><thead>");
-	$("#table-table").append("<tr><th scope=\"col\">#</th><th scope=\"col\">Departure</th><th scope=\"col\">Destination</th>");
-	$("#table-table").append("<th scope=\"col\">Departure Time</th><th scope=\"col\">Destination time</th><th scope=\"col\">Date</th></tr></thead><tbody>");
-    
-    items.routes.forEach(function (e, i) {
-    	$("#table-table").append("<tr><th scope=\"row\">"+e.train_id+"</th><td>"+ e.departure +"</td><td>"+e.destination+"</td><td>");
-    	$("#table-table").append(e.dep_time+"</td><td>"+e.des_time+"</td><td>"+e.date+"</td></tr>");
-		});
-	
+	$("#table-table").append("<tr><th scope=\"col\">#</th><th scope=\"col\">Departure   </th><th scope=\"col\">Destination</th>");
+	// $("#table-table").append("<th scope=\"col\">Departure Time</th><th scope=\"col\">Destination time</th><th scope=\"col\">Date</th></tr></thead><tbody>");
+	console.log(items);
+
+	for (let i = 0; i < items.length; i++) {
+		$("#table-table").append("<tr><th scope=\"row\">"+items[i].train_id+"</th><td>"+ items[i].dep +"</td><td>"+items[i].des + "</td><td>" + items[i].date + "</td></tr>");
+	}
 	$("#table-table").append("</tbody></table></div></div>");
 
 }
@@ -19,8 +18,8 @@ function sendFormRoute() {
 	var desToSend = $("#des-input").val().toString();
 	
 	if(depToSend.match("\\w+") && desToSend.match("\\w+")) {
-		$.post("services/items/"+ "{"+depToSend+"}/{"+desToSend+"}/{"+$("#day-input").val().toString()+":"
-	+$("#month-input").val().toString()+":"+$("#year-input").val().toString()+"}", function() {
+		$.post("services/items/"+ "{"+depToSend+"}/{"+desToSend+"}/{"+$("#day-input").val().toString()+"-"
+	+$("#month-input").val().toString()+"-"+$("#year-input").val().toString()+"}", function() {
 			getRouteItems();
 		})
 	} else {
@@ -40,8 +39,40 @@ function sendFormRoute() {
 
 
 $(document).ready(function() {
-			$("#search-route").on('click', function() {
-				console.log('asd1');
-				sendFormRoute();
-			})
+	// $("#search-route").on('click', function() {
+	// 	console.log('asd1');
+	// 		sendFormRoute();
+	// 	})
+
+	$("#routeForm").submit(function(e) {
+
+		e.preventDefault(); // avoid to execute the actual submit of the form.
+
+		var form = $(this);
+		var data = [];
+
+		$("form#routeForm :input").each(function(){
+			var input = $(this); // This is the jquery object of the input, do what you will
+			data.push(input.val());
 		});
+
+		// console.log(data);
+		let url = "/railway_station_service_war_exploded/services/items/" + data[0] + "/" + data[1] + "/" + data[4] + "-" + data[3] + "-" + data[2];
+
+		$.ajax({
+			type: "GET",
+			url: url,
+			success: function(data)
+			{
+
+				if (data === ""){
+					alert("Place doesn't exist");
+				}
+				alert(data);
+				updateRoute(JSON.parse(data));
+
+			},
+		});
+	});
+
+});
