@@ -1,106 +1,127 @@
 * {
 	margin: 0;
 	padding: 0;
+	font-family: 'Raleway', sans-serif;
 }
 
 html, body {
 	height: 100%;
 }
 
-.main-body {
-	min-height: 100%;
-	padding: 0px;
+/*  navbar start */
+.top-navbar {
+	padding: 0 20px 0 20px !important;
 }
 
-.container-wrap {
-	width: 100%;
-}
+ #logo-id {
+ 	border-radius: 2px;
+ 	background-color: #fff;
 
-.toppanel {
-	color: #fff;
-	min-height: 0;
-	height: auto;
-	margin-bottom: 20px;
-	background-color: #404040
-}
+ }
+/*  navbar end */
 
-.row::before {
-	display: table;
-}
-
-.row {
-	display: table;
-}
-
-.row::after {
-	display: table;
-}
-
-.welcome-msg {
-	font-size: 24px;
-	padding: 5px 0;
-}
-
-.profile-div {
-	text-decoration: none;
-	display: inline-block;
-	color: #fff;
-	margin-bottom: 2px;
-	background-color: transparent !Important;
-}
-
-.profile-top {
-	text-decoration: none;
-	display: inline-block;
-	color: #fff;
-	font-size: 16px;
-	margin: 10px 4px;
-}
-
-.welcome-msg {
-	display: inline-block;
-	padding: 5px 2px;
-	margin: 10px 0;
-}
+/* main content start */
 
 .main-container {
+	background-image: url(../img/train-depo.jpg);
+	background-size: cover;
+	background-position: center center;
+	min-height: 500px;
 	padding: 20px;
 }
 
+.main-top {
+	margin-left: 0 !important;
+}
+
 .form-div {
-	margin: 5px;
-	padding: 5px 10px 5px 10px;
-	border: 1px solid gray;
+	max-width: 500px !important;
+	margin: 15px;
+	padding: 15px;
 	border-radius: 12px;
-	background-color: #404040;
-	/* background-color: rgba(0, 0, 0, 0.2); */
+ 	background-color: #364042 ;
 }
 	
 .form-group {
 	color:  #fff;
 }
+
 .train-table {
+	margin-top: 10px;
 	min-height: 50px;
 	overflow: auto;
-	padding-bottom: 190px;
+	padding-bottom: 180px;
 }
+ 	/* registration form start */
+ 	.reg-form-div {
+ 		margin-left: auto;
+ 		margin-right: auto;
+ 		/* max-width: 500px !important; */
+ 		padding: 15px;
+		border-radius: 12px;
+	 	background-color: #364042 ;
+ 	}
+	.train-table-null {
+		margin-top: 10px;
+		min-height: 50px;
+		overflow: auto;
+		padding-bottom: 140px;
+	}
+	/* registration form end */
+/* main content end */
+
+/* footer start */
 
 .footer {
-	background-color: #404040;	
 	position: relative;
-	height: 170px;
-	margin-top: -170px;
-	clear: both;
-	padding: 0px;
+	background-color: #222;
+	color: #fff;
+	height: 165px;
+	margin-top: -150px;
+	padding-top: 30px;
+}
+.footer-row {
+	max-width: 100%;
+}
+.bottom-footer {
+	border-top: 1px solid #b2b2b2;
+	margin-top: 10px;
+	padding-top: 10px;
+	color: #b2b2b2;
 }
 
-.footer-ul {
-	color:  #fff;
-	/*margin: 5px 10px 0px 50px;*/
+.footer-nav {
+	text-align: right;
+	list-style: none;
+}
+
+.footer-nav li {
+	display: inline;
+}
+
+.footer-nav li:not(:first-child):before {
+	content: '|';
+	padding: 0px 10px;
+}
+
+.footer-nav a {
+	color: #b2b2b2;
+}
+
+.footer-nav a:hover {
+	color: #fff;
+}
+/* footer end */
+
+
+/* profile start */
+.row {
+	display: table;
 }
 
 .list-group-item{
 	border: 0 !important;
+	background-color: transparent !important;
 }
 
 .contact_list {
@@ -108,18 +129,31 @@ html, body {
 }
 
 .list_of_tickets a {
-	color: black !important;
+	color: #ffffff !important;
+	margin-bottom: 0;
 	font-size: 14px;
-}
-
-.auth{
-	margin: 0;
+	font-family: 'Raleway', sans-serif;
+	line-height: 1.5;
 }
 
 .title{
 	text-align: center;
+	color: #ffffff;
 }
 
+.personal_details{
+	border-radius: 12px;
+	background-color: #364042;
+	padding: 15px;
+	color: #ffffff;
+}
+
+.tickets{
+	border-radius: 12px;
+	background-color: #364042;
+	padding: 15px;
+	margin-bottom: 20px;
+}
 .personal_details ul li{
 	font-size: 14px;
 	margin: 0;
