@@ -108,7 +108,7 @@ public class RailwayService extends HttpServlet {
         }
         try {
             System.out.println("Database connected!");
-            File initialFile = new File("/Users/demezhanmarikov/IdeaProjects/railway_project/src/project.sql");
+            File initialFile = new File("/home/stayal0ne/swe/Karina/railway_project/src/project.sql");
             try {
                 InputStream targetStream = new FileInputStream(initialFile);
                 importSQL(connection, targetStream);
