@@ -24,8 +24,6 @@ function login() {
 
 
 $(document).ready(function () {
-
-
     $("#submit-reg").on('click', function () {
         console.log("submitted");
         login();
