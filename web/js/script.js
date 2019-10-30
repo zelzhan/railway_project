@@ -54,7 +54,26 @@ function register() {
 	});
 }
 
+
+function logout() {
+    $.removeCookie('encripted', { path: '/'});
+    window.location.replace("/railway_station_service_war_exploded");
+}
+
+
 $(document).ready(function () {
+
+    if (typeof $.cookie('encripted') != "undefined") {
+        $("#login").hide();
+        $("#signup").hide();
+        $("#userprofile").show();
+        $("#signout").show();
+    } else {
+        $("#login").show();
+        $("#signup").show();
+        $("#userprofile").hide();
+        $("#signout").hide();
+    }
 
     $("#submit-reg").on('click', function () {
         register();
