@@ -1,6 +1,7 @@
 package main;
 
 import com.google.gson.Gson;
+import org.glassfish.jersey.internal.util.Base64;
 import org.omg.CORBA.SystemException;
 
 import javax.servlet.http.HttpServlet;
@@ -17,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 
 class Route {
@@ -59,14 +61,16 @@ class Passenger {
     String first_name;
     String last_name;
     String phone;
+    String email;
 
     ArrayList<Ticket> past;
     ArrayList<Ticket> future;
 
-    public Passenger(String first_name, String last_name, String phone, ArrayList<Ticket> past, ArrayList<Ticket> future) {
+    public Passenger(String first_name, String last_name, String phone, String email, ArrayList<Ticket> past, ArrayList<Ticket> future) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.phone = phone;
+        this.email = email;
         this.past = past;
         this.future = future;
     }
@@ -126,7 +130,7 @@ public class RailwayService extends HttpServlet {
         try {
             System.out.println("Database connected!");
 
-            File initialFile = new File("/home/stayal0ne/swe/Karina/railway_project/src/project.sql");
+            File initialFile = new File("/Users/demezhanmarikov/IdeaProjects/railway_project_2/src/project.sql");
 
             try {
                 InputStream targetStream = new FileInputStream(initialFile);
@@ -207,19 +211,22 @@ public class RailwayService extends HttpServlet {
     }
 
     //USER's PROFILE
-    @GET
-    @Path("/userProfile")
-    public Response userProfile() {
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("/secured/userProfile")
+    public Response userProfile(@FormParam("authToken") String authToken) {
 
         try {
-            String email = "sean.employee@ex.com";
+            String decodedString = Base64.decodeAsString(authToken);
+            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
+            String email = tokenizer.nextToken();
             Statement st = connection.createStatement();
             Statement st2 = connection.createStatement();
             Statement st3 = connection.createStatement();
 
 
             //sql query for getting all personal info by email
-            ResultSet res = st.executeQuery("select u.first_name, u.last_name, u.phone from registered_user u where u.login = \"" + email + "\"");
+            ResultSet res = st.executeQuery("select u.first_name, u.last_name, u.phone, u.login from registered_user u where u.login = \"" + email + "\"");
             res.next();
             //sql query for getting tickets past the given Currentdate
             ResultSet prevT = st2.executeQuery("select t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time < now()");
@@ -238,7 +245,7 @@ public class RailwayService extends HttpServlet {
             }
 
 
-            Passenger user = new Passenger(res.getString(1), res.getString(2), res.getString(3), past, future);
+            Passenger user = new Passenger(res.getString(1), res.getString(2), res.getString(3), res.getString(4), past, future);
 
             Gson gson = new Gson();
             return Response.ok(gson.toJson(user)).build();
@@ -254,8 +261,6 @@ public class RailwayService extends HttpServlet {
     public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
         return Response.status(Response.Status.ACCEPTED).build();
     }
-
-
 
     @GET
     @Path("login")
