@@ -8,15 +8,12 @@ public class Graph {
     public ArrayList<List<String>> prevPaths;
 
     public Graph () {
-
         adjVertices = new HashMap<>();
-
     }
 
     public void addEdge(String label1, String label2) {
         adjVertices.get(label1).add(label2);
         adjVertices.get(label2).add(label1);
-
     }
 
     public void removeEdge(String label1, String label2) {
@@ -44,8 +41,7 @@ public class Graph {
 
 
 
-    public void printAllPaths(String s, String d)
-    {
+    public void printAllPaths(String s, String d) {
         if (prevPaths == null) {
             prevPaths = new ArrayList<>();
         } else {

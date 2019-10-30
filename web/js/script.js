@@ -1,4 +1,3 @@
-
 function updateRoute(items) {
 	let str = "<table class=\"table table-bordered\"><thead class=\'thead-dark\'><tr><th scope=\"col\">#</th>"
 	str += "<th scope=\"col\">Departure</th><th scope=\"col\">Destination</th><th scope=\"col\">Time</th></tr></thead>"
@@ -9,7 +8,6 @@ function updateRoute(items) {
 	str += "</tbody></table>";
 	$("#table-table").html("");
 	$("#table-table").append(str);
-
 }
 
 function sendFormRoute() {
@@ -36,6 +34,25 @@ function getRouteItems() {
     });
 }
 
+function register() {
+    var email = $("#email").val();
+    var password = $("#inputPassword").val();
+    var phone = $("#phone").val();
+    var firstName = $("#firstName").val();
+    var lastName = $("#lastName").val();
+
+    $.post("/railway_station_service_war_exploded/services/items/send", {
+        email: email,
+        password: password,
+        phone: phone,
+		firstName: firstName,
+		lastName: lastName
+    }, function () {
+    	alert("Registration is successful.")
+	}).fail( function () {
+		alert("Registration is not successful.")
+	});
+}
 
 $(document).ready(function () {
 
