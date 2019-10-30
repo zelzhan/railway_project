@@ -12,7 +12,7 @@ function login() {
     $.get("/railway_station_service_war_exploded/services/items/secured/login", {}, function () {
         $.cookie('encripted', btoa(email + ":" + password), { path : '/'});
         console.log($.cookie('encripted'));
-        // window.location.replace("/railway_station_service_war_exploded/");
+        window.location.replace("/railway_station_service_war_exploded/");
         alert("login is successful.")
     }).fail( function () {
         alert("login is not successful.")
@@ -22,9 +22,8 @@ function login() {
 
 
 
+
 $(document).ready(function () {
-
-
     $("#submit-reg").on('click', function () {
         console.log("submitted");
         login();

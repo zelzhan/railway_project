@@ -54,7 +54,44 @@ function register() {
 	});
 }
 
+function test() {
+
+    $.ajaxSetup({
+        headers:{
+            'Authorization': "Basic " + $.cookie('encripted')
+        }
+    });
+
+    $.get("/railway_station_service_war_exploded/services/secured/message", {}, function () {
+        alert("Authentication is successful.")
+        window.location.replace("/railway_station_service_war_exploded/services/secured/message");
+    }).fail( function () {
+        alert("Authentication failed.")
+        window.location.replace("/railway_station_service_war_exploded/services/secured/message");
+    });
+
+}
+
+
+function logout() {
+    $.removeCookie('encripted', { path: '/'});
+    window.location.replace("/railway_station_service_war_exploded");
+}
+
+
 $(document).ready(function () {
+
+    if (typeof $.cookie('encripted') != "undefined") {
+        $("#login").hide();
+        $("#signup").hide();
+        $("#userprofile").show();
+        $("#signout").show();
+    } else {
+        $("#login").show();
+        $("#signup").show();
+        $("#userprofile").hide();
+        $("#signout").hide();
+    }
 
     $("#submit-reg").on('click', function () {
         register();
