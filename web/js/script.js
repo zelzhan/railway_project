@@ -13,65 +13,62 @@ function updateRoute(items) {
 }
 
 function sendFormRoute() {
-	var depToSend = $("#dep-input").val().toString();
-	var desToSend = $("#des-input").val().toString();
-	
-	if(depToSend.match("\\w+") && desToSend.match("\\w+")) {
-		$.post("services/items/"+ "{"+depToSend+"}/{"+desToSend+"}/{"+$("#day-input").val().toString()+"-"
-	+$("#month-input").val().toString()+"-"+$("#year-input").val().toString()+"}", function() {
-			getRouteItems();
-		})
-	} else {
-		window.alert("Please, check your input");
-	}
+    var depToSend = $("#dep-input").val().toString();
+    var desToSend = $("#des-input").val().toString();
+
+    if (depToSend.match("\\w+") && desToSend.match("\\w+")) {
+        $.post("services/items/" + "{" + depToSend + "}/{" + desToSend + "}/{" + $("#day-input").val().toString() + "-"
+            + $("#month-input").val().toString() + "-" + $("#year-input").val().toString() + "}", function () {
+            getRouteItems();
+        })
+    } else {
+        window.alert("Please, check your input");
+    }
 }
 
- function getRouteItems() {
-            $.ajax({
-                url : 'services/items/',
-                dataType : 'json',
-                success : function(r) {
-                    updateRoute(r);
-                }
-            });
+function getRouteItems() {
+    $.ajax({
+        url: 'services/items/',
+        dataType: 'json',
+        success: function (r) {
+            updateRoute(r);
         }
+    });
+}
 
 
-$(document).ready(function() {
-	// $("#search-route").on('click', function() {
-	// 	console.log('asd1');
-	// 		sendFormRoute();
-	// 	})
+$(document).ready(function () {
 
-	$("#routeForm").submit(function(e) {
+    $("#submit-reg").on('click', function () {
+        register();
+    });
 
-		e.preventDefault(); // avoid to execute the actual submit of the form.
+    $("#routeForm").submit(function (e) {
 
-		var form = $(this);
-		var data = [];
+        e.preventDefault(); // avoid to execute the actual submit of the form.
 
-		$("form#routeForm :input").each(function(){
-			var input = $(this); // This is the jquery object of the input, do what you will
-			data.push(input.val());
-		});
+        var form = $(this);
+        var data = [];
 
-		// console.log(data);
-		let url = "/railway_station_service_war_exploded/services/items/" + data[0] + "/" + data[1] + "/" + data[4] + "-" + data[3] + "-" + data[2];
+        $("form#routeForm :input").each(function () {
+            var input = $(this); // This is the jquery object of the input, do what you will
+            data.push(input.val());
+        });
 
-		$.ajax({
-			type: "GET",
-			url: url,
-			success: function(data)
-			{
+        // console.log(data);
+        let url = "/railway_station_service_war_exploded/services/items/" + data[0] + "/" + data[1] + "/" + data[4] + "-" + data[3] + "-" + data[2];
 
-				if (data === ""){
-					alert("Place doesn't exist");
-				}
-				alert(data);
-				updateRoute(JSON.parse(data));
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                if (data === "") {
+                    alert("Place doesn't exist");
+                }
+                alert(data);
+                updateRoute(JSON.parse(data));
 
-			},
-		});
-	});
-
+            },
+        });
+    });
 });
