@@ -7,6 +7,8 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -34,8 +36,9 @@ public class SecureFilter implements ContainerRequestFilter {
             String username = tokenizer.nextToken();
             String password = tokenizer.nextToken();
 
-            // check in the dataaase
-            if ("username".equals(username) && "password".equals(password)) {
+
+
+            if(RailwayService.userExists(username, password)){
                 return;
             }
         }

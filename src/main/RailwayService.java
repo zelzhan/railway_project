@@ -255,6 +255,43 @@ public class RailwayService extends HttpServlet {
         return null;
     }
 
+    public static Boolean userExists(String login, String userPassword){
+        try {
+            Connection connection = null;
+            String url = "jdbc:mysql://localhost:3306/javabase?" + "useSSL=false";
+            String username = "java";
+            String password = "password";
+
+            System.out.println("Connecting database...");
+            try {
+                try {
+                    Class.forName("com.mysql.jdbc.Driver").newInstance();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                connection = DriverManager.getConnection(url, username, password);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery("SELECT EXISTS (select u.id from registered_user u where u.login = \"" + login + "\" and u.password = " +"\"" + userPassword + "\")");
+            res.next();
+            if(res.getString(1).equals("0")){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+
     @GET
     @Path("secured/login")
     @Produces("text/html")
