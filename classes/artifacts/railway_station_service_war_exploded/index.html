@@ -8,10 +8,11 @@
 	<link rel="stylesheet" href="styles/styles.css">
 	<!-- bootstrap -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
 	<!-- fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="/path/to/jquery.cookie.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 </head>
 <body>
@@ -23,7 +24,7 @@
 			</a>
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a href="#" class="nav-link">Home</a>
+					<a href="index.html" class="nav-link">Home</a>
 				</li>
 				<li class="nav-item">
 					<a href="#" class="nav-link">Contact us</a>
@@ -32,91 +33,95 @@
 			<span class="navbar-text">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a href="#" class="nav-link">Log in</a>
+					<a href="login.html" class="nav-link">Log in</a>
 				</li>
 				<li class="nav-item active">
-					<a href="#" class="nav-link">Sign up</a>
+					<a href="registration.html" class="nav-link">Sign up</a>
 				</li>
 			</ul>
 			</span>
 		</div>
 	</nav>
 
+	
 	<div class="main-container">
 		<div class="container main-top">
 			<div class="row">
-        
-        
 				<div class="form-div">
-						<form>
-							<div class="form-group">
-								<label for="departureInput">Departure City</label>
-								<input type="text" class="form-control" id="dep-input" placeholder="Astana">
-							</div>
-							<div class="form-group">
-								<label for="destinationInput">Destination City</label>
-								<input type="text" class="form-control" id="des-input" placeholder="Almaty">
 
-                
-                
-							</div>
-							<div class="form-group">
-								<div class="row">
-									<div class="col">
-										<label for="dateInput">Day</label>
-										<input type="text" class="form-control" id="day-input" placeholder="Enter day">
-									</div>
-									<div class="col">
-										<label>Month</label>
-										<select class="form-control" id="month-input">
-											<option selected>Choose</option>
-											<option>01</option>
-											<option>02</option>
-											<option>03</option>
-											<option>04</option>
-											<option>05</option>
-											<option>06</option>
-											<option>07</option>
-											<option>08</option>
-											<option>09</option>
-											<option>10</option>
-											<option>11</option>
-											<option>12</option>
-										</select>
-									</div>
-									<div class="col">
-										<label>Year</label>
-										<input type="text" class="form-control" id="year-input" placeholder="Year">
-									</div>
+					<form id="routeForm">
+						<div class="form-group">
+							<label for="departureInput">Departure City</label>
+							<input type="text" class="form-control" id="dep" placeholder="Astana">
+						</div>
+						<div class="form-group">
+							<label for="destinationInput">Destination City</label>
+							<input type="text" class="form-control" id="des" placeholder="Almaty">
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col">
+									<label for="dateInput">Day</label>
+									<input type="text" class="form-control" id="day-input" placeholder="Enter day">
+								</div>
+								<div class="col">
+									<label>Month</label>
+									<select class="form-control" id="month-input">
+										<option selected>Choose</option>
+										<option>01</option>
+										<option>02</option>
+										<option>03</option>
+										<option>04</option>
+										<option>05</option>
+										<option>06</option>
+										<option>07</option>
+										<option>08</option>
+										<option>09</option>
+										<option>10</option>
+										<option>11</option>
+										<option>12</option>
+									</select>
+								</div>
+								<div class="col">
+									<label>Year</label>
+									<input type="text" class="form-control" id="year-input" placeholder="Year">
 								</div>
 							</div>
-							<button type="submit" class="btn btn-primary" id="search-route">Search</button>
-						</form>
+						</div>
+						<button type="submit" class="btn btn-primary">Search</button>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div id="table-table" class="train-table">
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam, omnis voluptatem mollitia quisquam nam voluptate, eius, commodi iste aliquid facilis nulla a quo reiciendis laborum fugiat laboriosam voluptatibus laudantium neque.</p>
+
+	<div class="train-table">
+		<div class="container">
+			<div id="table-table" class="row">
+
+			</div>
+		</div>
+
 	</div>
 
-<footer class="footer">
+	<footer class="footer">
 		<div class="row footer-row">
 			<div class="col-lg-5 col-md-5">
 				<h2>EVe Booking</h2>
 			</div>
 		</div>
 		<div class="bottom-footer">
-			<div class="col-lg-5 col-md-5">© Copyright Team "Extented Version"</div>
-			<div class="col-lg-7 col-md-7">
+			<div class="col">© Copyright Team "Extented Version"</div>
+			<div class="col-lg-7 col-md-7 offset-1">
 				<ul class="footer-nav">
 					<li><a href="#">Home</a></li>
 					<li><a href="#">Contact us</a></li>
 				</ul>
 			</div>
 		</div>
-</footer>
+	</footer>
+
 
 
 

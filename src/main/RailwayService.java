@@ -52,6 +52,9 @@ class Ticket {
 
 }
 
+
+
+
 class Passenger {
     String first_name;
     String last_name;
@@ -136,6 +139,13 @@ public class RailwayService extends HttpServlet {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
     }
+
+//    @POST
+//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+//    @Path("secured/login")
+//    public Response login(@FormParam("email") String email, @FormParam("password") String password) {
+//
+//    }
 
     @GET
     @Path("{depart}/{dest}/{date}")
@@ -239,14 +249,26 @@ public class RailwayService extends HttpServlet {
     }
 
     @GET
-    @Path("/redirect")
+    @Path("secured/login")
     @Produces("text/html")
     public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
+        return Response.status(Response.Status.ACCEPTED).build();
+    }
+
+
+
+    @GET
+    @Path("login")
+    @Produces("text/html")
+    public Response Ruredirect(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
+
         String myJsfPage = "/index.html";
         String contextPath = request.getContextPath();
         response.sendRedirect(contextPath + myJsfPage);
+        System.out.println("I'm logged in!");
         return Response.status(Response.Status.ACCEPTED).build();
     }
+
 
 
     public static void importSQL(Connection conn, InputStream in) throws SQLException {

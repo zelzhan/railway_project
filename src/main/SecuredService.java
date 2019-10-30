@@ -8,10 +8,8 @@ import javax.ws.rs.core.MediaType;
 
 @Path("secured")
 public class SecuredService extends HttpServlet {
-
-
     public SecuredService (){
-        System.out.println("hleel");
+        System.out.println("Security is activated!");
     }
 
     @GET
