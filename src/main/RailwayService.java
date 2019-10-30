@@ -1,19 +1,19 @@
 package main;
 
 import com.google.gson.Gson;
+import org.omg.CORBA.SystemException;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.security.acl.Group;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -33,10 +33,25 @@ class Route {
     }
 }
 
+class Passenger {
+    String email;
+    String name;
+    String password;
+    //    ArrayList<Ticket> prevTickets = new ArrayList<>(); // Ticket class should be created
+    ArrayList<Object> nextTickets = new ArrayList<>();
+
+    public Passenger(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
+}
+
 @Path("/items")
 public class RailwayService extends HttpServlet {
     Graph graph;
     Connection connection;
+    String email;
 
     public RailwayService() {
         graph = new Graph();
@@ -72,8 +87,7 @@ public class RailwayService extends HttpServlet {
         graph.printAllPaths("6", "1");
 
 
-
-        String url = "jdbc:mysql://localhost:3306/javabase";
+        String url = "jdbc:mysql://localhost:3306/javabase?" + "useSSL=false";
         String username = "java";
         String password = "password";
 
@@ -94,7 +108,9 @@ public class RailwayService extends HttpServlet {
         }
         try {
             System.out.println("Database connected!");
+
             File initialFile = new File("/home/stayal0ne/swe/Karina/railway_project/src/project.sql");
+
             try {
                 InputStream targetStream = new FileInputStream(initialFile);
                 importSQL(connection, targetStream);
@@ -104,8 +120,6 @@ public class RailwayService extends HttpServlet {
         } catch (SQLException e) {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
-
-
     }
 
     @GET
@@ -127,7 +141,8 @@ public class RailwayService extends HttpServlet {
         try {
             Statement st = connection.createStatement();
             ResultSet res = st.executeQuery("select * from (select distinct t2.name1 as d, t1.name1 as f, s1.exact_timei, s2.exact_timef from schedule s1, schedule s2, station d1, station d2, train t1, train t2 where  d1.name = " + depart + " and s1.departure_time = " + date + "  and d1.id = s1.station_i and s1.train_id = t1.id and d2.id = s2.station_f  and d2.name = " + dest + " and s2.train_id = t2.id) t where t.d = t.f");
-            while(res.next()) {
+
+            while (res.next()) {
                 Route route = new Route(departTemp, destTemp, res.getString(1), res.getString(3));
                 System.out.println(route.train_id);
                 params.add(route);
@@ -137,16 +152,58 @@ public class RailwayService extends HttpServlet {
             e.printStackTrace();
         }
 
-//        for (Route route : routes) {
-//            params.add(new Route);
-//        }
         Gson gson = new Gson();
         return Response.ok(gson.toJson(params)).build();
     }
+
+    //User registration
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("send")
+    public Response postListItem(@FormParam("email") String email, @FormParam("password") String password, @FormParam("phone") String phone,
+                                 @FormParam("firstName") String firstName, @FormParam("lastName") String lastName) {
+        try {
+            //Unique email should be inserted in the database
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery("SELECT EXISTS (select login from registered_user where login =\"" + email + "\")"); //sql query for checking an email for uniqueness
+            res.next();
+            if (res.getString(1).equals("0")) { //sql query to insert an email and password of the new user
+                st.executeUpdate("INSERT INTO registered_user (login, first_name, last_name, password, phone) VALUES ( '" + email + "', '" + firstName + "', '" + lastName + "', '"  + password +  "', '" + phone + "')");
+            } else {
+                return Response.status(Response.Status.CONFLICT).build();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return Response.ok().build();
+    }
+
+    //USER's PROFILE
     @GET
-    public Response getSmth(){
-        Gson gs = new Gson();
-        return Response.ok(gs.toJson("heelo")).build();
+    @Path("/userProfile")
+    public Response userProfile() {
+
+        try {
+            String tempEmail = "kjf";
+            Statement st = connection.createStatement();
+            //sql query for getting all personal info by email
+            ResultSet res = st.executeQuery("select u.FirstName, u.LastName, u.phone, t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time >  now()");
+            System.out.println(res.getString(1));
+            //Passenger currentPas = new Passenger(res.toString(1),res.toString(2),res.toString(3));
+            //sql query for getting tickets past the given Currentdate
+            ResultSet prevT = st.executeQuery("select u.FirstName, u.LastName, u.phone, t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time < now()");
+            //sql query for getting tickets future the given Currentdate
+            ResultSet nextT = st.executeQuery("select u.FirstName, u.LastName, u.phone, t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time >  now()");
+
+
+            Gson gson = new Gson();
+            return Response.ok().build();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @GET
@@ -160,35 +217,25 @@ public class RailwayService extends HttpServlet {
     }
 
 
-    public static void importSQL(Connection conn, InputStream in) throws SQLException
-    {
+    public static void importSQL(Connection conn, InputStream in) throws SQLException {
         Scanner s = new Scanner(in);
         s.useDelimiter("(;(\r)?\n)|(--\n)");
         Statement st = null;
-        try
-        {
+        try {
             st = conn.createStatement();
-            while (s.hasNext())
-            {
+            while (s.hasNext()) {
                 String line = s.next();
-                if (line.startsWith("/*!") && line.endsWith("*/"))
-                {
+                if (line.startsWith("/*!") && line.endsWith("*/")) {
                     int i = line.indexOf(' ');
                     line = line.substring(i + 1, line.length() - " */".length());
                 }
 
-                if (line.trim().length() > 0)
-                {
+                if (line.trim().length() > 0) {
                     st.execute(line);
                 }
             }
-        }
-        finally
-        {
+        } finally {
             if (st != null) st.close();
         }
     }
-
-
-
 }

@@ -14,13 +14,15 @@ public class RailwayApplication extends Application {
 
     public RailwayApplication() {
         singletons.add(new RailwayService());
+        singletons.add(new SecuredService());
     }
 
     @Override
     public Set<Class<?>> getClasses() {
-        return empty;
+        HashSet<Class<?>> classes = new HashSet<>();
+        classes.add(SecureFilter.class);
+        return classes;
     }
-
     @Override
     public Set<Object> getSingletons() {
         return singletons;
