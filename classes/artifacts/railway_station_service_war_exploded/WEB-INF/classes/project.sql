@@ -85,11 +85,19 @@ create table if not exists schedule(
  create table if not exists ticket(
  	id bigint(20) primary key auto_increment,
  	client_id bigint(20) not null,
+<<<<<<< HEAD
      train_id bigint(20) not null,
  	start_station_id bigint(20) not null,
  	end_station_id bigint(20) not null,
  	departure_time timestamp not null,
  	arrival_time timestamp not null,
+=======
+    train_id bigint(20) not null,
+ 	start_station_id bigint(20) not null,
+ 	end_station_id bigint(20) not null,
+ 	departure_time date not null,
+ 	arrival_time date not null,
+>>>>>>> e54bcd00c375759d6625fac8916e3d665e7eed8f
  	availability tinyint(1) not null,
  	foreign key (client_id) references registered_user(id),
  	foreign key (train_id) references train(id),
@@ -112,7 +120,11 @@ INSERT INTO registered_user (login, password, first_name,last_name, phone) VALUE
 INSERT INTO registered_user (login, password, first_name,last_name, phone) VALUES ('gigi.employee@ex.com', 'gigiemployee123', 'Gigi', 'Employee', '87654566776');
 INSERT INTO registered_user (login, password, first_name,last_name, phone) VALUES ('robert.employee@ex.com', 'robertemployee123', 'Robert', 'Employee', '89998887766');
 INSERT INTO registered_user (login, password, first_name,last_name, phone) VALUES ('michael.employee@ex.com', 'michaelemployee123', 'Michael', 'Employee', '89009998880');
+<<<<<<< HEAD
 INSERT INTO registered_user (login, password, first_name,last_name, phone) VALUES ('sean.employee@ex.com', 'seanemployee123', 'Sean', 'Employee', '85675675667');
+=======
+INSERT INTO registered_user (login, password, first_name,last_name, phone) VALUES ( 'sean.employee@ex.com', 'seanemployee123', 'Sean', 'Jones', '85675675667');
+>>>>>>> e54bcd00c375759d6625fac8916e3d665e7eed8f
 INSERT INTO registered_user (login, password, first_name,last_name, phone) VALUES ('mark.employee@ex.com', 'markemployee123', 'Mark', 'Employee', '83455433445');
 
 INSERT INTO registered_user (login, password, first_name,last_name, phone) VALUES ('ellen.agent@ex.com', 'ellenagent123', 'Ellen', 'Agent', '87776667766');
@@ -126,8 +138,13 @@ insert into passenger (reservation_status, id) values ( 1, (select id FROM regis
 insert into passenger (reservation_status, id) values ( 1, (select id FROM registered_user WHERE login = 'anne.example@ex.com'));
 
 -- manager
+<<<<<<< HEAD
 INSERT INTO MANAGER (id) VALUES ((SELECT id FROM registered_user WHERE Login = 'mona.manager@ex.com'));
 INSERT INTO MANAGER (id) VALUES ((SELECT id FROM registered_user WHERE Login = 'mao.manager@ex.com'));
+=======
+INSERT INTO manager (id) VALUES ((SELECT id FROM registered_user WHERE Login = 'mona.manager@ex.com'));
+INSERT INTO manager (id) VALUES ((SELECT id FROM registered_user WHERE Login = 'mao.manager@ex.com'));
+>>>>>>> e54bcd00c375759d6625fac8916e3d665e7eed8f
 insert into manager (id) values (201122333);
 
 -- employee
@@ -180,8 +197,16 @@ insert into station (id,name) values (17,'Petropavlovsk');
 insert into station (id,name) values (18,'Kokshetau');
 
 -- TICKET
+<<<<<<< HEAD
 insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, availability) values(1, 561, 1, 3, '2038-01-12', '2038-01-19', 1);
 insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, availability) values(1, 561, 1, 3, '2019-01-01', '2019-01-02', 1);
+=======
+insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, availability) values(201521971, 561, 1, 3, '2038-01-12', '2038-01-19', 1);
+insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, availability) values(201521971, 561, 1, 3, '2019-01-01', '2019-01-02', 1);
+insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, availability) values(2, 561, 1, 3, '2019-12-12', '2019-12-13', 1);
+insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, availability) values(2, 561, 1, 3, '2019-01-10', '2019-01-11', 1);
+insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, availability) values(2, 5161, 1, 3, '2019-01-10', '2019-01-11', 1);
+>>>>>>> e54bcd00c375759d6625fac8916e3d665e7eed8f
 
 -- Moskva -> Aktobe -> Astana -> Karaganda -> Shymkent
 insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, exact_timei, exact_timef) values (1,561, 6, 5, '2038-01-12', '2038-01-19 ', '03:14:07', '03:14:07');

@@ -33,17 +33,39 @@ class Route {
     }
 }
 
-class Passenger {
-    String email;
-    String name;
-    String password;
-    //    ArrayList<Ticket> prevTickets = new ArrayList<>(); // Ticket class should be created
-    ArrayList<Object> nextTickets = new ArrayList<>();
+class Ticket {
+    String id;
+    String train_id;
+    String dept_station;
+    String dest_station;
+    String dept_time;
+    String dest_time;
 
-    public Passenger(String email, String name, String password) {
-        this.email = email;
-        this.name = name;
-        this.password = password;
+    public Ticket(String id, String train_id, String dept_station, String dest_station, String dept_time, String dest_time) {
+        this.id = id;
+        this.train_id = train_id;
+        this.dept_station = dept_station;
+        this.dest_station = dest_station;
+        this.dept_time = dept_time;
+        this.dest_time = dest_time;
+    }
+
+}
+
+class Passenger {
+    String first_name;
+    String last_name;
+    String phone;
+
+    ArrayList<Ticket> past;
+    ArrayList<Ticket> future;
+
+    public Passenger(String first_name, String last_name, String phone, ArrayList<Ticket> past, ArrayList<Ticket> future) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.phone = phone;
+        this.past = past;
+        this.future = future;
     }
 }
 
@@ -51,7 +73,6 @@ class Passenger {
 public class RailwayService extends HttpServlet {
     Graph graph;
     Connection connection;
-    String email;
 
     public RailwayService() {
         graph = new Graph();
@@ -77,15 +98,8 @@ public class RailwayService extends HttpServlet {
         graph.addEdge("9", "10");
         graph.addEdge("10", "1");
         graph.addEdge("1", "8");
-//        graph.addEdge("1", "8");
-//        graph.addEdge("C", "E");
-//        graph.addEdge("D", "H");
-//        graph.addEdge("H", "F");
-//        graph.addEdge("H", "G");
-//        graph.addEdge("G", "K");
 
         graph.printAllPaths("6", "1");
-
 
         String url = "jdbc:mysql://localhost:3306/javabase?" + "useSSL=false";
         String username = "java";
@@ -118,6 +132,7 @@ public class RailwayService extends HttpServlet {
                 e.printStackTrace();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new IllegalStateException("Cannot connect the database!", e);
         }
     }
@@ -132,7 +147,6 @@ public class RailwayService extends HttpServlet {
         // get the list of items from Database
         String departTemp = depart;
         String destTemp = dest;
-        String dateTemp = date;
         depart = '"' + depart + '"';
         dest = '"' + dest + '"';
         date = '"' + date + '"';
@@ -167,7 +181,9 @@ public class RailwayService extends HttpServlet {
             Statement st = connection.createStatement();
             ResultSet res = st.executeQuery("SELECT EXISTS (select login from registered_user where login =\"" + email + "\")"); //sql query for checking an email for uniqueness
             res.next();
+            System.out.println("sfcsdkmj");
             if (res.getString(1).equals("0")) { //sql query to insert an email and password of the new user
+
                 st.executeUpdate("INSERT INTO registered_user (login, first_name, last_name, password, phone) VALUES ( '" + email + "', '" + firstName + "', '" + lastName + "', '"  + password +  "', '" + phone + "')");
             } else {
                 return Response.status(Response.Status.CONFLICT).build();
@@ -186,20 +202,36 @@ public class RailwayService extends HttpServlet {
     public Response userProfile() {
 
         try {
-            String tempEmail = "kjf";
+            String email = "sean.employee@ex.com";
             Statement st = connection.createStatement();
-            //sql query for getting all personal info by email
-            ResultSet res = st.executeQuery("select u.FirstName, u.LastName, u.phone, t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time >  now()");
-            System.out.println(res.getString(1));
-            //Passenger currentPas = new Passenger(res.toString(1),res.toString(2),res.toString(3));
-            //sql query for getting tickets past the given Currentdate
-            ResultSet prevT = st.executeQuery("select u.FirstName, u.LastName, u.phone, t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time < now()");
-            //sql query for getting tickets future the given Currentdate
-            ResultSet nextT = st.executeQuery("select u.FirstName, u.LastName, u.phone, t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time >  now()");
+            Statement st2 = connection.createStatement();
+            Statement st3 = connection.createStatement();
 
+
+            //sql query for getting all personal info by email
+            ResultSet res = st.executeQuery("select u.first_name, u.last_name, u.phone from registered_user u where u.login = \"" + email + "\"");
+            res.next();
+            //sql query for getting tickets past the given Currentdate
+            ResultSet prevT = st2.executeQuery("select t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time < now()");
+            //sql query for getting tickets future the given Currentdate
+            ResultSet nextT = st3.executeQuery("select t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time >  now()");
+
+            ArrayList<Ticket> past = new ArrayList<>();
+            ArrayList<Ticket> future = new ArrayList<>();
+
+            while (prevT.next()) {
+                past.add(new Ticket(prevT.getString(1), prevT.getString(2), prevT.getString(3), prevT.getString(4), prevT.getString(5), prevT.getString(6)));
+            }
+
+            while (nextT.next()) {
+                future.add(new Ticket(nextT.getString(1), nextT.getString(2), nextT.getString(3), nextT.getString(4), nextT.getString(5), nextT.getString(6)));
+            }
+
+
+            Passenger user = new Passenger(res.getString(1), res.getString(2), res.getString(3), past, future);
 
             Gson gson = new Gson();
-            return Response.ok().build();
+            return Response.ok(gson.toJson(user)).build();
         } catch (SQLException e) {
             e.printStackTrace();
         }

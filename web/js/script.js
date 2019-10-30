@@ -1,15 +1,13 @@
 function updateRoute(items) {
-    $("#table-table").html("");
-    $("#table-table").append("<div class=\"train-table\"><div class=\"container\"><table class=\"table table-dark\"><thead>");
-    $("#table-table").append("<tr><th scope=\"col\">#</th><th scope=\"col\">Departure   </th><th scope=\"col\">Destination</th>");
-    // $("#table-table").append("<th scope=\"col\">Departure Time</th><th scope=\"col\">Destination time</th><th scope=\"col\">Date</th></tr></thead><tbody>");
-    console.log(items);
-
-    for (let i = 0; i < items.length; i++) {
-        $("#table-table").append("<tr><th scope=\"row\">" + items[i].train_id + "</th><td>" + items[i].dep + "</td><td>" + items[i].des + "</td><td>" + items[i].date + "</td></tr>");
-    }
-    $("#table-table").append("</tbody></table></div></div>");
-
+	let str = "<table class=\"table table-bordered\"><thead class=\'thead-dark\'><tr><th scope=\"col\">#</th>"
+	str += "<th scope=\"col\">Departure</th><th scope=\"col\">Destination</th><th scope=\"col\">Time</th></tr></thead>"
+	str += "<tbody>";
+	for (let i=0; i<items.length; i++) {
+		str +="<tr><th scope=\"row\">"+items[i].train_id+"</th><td>"+ items[i].dep +"</td><td>"+items[i].des + "</td><td>" + items[i].date + "</td></tr>";
+	}
+	str += "</tbody></table>";
+	$("#table-table").html("");
+	$("#table-table").append(str);
 }
 
 function sendFormRoute() {
