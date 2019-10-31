@@ -27,27 +27,26 @@ function getUserData() {
             $("#phone").append(phone);
 
             pasts.forEach(function (past) {
-                console.log(past);
-                $("#past").append("<li class=\"list-group-item list_of_tickets\">\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + past['dept_station'] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + past['dest_station'] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + past['dept_exact_time'] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + past['dest_exact_time'] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + past['dept_time'] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + past['dest_time'] + "</a>\n" +
-                    "</li>")
+                $("#past").append("<tr>\n" +
+                    "<th scope=\"col\">" + past['dept_station'] + "</th>\n" +
+                    "<th scope=\"col\">" + past['dest_station'] + "</th>\n" +
+                    "<th scope=\"col\">" + past['dept_exact_time'] + "</th>\n" +
+                    "<th scope=\"col\">" + past['dest_exact_time'] + "</th>\n" +
+                    "<th scope=\"col\">" + past['dept_time'] + "</th>\n" +
+                    "<th scope=\"col\">" + past['dest_time'] + "</th>\n" +
+                    "</tr>")
             });
 
             futures.forEach(function (future) {
                 console.log(future);
-                $("#future").append("<li class=\"list-group-item list_of_tickets\">\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + future['dept_station'] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + future['dest_station'] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + future['dept_exact_time'] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + future['dest_exact_time'] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + future['dept_time'] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + future['dest_time'] + "</a>\n" +
-                    "</li>")
+                $("#future").append("<tr>\n" +
+                    "<th scope=\"col\">" + future['dept_station'] + "</th>\n" +
+                    "<th scope=\"col\">" + future['dest_station'] + "</th>\n" +
+                    "<th scope=\"col\">" + future['dept_exact_time'] + "</th>\n" +
+                    "<th scope=\"col\">" + future['dest_exact_time'] + "</th>\n" +
+                    "<th scope=\"col\">" + future['dept_time'] + "</th>\n" +
+                    "<th scope=\"col\">" + future['dest_time'] + "</th>\n" +
+                    "</tr>")
             });
         }).fail( function () {
 
