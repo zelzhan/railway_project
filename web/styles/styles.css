@@ -163,4 +163,8 @@ html, body {
 table {
 	background: transparent !important;
 }
+
+.main-profile{
+	min-height: 780px!important;
+}
 /* profile end*/
