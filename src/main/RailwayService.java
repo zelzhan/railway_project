@@ -144,21 +144,12 @@ public class RailwayService extends HttpServlet {
         }
     }
 
-//    @POST
-//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-//    @Path("secured/login")
-//    public Response login(@FormParam("email") String email, @FormParam("password") String password) {
-//
-//    }
-
     @GET
     @Path("{depart}/{dest}/{date}")
     public Response getData(@PathParam("depart") String depart,
                             @PathParam("dest") String dest,
                             @PathParam("date") String date) {
 
-
-        // get the list of items from Database
         String departTemp = depart;
         String destTemp = dest;
         depart = '"' + depart + '"';

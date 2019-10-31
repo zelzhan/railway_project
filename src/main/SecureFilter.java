@@ -7,8 +7,7 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -36,11 +35,42 @@ public class SecureFilter implements ContainerRequestFilter {
             String username = tokenizer.nextToken();
             String password = tokenizer.nextToken();
 
+            // check in the dataaase
 
 
-            if(RailwayService.userExists(username, password)){
-                return;
+            String url = "jdbc:mysql://localhost:3306/javabase?" + "useSSL=false";
+            String name = "java";
+            String pass = "password";
+
+            System.out.println("Connecting database...");
+            try {
+                try {
+                    Class.forName("com.mysql.jdbc.Driver").newInstance();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Connection connection = DriverManager.getConnection(url, name, pass);
+
+                Statement st = connection.createStatement();
+
+                ResultSet res = st.executeQuery("select exists(select login from registered_user where login=\""+username+"\" and password=\""+password+"\")" ) ;
+
+                res.next();
+
+                System.out.println(res.getString(1));
+                if (res.getString(1).equals("1")) {
+                    return;
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+
+
         }
 
         Response unauthorizedStatus = Response
