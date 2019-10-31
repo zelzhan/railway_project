@@ -42,14 +42,18 @@ class Ticket {
     String dest_station;
     String dept_time;
     String dest_time;
+    String dept_exact_time;
+    String dest_exact_time;
 
-    public Ticket(String id, String train_id, String dept_station, String dest_station, String dept_time, String dest_time) {
+    public Ticket(String id, String train_id, String dept_station, String dest_station, String dept_time, String dest_time, String dept_exact_time, String dest_exact_time) {
         this.id = id;
         this.train_id = train_id;
         this.dept_station = dept_station;
         this.dest_station = dest_station;
         this.dept_time = dept_time;
         this.dest_time = dest_time;
+        this.dept_exact_time = dept_exact_time;
+        this.dest_exact_time = dest_exact_time;
     }
 
 }
@@ -186,7 +190,7 @@ public class RailwayService extends HttpServlet {
             Statement st = connection.createStatement();
             ResultSet res = st.executeQuery("SELECT EXISTS (select login from registered_user where login =\"" + email + "\")"); //sql query for checking an email for uniqueness
             res.next();
-            System.out.println("sfcsdkmj");
+
             if (res.getString(1).equals("0")) { //sql query to insert an email and password of the new user
 
                 st.executeUpdate("INSERT INTO registered_user (login, first_name, last_name, password, phone) VALUES ( '" + email + "', '" + firstName + "', '" + lastName + "', '"  + password +  "', '" + phone + "')");
@@ -215,26 +219,25 @@ public class RailwayService extends HttpServlet {
             Statement st2 = connection.createStatement();
             Statement st3 = connection.createStatement();
 
-
             //sql query for getting all personal info by email
             ResultSet res = st.executeQuery("select u.first_name, u.last_name, u.phone, u.login from registered_user u where u.login = \"" + email + "\"");
             res.next();
             //sql query for getting tickets past the given Currentdate
-            ResultSet prevT = st2.executeQuery("select t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time < now()");
+            ResultSet prevT = st2.executeQuery("select distinct t.id, t.train_id,  s1.name, s2.name, t.departure_time, t.arrival_time, a1.exact_timei, a2.exact_timef from registered_user u, ticket t, station s1, station s2, schedule a1, schedule a2 where u.login = \"" + email + "\" and s1.id=t.start_station_id and s2.id= t.end_station_id and t.client_id=u.id and a1.station_i=t.start_station_id and a2.station_f=t.end_station_id and t.departure_time < now(); ");
             //sql query for getting tickets future the given Currentdate
-            ResultSet nextT = st3.executeQuery("select t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time >  now()");
+//            ResultSet nextT = st3.executeQuery("select t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time >  now()");
+            ResultSet nextT = st3.executeQuery("select distinct t.id, t.train_id,  s1.name, s2.name, t.departure_time, t.arrival_time, a1.exact_timei, a2.exact_timef from registered_user u, ticket t, station s1, station s2, schedule a1, schedule a2 where u.login = \"" + email + "\" and s1.id=t.start_station_id and s2.id= t.end_station_id and t.client_id=u.id and a1.station_i=t.start_station_id and a2.station_f=t.end_station_id and t.departure_time > now();");
 
             ArrayList<Ticket> past = new ArrayList<>();
             ArrayList<Ticket> future = new ArrayList<>();
 
             while (prevT.next()) {
-                past.add(new Ticket(prevT.getString(1), prevT.getString(2), prevT.getString(3), prevT.getString(4), prevT.getString(5), prevT.getString(6)));
+                past.add(new Ticket(prevT.getString(1), prevT.getString(2), prevT.getString(3), prevT.getString(4), prevT.getString(5), prevT.getString(6), prevT.getString(7), prevT.getString(8)));
             }
 
             while (nextT.next()) {
-                future.add(new Ticket(nextT.getString(1), nextT.getString(2), nextT.getString(3), nextT.getString(4), nextT.getString(5), nextT.getString(6)));
+                future.add(new Ticket(nextT.getString(1), nextT.getString(2), nextT.getString(3), nextT.getString(4), nextT.getString(5), nextT.getString(6), nextT.getString(7), nextT.getString(8)));
             }
-
 
             Passenger user = new Passenger(res.getString(1), res.getString(2), res.getString(3), res.getString(4), past, future);
 
@@ -244,43 +247,6 @@ public class RailwayService extends HttpServlet {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public static Boolean userExists(String login, String userPassword){
-        try {
-            Connection connection = null;
-            String url = "jdbc:mysql://localhost:3306/javabase?" + "useSSL=false";
-            String username = "java";
-            String password = "password";
-
-            System.out.println("Connecting database...");
-            try {
-                try {
-                    Class.forName("com.mysql.jdbc.Driver").newInstance();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                connection = DriverManager.getConnection(url, username, password);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            Statement st = connection.createStatement();
-            ResultSet res = st.executeQuery("SELECT EXISTS (select u.id from registered_user u where u.login = \"" + login + "\" and u.password = " +"\"" + userPassword + "\")");
-            res.next();
-            if(res.getString(1).equals("0")){
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e){
-            System.out.println(e);
-        }
-        return false;
     }
 
     @GET

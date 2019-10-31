@@ -18,39 +18,39 @@ function getUserData() {
             console.log(out);
             let data = JSON.parse(out);
             let full_name = data['first_name'] + " " + data['last_name'];
+            let phone = data['phone'];
             let email = data['email'];
             let pasts = data['past'];
             let futures = data['future'];
             $("#full_name").append(full_name);
             $("#email").append(email);
-            $("#past").html("");
-            $("#future").html("");
+            $("#phone").append(phone);
 
             pasts.forEach(function (past) {
+                console.log(past);
                 $("#past").append("<li class=\"list-group-item list_of_tickets\">\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + past[0] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + past[1] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + past[2] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + past[3] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + past[4] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + past[5] + "</a>\n" +
+                    "<a class=\"col-md-3\" ng-href=\"#\">" + past['dept_station'] + "</a>\n" +
+                    "<a class=\"col-md-3\" ng-href=\"#\">" + past['dest_station'] + "</a>\n" +
+                    "<a class=\"col-md-3\" ng-href=\"#\">" + past['dept_exact_time'] + "</a>\n" +
+                    "<a class=\"col-md-3\" ng-href=\"#\">" + past['dest_exact_time'] + "</a>\n" +
+                    "<a class=\"col-md-3\" ng-href=\"#\">" + past['dept_time'] + "</a>\n" +
+                    "<a class=\"col-md-3\" ng-href=\"#\">" + past['dest_time'] + "</a>\n" +
                     "</li>")
             });
 
             futures.forEach(function (future) {
+                console.log(future);
                 $("#future").append("<li class=\"list-group-item list_of_tickets\">\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + future[0] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + future[1] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + future[2] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + future[3] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + future[4] + "</a>\n" +
-                    "<a class=\"col-md-3\" ng-href=\"#\">" + future[5] + "</a>\n" +
+                    "<a class=\"col-md-3\" ng-href=\"#\">" + future['dept_station'] + "</a>\n" +
+                    "<a class=\"col-md-3\" ng-href=\"#\">" + future['dest_station'] + "</a>\n" +
+                    "<a class=\"col-md-3\" ng-href=\"#\">" + future['dept_exact_time'] + "</a>\n" +
+                    "<a class=\"col-md-3\" ng-href=\"#\">" + future['dest_exact_time'] + "</a>\n" +
+                    "<a class=\"col-md-3\" ng-href=\"#\">" + future['dept_time'] + "</a>\n" +
+                    "<a class=\"col-md-3\" ng-href=\"#\">" + future['dest_time'] + "</a>\n" +
                     "</li>")
             });
-
-            alert("login is successful.")
         }).fail( function () {
-            alert("login is not successful.")
+
         });
     }
 }

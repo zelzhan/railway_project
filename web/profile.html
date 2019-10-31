@@ -6,8 +6,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/profile.js"></script>
     <script src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/profile.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+
     <title>Profile</title>
 </head>
 <body>
@@ -28,10 +30,10 @@
         <span class="navbar-text">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a href="login.html" class="nav-link">Log in</a>
+					<a href="profile.html" class="nav-link" id = "userprofile">My Profile</a>
 				</li>
 				<li class="nav-item active">
-					<a href="registration.html" class="nav-link">Sign up</a>
+					<a onclick="logout();" href="#" class="nav-link" id = "signout">Sign Out</a>
 				</li>
 			</ul>
 			</span>
