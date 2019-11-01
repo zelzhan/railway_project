@@ -136,7 +136,7 @@ $(document).ready(function () {
             data.push(input.val());
         });
 
-        // console.log(data);
+
         let url = "/railway_station_service_war_exploded/services/items/" + data[0] + "/" + data[1] + "/" + data[4] + "-" + data[3] + "-" + data[2];
 
         $.ajax({

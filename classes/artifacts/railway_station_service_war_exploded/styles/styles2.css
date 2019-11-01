@@ -103,7 +103,9 @@
     font-size: 20px;
 }
 
-
+.train-table {
+    margin: 20px 0;
+}
 .btn {
     padding: 20px  32px;
     font-family: 'Varela Round';

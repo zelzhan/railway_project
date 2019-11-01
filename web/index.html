@@ -1,143 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Railway booking</title>
-	<!-- css -->
-	<link rel="stylesheet" href="styles/styles.css">
-	<!-- bootstrap -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<!-- fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
-	
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-	<script src="js/jquery.cookie.js"></script>
-	<script type="text/javascript" src="js/script.js"></script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <title>EVe booking</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom fonts for this template -->
+    <link href="fonts/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <link href="styles/styles2.css" rel="stylesheet">
+    <script src="js/script.js" type="text/javascript"> </script>
+
 </head>
-<body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark top-navbar">
-		<div class="collapse navbar-collapse">
-			<a href="#" class="navbar-brand">
-				<img src="img/train-logo.svg" id="logo-id" alt="train-logo" width="40" height="40">
-				EVe Booking
-			</a>
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-					<a href="index.html" class="nav-link">Home</a>
-				</li>
-				<li class="nav-item">
-					<a href="#" class="nav-link">Contact us</a>
-				</li>
-			</ul>
-			<span class="navbar-text">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
-					<a href="login.html" class="nav-link" id = "login">Log in</a>
-				</li>
-				<li class="nav-item active">
-					<a href="registration.html" class="nav-link" id = "signup">Sign up</a>
-				</li>
-				<li class="nav-item active">
-					<a href="profile.html" class="nav-link" id = "userprofile">My Profile</a>
-				</li>
 
-				<li class="nav-item active">
-					<a onclick="logout();" href="#" class="nav-link" id = "signout">Sign Out</a>
-				</li>
-			</ul>
-			</span>
-		</div>
-	</nav>
+<body id="page-top">
 
-	
-	<div class="main-container">
-		<div class="container main-top">
-			<div class="row">
-				<div class="form-div">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="main-top-bar">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">EVe booking</a>
 
-					<form id="routeForm">
-						<div class="form-group">
-							<label for="departureInput">Departure City</label>
-							<input type="text" class="form-control" id="dep" placeholder="Astana">
-						</div>
-						<div class="form-group">
-							<label for="destinationInput">Destination City</label>
-							<input type="text" class="form-control" id="des" placeholder="Almaty">
-						</div>
-						<div class="form-group">
-							<div class="row">
-								<div class="col">
-									<label for="dateInput">Day</label>
-									<input type="text" class="form-control" id="day-input" placeholder="Enter day">
-								</div>
-								<div class="col">
-									<label>Month</label>
-									<select class="form-control" id="month-input">
-										<option selected>Choose</option>
-										<option>01</option>
-										<option>02</option>
-										<option>03</option>
-										<option>04</option>
-										<option>05</option>
-										<option>06</option>
-										<option>07</option>
-										<option>08</option>
-										<option>09</option>
-										<option>10</option>
-										<option>11</option>
-										<option>12</option>
-									</select>
-								</div>
-								<div class="col">
-									<label>Year</label>
-									<input type="text" class="form-control" id="year-input" placeholder="Year">
-								</div>
-							</div>
-						</div>
-						<button type="submit" class="btn btn-primary">Search</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#about">Booking</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#team-info">Our team</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Log in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="registration.html">Sign up</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
+<!-- Header -->
+<header class="top-header">
+    <div class="container d-flex h-100 align-items-center">
+        <div class="mx-auto text-center">
+            <h1 class="mx-auto my-0 text-uppercase">Extended Version</h1>
+            <h2 class="text-white-50 mx-auto mt-2 mb-5">Buy tickets with us</h2>
+            <a href="#about" class="btn btn-primary js-scroll-trigger">Let's do it</a>
+        </div>
+    </div>
+</header>
 
-	<div class="train-table">
-		<div class="container">
-			<div id="table-table" class="row">
+<!-- About Section -->
+<section id="about" class="about-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <form id="routeForm">
+                    <div class="form-group">
+                        <label>Departure City</label>
+                        <input type="text" class="form-control" id="dep" placeholder="Astana">
+                    </div>
+                    <div class="form-group">
+                        <label>Destination City</label>
+                        <input type="text" class="form-control" id="des" placeholder="Almaty">
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <label>Day</label>
+                                <input type="text" class="form-control" id="day-input" placeholder="Enter day">
+                            </div>
+                            <div class="col">
+                                <label>Month</label>
+                                <select class="form-control" id="month-input">
+                                    <option selected>Choose</option>
+                                    <option>01</option>
+                                    <option>02</option>
+                                    <option>03</option>
+                                    <option>04</option>
+                                    <option>05</option>
+                                    <option>06</option>
+                                    <option>07</option>
+                                    <option>08</option>
+                                    <option>09</option>
+                                    <option>10</option>
+                                    <option>11</option>
+                                    <option>12</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label>Year</label>
+                                <input type="text" class="form-control" id="year-input" placeholder="Year">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="search-route">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 
-			</div>
-		</div>
+<div class="train-table">
+    <div class="container">
+        <div id="table-table" class="row">
+        </div>
+    </div>
+</div>
 
-	</div>
+<!-- Projects Section -->
+<section id="team-info" class="projects-section bg-light">
+    <div class="container">
+        <div class="row">
+            <!--Carousel Wrapper-->
+            <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
+                <!--Indicators-->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-1z" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-1z" data-slide-to="2"></li>
+                </ol>
+                <!--/.Indicators-->
+                <!--Slides-->
+                <div class="carousel-inner" role="listbox">
+                    <!--First slide-->
+                    <div class="carousel-item active">
 
-	<footer class="footer">
-		<div class="row footer-row">
-			<div class="col-lg-5 col-md-5">
-				<h2>EVe Booking</h2>
-			</div>
-		</div>
-		<div class="bottom-footer">
-			<div class="col">© Copyright Team "Extented Version"</div>
-			<div class="col-lg-7 col-md-7 offset-1">
-				<ul class="footer-nav">
-					<li><a href="#">Home</a></li>
-					<li><a href="#">Contact us</a></li>
-				</ul>
-			</div>
-		</div>
-	</footer>
+                        <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg"
+                             alt="First slide">
+                    </div>
+                    <!--/First slide-->
+                    <!--Second slide-->
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg"
+                             alt="Second slide">
+                    </div>
+                    <!--/Second slide-->
+                    <!--Third slide-->
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg"
+                             alt="Third slide">
+                    </div>
+                    <!--/Third slide-->
+                </div>
+                <!--/.Slides-->
+                <!--Controls-->
+                <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+                <!--/.Controls-->
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- Contact -->
+<section class="contact-section bg-black" id="contact">
+    <div class="container">
 
+        <div class="row">
 
+            <div class="col-md-4 mb-3 mb-md-0 offset-2">
+                <div class="card py-4 h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-map-marked-alt text-primary mb-2"></i>
+                        <h4 class="text-uppercase m-0">Address</h4>
+                        <hr class="my-4">
+                        <div class="small text-black-50">Kabanbay batyr 53, Astana, Kazakhstan</div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="card py-4 h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-envelope text-primary mb-2"></i>
+                        <h4 class="text-uppercase m-0">Email</h4>
+                        <hr class="my-4">
+                        <div class="small text-black-50">
+                            <a href="#">naz.university@nu.edu.kz</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- Footer -->
+<footer class="bg-black small text-center text-white-50">
+    <div class="container">
+        Copyright &copy; EVe booking
+    </div>
+</footer>
 
-<!--
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
- -->
+<!-- Bootstrap core JavaScript -->
+<!--<script src="js/jquery/jquery.min.js"></script>-->
+<script src="js/bootstrap-js/bootstrap.bundle.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="js/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for this template -->
+<script src="js/animation.js"></script>
+
+<!--	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+<!--	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
+<!--	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
+
 </body>
 </html>
