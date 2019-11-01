@@ -24,7 +24,7 @@ function showMap(index) {
         type: "GET",
         url: url,
         success: function (data) {
-            window.location.replace("C:\\Users\\abyl\\Desktop\\Fall 2019\\rails\\web\\map.html");
+            window.location.replace("map.html");
         },
     });
 }
@@ -104,7 +104,7 @@ $(document).ready(function () {
             data.push(input.val());
         });
 
-        // console.log(data);
+
         let url = "/railway_station_service_war_exploded/services/items/" + data[0] + "/" + data[1] + "/" + data[4] + "-" + data[3] + "-" + data[2];
 
         $.ajax({

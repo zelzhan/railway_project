@@ -208,7 +208,7 @@ public class RailwayService extends HttpServlet {
         //System.out.println("Message"+ str);
 
         //WriteToFile(str, "Abyl111.html");
-        BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\abyl\\Desktop\\Fall 2019\\rails\\web\\map.html"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("/home/sunnya/railway_project/web/map.html"));
         writer.write(str);
 
         writer.close();
