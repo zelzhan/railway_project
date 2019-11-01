@@ -23,12 +23,15 @@ public class SecureFilter implements ContainerRequestFilter {
 
         System.out.println("Filter activated");
         if (!requestContext.getUriInfo().getPath().contains(SECURED_URL_PREFIX)){
+            System.out.println("Don't have url prefix");
             return;
         }
 
         List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
+        System.out.println(authHeader);
         if (authHeader != null && authHeader.size() > 0) {
             String authToken = authHeader.get(0);
+
             authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
             String decodedString = Base64.decodeAsString(authToken);
             StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
@@ -63,8 +66,10 @@ public class SecureFilter implements ContainerRequestFilter {
 
                 System.out.println(res.getString(1));
                 if (res.getString(1).equals("1")) {
+                    System.out.println("Authorized!");
                     return;
                 }
+
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -72,6 +77,7 @@ public class SecureFilter implements ContainerRequestFilter {
 
 
         }
+
 
         Response unauthorizedStatus = Response
                 .status(Response.Status.UNAUTHORIZED)

@@ -1,8 +1,10 @@
 package main;
 
 import com.google.gson.Gson;
+import org.glassfish.jersey.internal.util.Base64;
 import org.omg.CORBA.SystemException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 
 class Route {
@@ -280,10 +283,14 @@ public class RailwayService extends HttpServlet {
     //USER's PROFILE
     @GET
     @Path("/userProfile")
-    public Response userProfile() {
+    public Response userProfile(@QueryParam("auth") String token) {
+
+        String decodedString = Base64.decodeAsString(token);
+        StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
+        String email = tokenizer.nextToken();
+        String password = tokenizer.nextToken();
 
         try {
-            String email = "sean.employee@ex.com";
             Statement st = connection.createStatement();
             Statement st2 = connection.createStatement();
             Statement st3 = connection.createStatement();
@@ -345,14 +352,22 @@ public class RailwayService extends HttpServlet {
     }
 
 
-    @GET
-    @Path("secured/login")
-    @Produces("text/html")
-    public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
-        return Response.status(Response.Status.ACCEPTED).build();
-    }
-
-
+//    @Context
+//    ServletContext servletContext;
+//
+//
+//    @Path("userProfile")
+//    @GET
+//    public InputStream getFile(@QueryParam("auth") String token) {
+//        try {
+//            String base = servletContext.getRealPath("/profile.html");
+//            File f = new File(String.format("%s", base));
+//            return new FileInputStream(f);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     @GET
     @Path("login")
@@ -365,6 +380,17 @@ public class RailwayService extends HttpServlet {
         System.out.println("I'm logged in!");
         return Response.status(Response.Status.ACCEPTED).build();
     }
+
+
+    @GET
+    @Path("secured/login")
+    @Produces("text/html")
+    public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
+        return Response.status(Response.Status.ACCEPTED).build();
+    }
+
+
+
 
 
 

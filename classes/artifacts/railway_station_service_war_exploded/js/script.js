@@ -43,6 +43,10 @@ function sendFormRoute() {
     }
 }
 
+function myProfile() {
+    window.location.replace("/railway_station_service_war_exploded/services/items/userProfile?auth=" + $.cookie('encripted'));
+}
+
 function getRouteItems() {
     $.ajax({
         url: 'services/items/',
@@ -50,6 +54,12 @@ function getRouteItems() {
         success: function (r) {
             updateRoute(r);
         }
+    });
+
+    $.get("/railway_station_service_war_exploded/services/secured/message", {}, function () {
+        alert("Authentication is successful.");
+    }).fail( function () {
+        alert("Authentication failed.")
     });
 }
 
