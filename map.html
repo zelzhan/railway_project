@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_9eeba70a79554a9db924bd2abd4170ff {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_9eeba70a79554a9db924bd2abd4170ff" ></div>
+        
+</body>
+<script>    
+    
+            var map_9eeba70a79554a9db924bd2abd4170ff = L.map(
+                "map_9eeba70a79554a9db924bd2abd4170ff",
+                {
+                    center: [47.49, 66.36],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 5,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_1da57e8647a14badab98aea6f326a404 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_9eeba70a79554a9db924bd2abd4170ff);
+        
+    
+            var marker_03c6a7d29cc64b0d9305dd781bac44d4 = L.marker(
+                [43.2363924, 76.9457275],
+                {}
+            ).addTo(map_9eeba70a79554a9db924bd2abd4170ff);
+        
+    
+            var icon_fd1b5f20f52246c1b1381ef57e1a29ae = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fire", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_03c6a7d29cc64b0d9305dd781bac44d4.setIcon(icon_fd1b5f20f52246c1b1381ef57e1a29ae);
+        
+    
+        var popup_51703f5754a945a181e85301475e099c = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b8a3f90f9047430cb75dcadd97cc683c = $(`<div id="html_b8a3f90f9047430cb75dcadd97cc683c" style="width: 100.0%; height: 100.0%;">Departure point</div>`)[0];
+            popup_51703f5754a945a181e85301475e099c.setContent(html_b8a3f90f9047430cb75dcadd97cc683c);
+        
+
+        marker_03c6a7d29cc64b0d9305dd781bac44d4.bindPopup(popup_51703f5754a945a181e85301475e099c)
+        ;
+
+        
+    
+    
+            var marker_f6ed7d738e5d485eaf6d222b40d4136e = L.marker(
+                [43.2363924, 76.9457275],
+                {}
+            ).addTo(map_9eeba70a79554a9db924bd2abd4170ff);
+        
+    
+            var icon_78d2fddd218e4178a3897621a00e39bc = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fire", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_f6ed7d738e5d485eaf6d222b40d4136e.setIcon(icon_78d2fddd218e4178a3897621a00e39bc);
+        
+    
+            var marker_228a4ff003204b779242c36fc60ebf77 = L.marker(
+                [42.2940788, 69.6385235157434],
+                {}
+            ).addTo(map_9eeba70a79554a9db924bd2abd4170ff);
+        
+    
+            var icon_c355a85413904a2988d9766e44f3e286 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "fire", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_228a4ff003204b779242c36fc60ebf77.setIcon(icon_c355a85413904a2988d9766e44f3e286);
+        
+    
+        var popup_cd58c84983f846668073f0d32dcfbeef = L.popup({"maxWidth": "100%"});
+
+        
+            var html_36af2c3233924fc4880cba9b7b7859de = $(`<div id="html_36af2c3233924fc4880cba9b7b7859de" style="width: 100.0%; height: 100.0%;">Departure point</div>`)[0];
+            popup_cd58c84983f846668073f0d32dcfbeef.setContent(html_36af2c3233924fc4880cba9b7b7859de);
+        
+
+        marker_228a4ff003204b779242c36fc60ebf77.bindPopup(popup_cd58c84983f846668073f0d32dcfbeef)
+        ;
+
+        
+    
+    
+            var poly_line_f68e2cde37c144adae84bece1a93e628 = L.polyline(
+                [[43.2363924, 76.9457275], [43.2363924, 76.9457275], [42.2940788, 69.6385235157434]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_9eeba70a79554a9db924bd2abd4170ff);
+        
+    
+        var popup_39d0dc225a784e0eabfb9db0ce814354 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_7156a16f71004cefb86501afd36e94df = $(`<div id="html_7156a16f71004cefb86501afd36e94df" style="width: 100.0%; height: 100.0%;">my favourite ice cream shop</div>`)[0];
+            popup_39d0dc225a784e0eabfb9db0ce814354.setContent(html_7156a16f71004cefb86501afd36e94df);
+        
+
+        poly_line_f68e2cde37c144adae84bece1a93e628.bindPopup(popup_39d0dc225a784e0eabfb9db0ce814354)
+        ;
+
+        
+    
+</script>
