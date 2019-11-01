@@ -114,7 +114,7 @@ public class RailwayService extends HttpServlet {
 
         String url = "jdbc:mysql://localhost:3306/javabase?" + "allowPublicKeyRetrieval=true&useSSL=false";
         String username = "java";
-        String password = "password";
+        String password = "Password123.";
 
         System.out.println("Connecting database...");
         try {
@@ -148,7 +148,7 @@ public class RailwayService extends HttpServlet {
         try {
             System.out.println("Database connected!");
 
-            File initialFile = new File("C:\\Users\\abyl\\Desktop\\Fall 2019\\rails\\src\\project.sql");
+            File initialFile = new File("/home/sunnya/railway_project/src/project.sql");
 
             try {
                 InputStream targetStream = new FileInputStream(initialFile);
