@@ -14,6 +14,7 @@ import java.io.*;
 import java.net.Socket;
 import java.security.acl.Group;
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,15 +40,15 @@ class Route {
 }
 
 class Ticket {
-    String id;
+    String client_id;
     String train_id;
     String dept_station;
     String dest_station;
     String dept_time;
     String dest_time;
 
-    public Ticket(String id, String train_id, String dept_station, String dest_station, String dept_time, String dest_time) {
-        this.id = id;
+    public Ticket(String client_id, String train_id, String dept_station, String dest_station, String dept_time, String dest_time) {
+        this.client_id = client_id;
         this.train_id = train_id;
         this.dept_station = dept_station;
         this.dest_station = dest_station;
@@ -262,7 +263,6 @@ public class RailwayService extends HttpServlet {
             Statement st = connection.createStatement();
             ResultSet res = st.executeQuery("SELECT EXISTS (select login from registered_user where login =\"" + email + "\")"); //sql query for checking an email for uniqueness
             res.next();
-            System.out.println("sfcsdkmj");
             if (res.getString(1).equals("0")) { //sql query to insert an email and password of the new user
 
                 st.executeUpdate("INSERT INTO registered_user (login, first_name, last_name, password, phone) VALUES ( '" + email + "', '" + firstName + "', '" + lastName + "', '"  + password +  "', '" + phone + "')");
@@ -318,6 +318,32 @@ public class RailwayService extends HttpServlet {
         }
         return null;
     }
+    //TICKECTS BUYING
+    //User registration
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("buyTicket")
+    public Response postNewTickets(@FormParam("train_id") int train_id, @FormParam("start_station_id") int start_station_id,
+                                 @FormParam("end_station_id") int end_station_id, @FormParam("destTime") String destTime, @FormParam("deptTime") String deptTime) {
+        try {
+            String email = "sean.employee@ex.com";
+//            
+            Statement st = connection.createStatement();
+            System.out.println("hey");
+            int res =   st.executeUpdate("insert into ticket(train_id, start_station_id, end_station_id, departure_time, arrival_time, availability, client_id) values (\"" + train_id + "\",\"" + start_station_id + "\",\"" + end_station_id + "\",\""+deptTime+"\",\"" +destTime+ "\"," + " -1, (select id from registered_user where login like \""+email+"\"))");
+            System.out.println(res);
+            if (res == 1){
+                return Response.status(Response.Status.OK).build();
+            } else{
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Response.ok().build();
+    }
+
 
     @GET
     @Path("secured/login")

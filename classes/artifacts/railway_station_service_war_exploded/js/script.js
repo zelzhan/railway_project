@@ -77,7 +77,30 @@ function logout() {
 }
 
 
+function buyTicket(){
+    let train_id = 563;
+    let start_station_id = 8;
+    let end_station_id = 7;
+    let dest_time = "2019-04-04 23:34:22";
+    let dept_time = "2019-04-05 23:34:22";
+
+    $.post("/railway_station_service_war_exploded/services/items/buyTicket", {
+       train_id: train_id,
+       start_station_id: start_station_id,
+       end_station_id: end_station_id,
+       destTime: dest_time,
+       deptTime: dept_time
+    }, function () {
+        console.log("hey");
+        alert("We bought ticket");
+    }).fail( function (){
+        console.log("not hey");
+
+    });
+}
+
 $(document).ready(function () {
+    buyTicket();
 
     if (typeof $.cookie('encripted') != "undefined") {
         $("#login").hide();
