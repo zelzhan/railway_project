@@ -2,13 +2,13 @@ let routeDate;
 
 function updateRoute(items) {
     let str = "<table class=\"table table-bordered\"><thead class=\'thead-dark\'><tr><th scope=\"col\">#</th>"
-    str += "<th scope=\"col\">Departure</th><th scope=\"col\">Destination</th><th scope=\"col\">Time</th><th scope=\"col\">-----</th></tr></thead>"
+    str += "<th scope=\"col\">Departure</th><th scope=\"col\">Destination</th><th scope=\"col\">Time</th><th scope=\"col\">-----</th><th scope=\"col\"></th></tr></thead>"
     str += "<tbody>";
     routeDate = items;
     for (let i=0; i<items.length; i++) {
         console.log(items[i]);
         str +="<tr><th scope=\"row\">"+items[i].train_id+"</th><td>"+ items[i].dep +"</td><td>"+items[i].des + "</td><td>" + items[i].dateh + "</td>" +
-            "<td><button type=\"submit\" onclick ='showMap(" + i +");' class=\"btn btn-primary\">Show Map</button></td></tr>";
+            "<td><button type=\"submit\" onclick ='showMap(" + i +");' class=\"btn btn-primary\">Show Map</button></td> <td><button type=\"submit\" onclick ='buyTicket(" + i +");' class=\"btn btn-primary\">Buy ticket</button></td></tr>";
     }
     str += "</tbody></table>";
     $("#table-table").html("");
@@ -24,7 +24,7 @@ function showMap(index) {
         type: "GET",
         url: url,
         success: function (data) {
-            window.location.replace("C:\\Users\\abyl\\Desktop\\Fall 2019\\rails\\web\\map.html");
+            window.location.replace("map.html");
         },
     });
 }
@@ -87,30 +87,29 @@ function logout() {
 }
 
 
-function buyTicket(){
-    let train_id = 563;
-    let start_station_id = 8;
-    let end_station_id = 7;
-    let dest_time = "2019-04-04 23:34:22";
-    let dept_time = "2019-04-05 23:34:22";
+function buyTicket(index){
+    let train_id = 560;
+    let start_station_id = 1;
+    let end_station_id = 3;
+    let dest_time = "2038-01-19 03:14:07";
+    let dept_time = "2038-01-19 13:32:07";
+    let cookie = $.cookie('encripted');
 
     $.post("/railway_station_service_war_exploded/services/items/buyTicket", {
+        authToken: cookie,
        train_id: train_id,
        start_station_id: start_station_id,
        end_station_id: end_station_id,
        destTime: dest_time,
        deptTime: dept_time
     }, function () {
-        console.log("hey");
         alert("We bought ticket");
     }).fail( function (){
-        console.log("not hey");
-
     });
 }
 
 $(document).ready(function () {
-    buyTicket();
+    // buyTicketket();
 
     if (typeof $.cookie('encripted') != "undefined") {
         $("#login").hide();
