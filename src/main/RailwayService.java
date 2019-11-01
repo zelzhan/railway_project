@@ -11,6 +11,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
+import java.net.Socket;
 import java.security.acl.Group;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -23,13 +24,17 @@ class Route {
     String dep;
     String des;
     String train_id;
-    String date;
+    String datey;
+    String dateh;
+    int route_id;
 
-    public Route(String dep, String des, String train_id, String date) {
+    public Route(String dep, String des, String train_id, String dateh, String datey, int route_id) {
         this.dep = dep;
         this.des = des;
         this.train_id = train_id;
-        this.date = date;
+        this.dateh = dateh;
+        this.datey = datey;
+        this.route_id = route_id;
     }
 }
 
@@ -52,6 +57,9 @@ class Ticket {
 
 }
 
+
+
+
 class Passenger {
     String first_name;
     String last_name;
@@ -73,8 +81,11 @@ class Passenger {
 public class RailwayService extends HttpServlet {
     Graph graph;
     Connection connection;
+    DataOutputStream dout;
+    DataInputStream din;
 
-    public RailwayService() {
+
+    public RailwayService() throws IOException {
         graph = new Graph();
         graph.addVertex("6");
         graph.addVertex("5");
@@ -101,7 +112,7 @@ public class RailwayService extends HttpServlet {
 
         graph.printAllPaths("6", "1");
 
-        String url = "jdbc:mysql://localhost:3306/javabase?" + "useSSL=false";
+        String url = "jdbc:mysql://localhost:3306/javabase?" + "allowPublicKeyRetrieval=true&useSSL=false";
         String username = "java";
         String password = "Password123.";
 
@@ -120,9 +131,25 @@ public class RailwayService extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+
+
+        try {
+            Socket socket = new Socket("localhost", 2004);
+
+            this.dout = new DataOutputStream(socket.getOutputStream());
+            this.din = new DataInputStream(socket.getInputStream());
+        }
+        catch(Exception e){
+            e.printStackTrace();}
+
+
+
         try {
             System.out.println("Database connected!");
+
             File initialFile = new File("/home/sunnya/railway_project/src/project.sql");
+
             try {
                 InputStream targetStream = new FileInputStream(initialFile);
                 importSQL(connection, targetStream);
@@ -136,13 +163,68 @@ public class RailwayService extends HttpServlet {
     }
 
     @GET
+    @Path("{depart}/{dest}/{date}/{red}/{route}")
+    public Response getData1(@PathParam("depart") String depart,
+                             @PathParam("dest") String dest,
+                             @PathParam("date") String datey,
+                             @PathParam("red") String dateh,
+                             @PathParam("route") int route) throws IOException {
+
+        String departTemp = depart;
+        String destTemp = dest;
+
+        List<Route> params = new ArrayList();
+        String s = "";
+        try {
+            Statement st = connection.createStatement();
+            System.out.println(route+"GFDFGHJNHD");
+            ResultSet res = st.executeQuery("select distinct s1.name, s2.name, s.exact_timei, s.exact_timef\n" +
+                    "from schedule s, station s1, station s2 where s1.id = s.station_i and s2.id = s.station_f and \n" +
+                    "s.route_id =" + route + " and s.departure_time =" + datey + "");
+
+            System.out.println("SSSSSSSSSSSSSSSSS");
+            while (res.next()) {
+                Route r = new Route(res.getString(1), res.getString(2), "blabla",
+                        res.getString(3), res.getString(4), route);
+                params.add(r);
+                s += res.getString(1) + ", ";
+                System.out.println(s);
+            }
+            s += depart + ", ";
+            s += dest;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        dout.writeUTF(s);
+        dout.flush();
+
+        System.out.println("send first mess");
+        String str = din.readUTF();//in.readLine();
+
+        System.out.println(str);
+
+        //System.out.println("Message"+ str);
+
+        //WriteToFile(str, "Abyl111.html");
+        BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\abyl\\Desktop\\Fall 2019\\rails\\web\\map.html"));
+        writer.write(str);
+
+        writer.close();
+        //System.out.println("Messagerrrrrrrrrrrrrrrrrrrrrrrrr");
+
+
+        Gson gson = new Gson();
+        return Response.ok(gson.toJson(str)).build();
+    }
+
+    @GET
     @Path("{depart}/{dest}/{date}")
     public Response getData(@PathParam("depart") String depart,
                             @PathParam("dest") String dest,
                             @PathParam("date") String date) {
 
-
-        // get the list of items from Database
         String departTemp = depart;
         String destTemp = dest;
         depart = '"' + depart + '"';
@@ -150,12 +232,13 @@ public class RailwayService extends HttpServlet {
         date = '"' + date + '"';
 
         List<Route> params = new ArrayList();
+        //System.out.println("AAAAAAAAA");
         try {
             Statement st = connection.createStatement();
-            ResultSet res = st.executeQuery("select * from (select distinct t2.name1 as d, t1.name1 as f, s1.exact_timei, s2.exact_timef from schedule s1, schedule s2, station d1, station d2, train t1, train t2 where  d1.name = " + depart + " and s1.departure_time = " + date + "  and d1.id = s1.station_i and s1.train_id = t1.id and d2.id = s2.station_f  and d2.name = " + dest + " and s2.train_id = t2.id) t where t.d = t.f");
+            ResultSet res = st.executeQuery("select * from (select distinct t2.name1 as d, t1.name1 as f, s1.exact_timei, s2.exact_timef, s2.route_id from schedule s1, schedule s2, station d1, station d2, train t1, train t2 where  d1.name = " + depart + " and s1.departure_time = " + date + "  and d1.id = s1.station_i and s1.train_id = t1.id and d2.id = s2.station_f  and d2.name = " + dest + " and s2.train_id = t2.id) t where t.d = t.f");
 
             while (res.next()) {
-                Route route = new Route(departTemp, destTemp, res.getString(1), res.getString(3));
+                Route route = new Route(departTemp, destTemp, res.getString(1), res.getString(3), date, res.getInt(5));
                 System.out.println(route.train_id);
                 params.add(route);
             }
@@ -237,14 +320,26 @@ public class RailwayService extends HttpServlet {
     }
 
     @GET
-    @Path("/redirect")
+    @Path("secured/login")
     @Produces("text/html")
     public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
+        return Response.status(Response.Status.ACCEPTED).build();
+    }
+
+
+
+    @GET
+    @Path("login")
+    @Produces("text/html")
+    public Response Ruredirect(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
+
         String myJsfPage = "/index.html";
         String contextPath = request.getContextPath();
         response.sendRedirect(contextPath + myJsfPage);
+        System.out.println("I'm logged in!");
         return Response.status(Response.Status.ACCEPTED).build();
     }
+
 
 
     public static void importSQL(Connection conn, InputStream in) throws SQLException {

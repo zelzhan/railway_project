@@ -1,13 +1,32 @@
+let routeDate;
+
 function updateRoute(items) {
-	let str = "<table class=\"table table-bordered\"><thead class=\'thead-dark\'><tr><th scope=\"col\">#</th>"
-	str += "<th scope=\"col\">Departure</th><th scope=\"col\">Destination</th><th scope=\"col\">Time</th></tr></thead>"
-	str += "<tbody>";
-	for (let i=0; i<items.length; i++) {
-		str +="<tr><th scope=\"row\">"+items[i].train_id+"</th><td>"+ items[i].dep +"</td><td>"+items[i].des + "</td><td>" + items[i].date + "</td></tr>";
-	}
-	str += "</tbody></table>";
-	$("#table-table").html("");
-	$("#table-table").append(str);
+    let str = "<table class=\"table table-bordered\"><thead class=\'thead-dark\'><tr><th scope=\"col\">#</th>"
+    str += "<th scope=\"col\">Departure</th><th scope=\"col\">Destination</th><th scope=\"col\">Time</th><th scope=\"col\">-----</th></tr></thead>"
+    str += "<tbody>";
+    routeDate = items;
+    for (let i=0; i<items.length; i++) {
+        console.log(items[i]);
+        str +="<tr><th scope=\"row\">"+items[i].train_id+"</th><td>"+ items[i].dep +"</td><td>"+items[i].des + "</td><td>" + items[i].dateh + "</td>" +
+            "<td><button type=\"submit\" onclick ='showMap(" + i +");' class=\"btn btn-primary\">Show Map</button></td></tr>";
+    }
+    str += "</tbody></table>";
+    $("#table-table").html("");
+    $("#table-table").append(str);
+}
+
+function showMap(index) {
+    let items = routeDate[index];
+    let url = "/railway_station_service_war_exploded/services/items/" + items['dep']
+        + "/" + items['des'] + "/" + items['datey'] + "/"+items['dateh'] + "/" + items['route_id'];
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (data) {
+            window.location.replace("C:\\Users\\abyl\\Desktop\\Fall 2019\\rails\\web\\map.html");
+        },
+    });
 }
 
 function sendFormRoute() {
@@ -34,31 +53,44 @@ function getRouteItems() {
     });
 }
 
-function register() {
-    var email = $("#email").val();
-    var password = $("#inputPassword").val();
-    var phone = $("#phone").val();
-    var firstName = $("#firstName").val();
-    var lastName = $("#lastName").val();
 
-    $.post("/railway_station_service_war_exploded/services/items/send", {
-        email: email,
-        password: password,
-        phone: phone,
-		firstName: firstName,
-		lastName: lastName
-    }, function () {
-    	alert("Registration is successful.")
-	}).fail( function () {
-		alert("Registration is not successful.")
-	});
+function test() {
+
+    $.ajaxSetup({
+        headers:{
+            'Authorization': "Basic " + $.cookie('encripted')
+        }
+    });
+
+    $.get("/railway_station_service_war_exploded/services/secured/message", {}, function () {
+        alert("Authentication is successful.");
+    }).fail( function () {
+        alert("Authentication failed.")
+    });
+
 }
+
+
+function logout() {
+    $.removeCookie('encripted', { path: '/'});
+    window.location.replace("/railway_station_service_war_exploded");
+}
+
 
 $(document).ready(function () {
 
-    $("#submit-reg").on('click', function () {
-        register();
-    });
+    if (typeof $.cookie('encripted') != "undefined") {
+        $("#login").hide();
+        $("#signup").hide();
+        $("#userprofile").show();
+        $("#signout").show();
+    } else {
+        $("#login").show();
+        $("#signup").show();
+        $("#userprofile").hide();
+        $("#signout").hide();
+    }
+
 
     $("#routeForm").submit(function (e) {
 
@@ -82,7 +114,6 @@ $(document).ready(function () {
                 if (data === "") {
                     alert("Place doesn't exist");
                 }
-                alert(data);
                 updateRoute(JSON.parse(data));
 
             },

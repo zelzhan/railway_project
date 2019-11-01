@@ -1,5 +1,6 @@
 package main;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,15 +13,17 @@ public class RailwayApplication extends Application {
     private Set<Object> singletons = new HashSet<Object>();
     private Set<Class<?>> empty = new HashSet<Class<?>>();
 
-    public RailwayApplication() {
+    public RailwayApplication() throws IOException {
         singletons.add(new RailwayService());
+        singletons.add(new SecuredService());
     }
 
     @Override
     public Set<Class<?>> getClasses() {
-        return empty;
+        HashSet<Class<?>> classes = new HashSet<>();
+        classes.add(SecureFilter.class);
+        return classes;
     }
-
     @Override
     public Set<Object> getSingletons() {
         return singletons;
