@@ -44,7 +44,7 @@ function sendFormRoute() {
 }
 
 function myProfile() {
-    window.location.replace("/railway_station_service_war_exploded/services/items/userProfile?auth=" + $.cookie('encripted'));
+    window.location.replace("/railway_station_service_war_exploded/profile.html");
 }
 
 function getRouteItems() {
