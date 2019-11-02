@@ -24,23 +24,25 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 
+
 class Route {
     String dep;
     String des;
     String train_id;
-    String datey;
-    String dateh;
+    String start_date;
+    String end_date;
     int route_id;
 
     public Route(String dep, String des, String train_id, String dateh, String datey, int route_id) {
         this.dep = dep;
         this.des = des;
         this.train_id = train_id;
-        this.dateh = dateh;
-        this.datey = datey;
+        this.start_date = dateh;
+        this.end_date = datey;
         this.route_id = route_id;
     }
 }
+
 
 class Ticket {
     String client_id;
@@ -124,7 +126,7 @@ public class RailwayService extends HttpServlet {
 
         String url = "jdbc:mysql://localhost:3306/javabase?" + "allowPublicKeyRetrieval=true&useSSL=false";
         String username = "java";
-        String password = "password";
+        String password = "Password123.";
 
         System.out.println("Connecting database...");
         try {
@@ -158,7 +160,7 @@ public class RailwayService extends HttpServlet {
         try {
             System.out.println("Database connected!");
 
-            File initialFile = new File("/home/stayal0ne/swe/Karina/railway_project/src/project.sql");
+            File initialFile = new File("/home/sunnya/railway_project/src/project.sql");
 
             try {
                 InputStream targetStream = new FileInputStream(initialFile);
@@ -229,35 +231,36 @@ public class RailwayService extends HttpServlet {
         return Response.ok(gson.toJson(str)).build();
     }
 
+
     @GET
     @Path("{depart}/{dest}/{date}")
     public Response getData(@PathParam("depart") String depart,
                             @PathParam("dest") String dest,
                             @PathParam("date") String date) {
 
-        String departTemp = depart;
-        String destTemp = dest;
-        depart = '"' + depart + '"';
-        dest = '"' + dest + '"';
-        date = '"' + date + '"';
 
         List<Route> params = new ArrayList();
-        //System.out.println("AAAAAAAAA");
         try {
             Statement st = connection.createStatement();
-            ResultSet res = st.executeQuery("select * from (select distinct t2.name1 as d, t1.name1 as f, s1.exact_timei, s2.exact_timef, s2.route_id from schedule s1, schedule s2, station d1, station d2, train t1, train t2 where  d1.name = " + depart + " and s1.departure_time = " + date + "  and d1.id = s1.station_i and s1.train_id = t1.id and d2.id = s2.station_f  and d2.name = " + dest + " and s2.train_id = t2.id) t where t.d = t.f");
-
+            System.out.println(depart + date+ dest);
+            ResultSet res = st.executeQuery("select * from (select distinct t2.name1 as d, t1.name1 as f, s1.departure_time, s1.exact_timei, s2.arrival_time, s2.exact_timef, s2.route_id from schedule s1, schedule s2, station d1, station d2, train t1, train t2 where  d1.name = \"" + depart + "\" and s1.departure_time = \"" + date + "\"  and d1.id = s1.station_i and s1.train_id = t1.id and d2.id = s2.station_f  and d2.name = \"" + dest + "\" and s2.train_id = t2.id) t where t.d = t.f");
+            Statement st2 = connection.createStatement();
             while (res.next()) {
-                Route route = new Route(departTemp, destTemp, res.getString(1), res.getString(3), date, res.getInt(5));
-                System.out.println(route.train_id);
-                params.add(route);
-            }
 
+                System.out.println(res.getString(1));
+                ResultSet res2 = st2.executeQuery("select id from train where name1=\""+res.getString(1)+"\"");
+                res2.next();
+                System.out.println(res2.getString(1));
+                Route route = new Route(depart, dest, res2.getString(1), res.getString(3)+" "+res.getString(4), res.getString(5)+" "+res.getString(6), res.getInt(7));
+                params.add(route);
+            };
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         Gson gson = new Gson();
+
+        System.out.println(gson.toJson(params));
         return Response.ok(gson.toJson(params)).build();
     }
 
