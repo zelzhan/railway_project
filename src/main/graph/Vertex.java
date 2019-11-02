@@ -1,4 +1,4 @@
-package main;
+package main.graph;
 
 public class Vertex {
     String label;

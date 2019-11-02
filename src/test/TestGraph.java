@@ -1,7 +1,7 @@
 package test;
 
-import main.Graph;
-import main.Vertex;
+import main.graph.Graph;
+import main.graph.Vertex;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;

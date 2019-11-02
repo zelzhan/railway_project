@@ -1,6 +1,7 @@
-package main;
+package main.graph;
 
-import java.text.CollationElementIterator;
+import main.graph.Vertex;
+
 import java.util.*;
 
 public class Graph {

@@ -1,9 +1,12 @@
 package main;
 
 import com.google.gson.Gson;
+import javafx.util.Pair;
+import main.graph.Graph;
+import main.wrappers.Passenger;
+import main.wrappers.Route;
+import main.wrappers.Ticket;
 import org.glassfish.jersey.internal.util.Base64;
-import org.omg.CORBA.SystemException;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,78 +17,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.net.Socket;
-import java.security.acl.Group;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
 
-
-class Route {
-    String dep;
-    String des;
-    String train_id;
-    String datey;
-    String dateh;
-    int route_id;
-
-    public Route(String dep, String des, String train_id, String dateh, String datey, int route_id) {
-        this.dep = dep;
-        this.des = des;
-        this.train_id = train_id;
-        this.dateh = dateh;
-        this.datey = datey;
-        this.route_id = route_id;
-    }
-}
-
-class Ticket {
-    String client_id;
-    String train_id;
-    String dept_station;
-    String dest_station;
-    String dept_time;
-    String dest_time;
-    String dept_exact_time;
-    String dest_exact_time;
-
-    public Ticket(String client_id, String train_id, String dept_station, String dest_station, String dept_time, String dest_time, String dept_exact_time, String dest_exact_time) {
-        this.client_id = client_id;
-        this.train_id = train_id;
-        this.dept_station = dept_station;
-        this.dest_station = dest_station;
-        this.dept_time = dept_time;
-        this.dest_time = dest_time;
-        this.dept_exact_time = dept_exact_time;
-        this.dest_exact_time = dest_exact_time;
-    }
-
-}
-
-
-
-
-class Passenger {
-    String first_name;
-    String last_name;
-    String phone;
-    String email;
-
-    ArrayList<Ticket> past;
-    ArrayList<Ticket> future;
-
-    public Passenger(String first_name, String last_name, String phone, String email, ArrayList<Ticket> past, ArrayList<Ticket> future) {
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.phone = phone;
-        this.email = email;
-        this.past = past;
-        this.future = future;
-    }
-}
+import static main.SqlUtils.findMapRoute;
+import static main.SqlUtils.findRoute;
+import static main.Utils.*;
 
 @Path("/items")
 public class RailwayService extends HttpServlet {
@@ -93,83 +33,26 @@ public class RailwayService extends HttpServlet {
     Connection connection;
     DataOutputStream dout;
     DataInputStream din;
-
+    boolean initalized;
 
     public RailwayService() throws IOException {
-        graph = new Graph();
-        graph.addVertex("6");
-        graph.addVertex("5");
-        graph.addVertex("2");
-        graph.addVertex("4");
-        graph.addVertex("3");
-        graph.addVertex("8");
-        graph.addVertex("1");
-        graph.addVertex("3");
-        graph.addVertex("7");
-        graph.addVertex("10");
-        graph.addVertex("9");
+        this.graph = initalizeGraph(graph);
+        this.initalized = false;
 
-        graph.addEdge("6", "5");
-        graph.addEdge("5", "2");
-        graph.addEdge("2", "4");
-        graph.addEdge("4", "3");
-        graph.addEdge("3", "7");
-        graph.addEdge("3", "1");
-        graph.addEdge("6", "9");
-        graph.addEdge("9", "10");
-        graph.addEdge("10", "1");
-        graph.addEdge("1", "8");
+    }
 
-        graph.printAllPaths("6", "1");
+    @GET
+    @Path("initialize")
+    public Response init(@Context ServletContext servletContext) {
 
-        String url = "jdbc:mysql://localhost:3306/javabase?" + "allowPublicKeyRetrieval=true&useSSL=false";
-        String username = "java";
-        String password = "password";
-
-        System.out.println("Connecting database...");
-        try {
-            try {
-                Class.forName("com.mysql.jdbc.Driver").newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            connection = DriverManager.getConnection(url, username, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (!this.initalized){
+            connection = initializeDatabase(connection, servletContext);
+            Pair<DataInputStream, DataOutputStream> pair = initializeSocket(servletContext, this.dout, this.din);
+            this.din = pair.getKey();
+            this.dout = pair.getValue();
+            this.initalized = true;
         }
-
-
-
-        try {
-            Socket socket = new Socket("localhost", 2004);
-
-            this.dout = new DataOutputStream(socket.getOutputStream());
-            this.din = new DataInputStream(socket.getInputStream());
-        }
-        catch(Exception e){
-            e.printStackTrace();}
-
-
-
-        try {
-            System.out.println("Database connected!");
-
-            File initialFile = new File("/home/stayal0ne/swe/Karina/railway_project/src/project.sql");
-
-            try {
-                InputStream targetStream = new FileInputStream(initialFile);
-                importSQL(connection, targetStream);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("Cannot connect the database!", e);
-        }
+        return Response.ok().build();
     }
 
     @GET
@@ -180,53 +63,10 @@ public class RailwayService extends HttpServlet {
                              @PathParam("red") String dateh,
                              @PathParam("route") int route) throws IOException {
 
-        String departTemp = depart;
-        String destTemp = dest;
-
         List<Route> params = new ArrayList();
-        String s = "";
-        try {
-            Statement st = connection.createStatement();
-            System.out.println(route+"GFDFGHJNHD");
-            ResultSet res = st.executeQuery("select distinct s1.name, s2.name, s.exact_timei, s.exact_timef\n" +
-                    "from schedule s, station s1, station s2 where s1.id = s.station_i and s2.id = s.station_f and \n" +
-                    "s.route_id =" + route + " and s.departure_time =" + datey + "");
-
-            System.out.println("SSSSSSSSSSSSSSSSS");
-            while (res.next()) {
-                Route r = new Route(res.getString(1), res.getString(2), "blabla",
-                        res.getString(3), res.getString(4), route);
-                params.add(r);
-                s += res.getString(1) + ", ";
-                System.out.println(s);
-            }
-            s += depart + ", ";
-            s += dest;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        dout.writeUTF(s);
-        dout.flush();
-
-        System.out.println("send first mess");
-        String str = din.readUTF();//in.readLine();
-
-        System.out.println(str);
-
-        //System.out.println("Message"+ str);
-
-        //WriteToFile(str, "Abyl111.html");
-        BufferedWriter writer = new BufferedWriter(new FileWriter("/home/stayal0ne/swe/Karina/railway_project/web/map.html"));
-        writer.write(str);
-
-        writer.close();
-        //System.out.println("Messagerrrrrrrrrrrrrrrrrrrrrrrrr");
-
-
+        String result = findMapRoute(connection, route, datey, depart, dest, this.din, this.dout);
         Gson gson = new Gson();
-        return Response.ok(gson.toJson(str)).build();
+        return Response.ok(gson.toJson(result)).build();
     }
 
     @GET
@@ -235,33 +75,11 @@ public class RailwayService extends HttpServlet {
                             @PathParam("dest") String dest,
                             @PathParam("date") String date) {
 
-        String departTemp = depart;
-        String destTemp = dest;
-        depart = '"' + depart + '"';
-        dest = '"' + dest + '"';
-        date = '"' + date + '"';
-
-        List<Route> params = new ArrayList();
-        //System.out.println("AAAAAAAAA");
-        try {
-            Statement st = connection.createStatement();
-            ResultSet res = st.executeQuery("select * from (select distinct t2.name1 as d, t1.name1 as f, s1.exact_timei, s2.exact_timef, s2.route_id from schedule s1, schedule s2, station d1, station d2, train t1, train t2 where  d1.name = " + depart + " and s1.departure_time = " + date + "  and d1.id = s1.station_i and s1.train_id = t1.id and d2.id = s2.station_f  and d2.name = " + dest + " and s2.train_id = t2.id) t where t.d = t.f");
-
-            while (res.next()) {
-                Route route = new Route(departTemp, destTemp, res.getString(1), res.getString(3), date, res.getInt(5));
-                System.out.println(route.train_id);
-                params.add(route);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        List<Route> params = findRoute('"' + depart + '"', '"' + dest + '"', '"' + date + '"', connection, depart, dest);
         Gson gson = new Gson();
         return Response.ok(gson.toJson(params)).build();
     }
 
-    //User registration
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("send")
@@ -272,14 +90,20 @@ public class RailwayService extends HttpServlet {
             Statement st = connection.createStatement();
             ResultSet res = st.executeQuery("SELECT EXISTS (select login from registered_user where login =\"" + email + "\")"); //sql query for checking an email for uniqueness
             res.next();
+            System.out.println(res.getString(1));
             if (res.getString(1).equals("0")) { //sql query to insert an email and password of the new user
-
                 st.executeUpdate("INSERT INTO registered_user (login, first_name, last_name, password, phone) VALUES ( '" + email + "', '" + firstName + "', '" + lastName + "', '"  + password +  "', '" + phone + "')");
+                Statement st1 = connection.createStatement();
+                ResultSet res1 = st1.executeQuery("SELECT EXISTS (select login from registered_user where login =\"" + email + "\")"); //sql query for checking an email for uniqueness
+                res1.next();
+                System.out.println(res1.getString(1));
             } else {
                 return Response.status(Response.Status.CONFLICT).build();
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -356,68 +180,10 @@ public class RailwayService extends HttpServlet {
         return Response.ok().build();
     }
 
-
-//    @Context
-//    ServletContext servletContext;
-//
-//
-//    @Path("userProfile")
-//    @GET
-//    public InputStream getFile(@QueryParam("auth") String token) {
-//        try {
-//            String base = servletContext.getRealPath("/profile.html");
-//            File f = new File(String.format("%s", base));
-//            return new FileInputStream(f);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
-
-    @GET
-    @Path("login")
-    @Produces("text/html")
-    public Response Ruredirect(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
-
-        String myJsfPage = "/index.html";
-        String contextPath = request.getContextPath();
-        response.sendRedirect(contextPath + myJsfPage);
-        System.out.println("I'm logged in!");
-        return Response.status(Response.Status.ACCEPTED).build();
-    }
-
-
     @GET
     @Path("secured/login")
     @Produces("text/html")
     public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
         return Response.status(Response.Status.ACCEPTED).build();
-    }
-
-
-
-
-
-
-    public static void importSQL(Connection conn, InputStream in) throws SQLException {
-        Scanner s = new Scanner(in);
-        s.useDelimiter("(;(\r)?\n)|(--\n)");
-        Statement st = null;
-        try {
-            st = conn.createStatement();
-            while (s.hasNext()) {
-                String line = s.next();
-                if (line.startsWith("/*!") && line.endsWith("*/")) {
-                    int i = line.indexOf(' ');
-                    line = line.substring(i + 1, line.length() - " */".length());
-                }
-
-                if (line.trim().length() > 0) {
-                    st.execute(line);
-                }
-            }
-        } finally {
-            if (st != null) st.close();
-        }
     }
 }

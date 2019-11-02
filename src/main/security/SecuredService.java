@@ -1,4 +1,4 @@
-package main;
+package main.security;
 
 import javax.servlet.http.HttpServlet;
 import javax.ws.rs.GET;

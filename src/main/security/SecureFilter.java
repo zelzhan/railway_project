@@ -1,5 +1,6 @@
-package main;
+package main.security;
 
+import main.RailwayApplication;
 import org.glassfish.jersey.internal.util.Base64;
 
 import javax.ws.rs.container.ContainerRequestContext;
@@ -39,43 +40,23 @@ public class SecureFilter implements ContainerRequestFilter {
             String password = tokenizer.nextToken();
 
             // check in the dataaase
-
-
             String url = "jdbc:mysql://localhost:3306/javabase?" + "useSSL=false";
-            String name = "java";
-            String pass = "password";
+            String name = RailwayApplication.properties.getProperty("USERNAME");
+            String pass = RailwayApplication.properties.getProperty("PASSWORD");
 
-            System.out.println("Connecting database...");
             try {
-                try {
-                    Class.forName("com.mysql.jdbc.Driver").newInstance();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
                 Connection connection = DriverManager.getConnection(url, name, pass);
-
                 Statement st = connection.createStatement();
-
                 ResultSet res = st.executeQuery("select exists(select login from registered_user where login=\""+username+"\" and password=\""+password+"\")" ) ;
-
                 res.next();
-
-                System.out.println(res.getString(1));
                 if (res.getString(1).equals("1")) {
                     System.out.println("Authorized!");
                     return;
                 }
-
-
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
         }
 
 

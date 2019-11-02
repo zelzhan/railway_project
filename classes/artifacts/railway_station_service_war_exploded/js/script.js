@@ -109,7 +109,9 @@ function buyTicket(index){
 }
 
 $(document).ready(function () {
-    // buyTicketket();
+    $.get("/railway_station_service_war_exploded/services/items/initialize", {}, function (res) {
+        console.log("Succeesfully initialized!")
+    });
 
     if (typeof $.cookie('encripted') != "undefined") {
         $("#login").hide();
