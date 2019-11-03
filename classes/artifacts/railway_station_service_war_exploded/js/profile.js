@@ -7,10 +7,8 @@ function getUserData() {
         }
     });
 
-    console.log(cookie);
     if(typeof $.cookie('encripted') === "undefined"){
         console.log("Cookie doesn't exists");
-        // window.location.replace("/railway_station_service_war_exploded/");
     } else{
         $.post("/railway_station_service_war_exploded/services/items/secured/userProfile", {
             authToken: cookie
@@ -30,8 +28,8 @@ function getUserData() {
                 $("#past").append("<tr>\n" +
                     "<th scope=\"col\">" + past['dept_station'] + "</th>\n" +
                     "<th scope=\"col\">" + past['dest_station'] + "</th>\n" +
-                    "<th scope=\"col\">" + past['dept_exact_time'] + "</th>\n" +
-                    "<th scope=\"col\">" + past['dest_exact_time'] + "</th>\n" +
+                    //"<th scope=\"col\">" + past['dept_exact_time'] + "</th>\n" +
+                    //"<th scope=\"col\">" + past['dest_exact_time'] + "</th>\n" +
                     "<th scope=\"col\">" + past['dept_time'] + "</th>\n" +
                     "<th scope=\"col\">" + past['dest_time'] + "</th>\n" +
                     "</tr>")
@@ -42,8 +40,8 @@ function getUserData() {
                 $("#future").append("<tr>\n" +
                     "<th scope=\"col\">" + future['dept_station'] + "</th>\n" +
                     "<th scope=\"col\">" + future['dest_station'] + "</th>\n" +
-                    "<th scope=\"col\">" + future['dept_exact_time'] + "</th>\n" +
-                    "<th scope=\"col\">" + future['dest_exact_time'] + "</th>\n" +
+                    //"<th scope=\"col\">" + future['dept_exact_time'] + "</th>\n" +
+                    //"<th scope=\"col\">" + future['dest_exact_time'] + "</th>\n" +
                     "<th scope=\"col\">" + future['dept_time'] + "</th>\n" +
                     "<th scope=\"col\">" + future['dest_time'] + "</th>\n" +
                     "</tr>")

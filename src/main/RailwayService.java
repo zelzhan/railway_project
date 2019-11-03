@@ -1,10 +1,13 @@
 package main;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import javafx.util.Pair;
+import jdk.nashorn.internal.parser.JSONParser;
 import main.graph.Graph;
 import main.wrappers.Passenger;
 import main.wrappers.Route;
+import main.wrappers.RouteBuyTicket;
 import main.wrappers.Ticket;
 import org.glassfish.jersey.internal.util.Base64;
 import javax.servlet.ServletContext;
@@ -75,7 +78,8 @@ public class RailwayService extends HttpServlet {
                             @PathParam("dest") String dest,
                             @PathParam("date") String date) {
 
-        List<Route> params = findRoute('"' + depart + '"', '"' + dest + '"', '"' + date + '"', connection, depart, dest);
+        List<Route> params = findRoute(depart, dest, date, connection);
+
         Gson gson = new Gson();
         return Response.ok(gson.toJson(params)).build();
     }
@@ -127,20 +131,21 @@ public class RailwayService extends HttpServlet {
             ResultSet res = st.executeQuery("select u.first_name, u.last_name, u.phone, u.login from registered_user u where u.login = \"" + email + "\"");
             res.next();
             //sql query for getting tickets past the given Currentdate
-            ResultSet prevT = st2.executeQuery("select distinct t.id, t.train_id,  s1.name, s2.name, t.departure_time, t.arrival_time, a1.exact_timei, a2.exact_timef from registered_user u, ticket t, station s1, station s2, schedule a1, schedule a2 where u.login = \"" + email + "\" and s1.id=t.start_station_id and s2.id= t.end_station_id and t.client_id=u.id and a1.station_i=t.start_station_id and a2.station_f=t.end_station_id and t.departure_time < now(); ");
+            ResultSet prevT = st2.executeQuery("select distinct t.id, t.train_id,  s1.name, s2.name, t.departure_time, t.arrival_time from registered_user u, ticket t, station s1, station s2 where u.login = \""+email+"\" and s1.id=t.start_station_id and s2.id= t.end_station_id and t.client_id=u.id and t.departure_time < now();");
             //sql query for getting tickets future the given Currentdate
-//            ResultSet nextT = st3.executeQuery("select t.id, t.train_id,  t.start_station_id, t.end_station_id, t.departure_time, t.arrival_time  from registered_user u, ticket t where u.login = \"" + email + "\" and t.client_id=u.id and t.departure_time >  now()");
-            ResultSet nextT = st3.executeQuery("select distinct t.id, t.train_id,  s1.name, s2.name, t.departure_time, t.arrival_time, a1.exact_timei, a2.exact_timef from registered_user u, ticket t, station s1, station s2, schedule a1, schedule a2 where u.login = \"" + email + "\" and s1.id=t.start_station_id and s2.id= t.end_station_id and t.client_id=u.id and a1.station_i=t.start_station_id and a2.station_f=t.end_station_id and t.departure_time > now();");
+
+            ResultSet nextT = st3.executeQuery("select distinct t.id, t.train_id,  s1.name, s2.name, t.departure_time, t.arrival_time from registered_user u, ticket t, station s1, station s2 where u.login = \""+email+"\" and s1.id=t.start_station_id and s2.id= t.end_station_id and t.client_id=u.id and t.departure_time > now();");
+
 
             ArrayList<Ticket> past = new ArrayList<>();
             ArrayList<Ticket> future = new ArrayList<>();
 
             while (prevT.next()) {
-                past.add(new Ticket(prevT.getString(1), prevT.getString(2), prevT.getString(3), prevT.getString(4), prevT.getString(5), prevT.getString(6), prevT.getString(7), prevT.getString(8)));
+                past.add(new Ticket(prevT.getString(1), prevT.getString(2), prevT.getString(3), prevT.getString(4), prevT.getString(5), prevT.getString(6)));
             }
 
             while (nextT.next()) {
-                future.add(new Ticket(nextT.getString(1), nextT.getString(2), nextT.getString(3), nextT.getString(4), nextT.getString(5), nextT.getString(6), nextT.getString(7), nextT.getString(8)));
+                future.add(new Ticket(nextT.getString(1), nextT.getString(2), nextT.getString(3), nextT.getString(4), nextT.getString(5), nextT.getString(6)));
             }
 
             Passenger user = new Passenger(res.getString(1), res.getString(2), res.getString(3), res.getString(4), past, future);
@@ -154,31 +159,39 @@ public class RailwayService extends HttpServlet {
     }
 
     //TICKECTS BUYING
-    //User registration
     @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("buyTicket")
-    public Response postNewTickets(@FormParam("authToken") String authToken, @FormParam("train_id") int train_id, @FormParam("start_station_id") int start_station_id,
-                                 @FormParam("end_station_id") int end_station_id, @FormParam("destTime") String destTime, @FormParam("deptTime") String deptTime) {
+    public Response postNewTickets(String js) {
+        Gson gson  = new Gson();
+        RouteBuyTicket route = gson.fromJson(js, RouteBuyTicket.class);
+
+
+
+        System.out.println(js);
         try {
-            String decodedString = Base64.decodeAsString(authToken);
+            String decodedString = Base64.decodeAsString(route.getAuthToken());
             StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
             String email = tokenizer.nextToken();
-            //
+            Statement st2 = connection.createStatement();
+            ResultSet id1 = st2.executeQuery("select ID from station where name = \"" +route.getStart_station() + "\"");
+            id1.next();
+            Statement st3 = connection.createStatement();
+            ResultSet id2 = st3.executeQuery("select ID from station where name = \"" +route.getEnd_station()+ "\"");
+            id2.next();
+            String s = id2.getString(1);
+            System.out.println(id1.getString(1));
+
             Statement st = connection.createStatement();
-            int res =   st.executeUpdate("insert into ticket(train_id, start_station_id, end_station_id, departure_time, arrival_time, availability, client_id) values (\"" + train_id + "\",\"" + start_station_id + "\",\"" + end_station_id + "\",\""+deptTime+"\",\"" +destTime+ "\"," + " -1, (select id from registered_user where login like \""+email+"\"))");
-            System.out.println(res);
-            if (res == 1){
-                return Response.status(Response.Status.OK).build();
-            } else{
-                return Response.status(Response.Status.BAD_REQUEST).build();
-            }
+            st.executeUpdate("insert into ticket(train_id, start_station_id, end_station_id, departure_time, arrival_time, availability, client_id) values (" + Integer.parseInt(route.getTrain_id()) + "," + id1.getString(1) + "," + id2.getString(1) +" , \"" + route.getDeptTime() + "\", \"" + route.getDestTime() + "\", -1, (select id from registered_user where login = \"" + email + "\"))");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return Response.ok().build();
     }
+    //User registration
 
     @GET
     @Path("secured/login")
