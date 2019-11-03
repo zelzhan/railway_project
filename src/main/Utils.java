@@ -54,7 +54,7 @@ public class Utils {
             File initialFile = new File(pathToSql);
             InputStream targetStream = new FileInputStream(initialFile);
             importSQL(connection, targetStream);
-            System.out.println("Database connected!");
+            System.out.println("Database connected!\n");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new IllegalStateException("Cannot connect the database!", e);
@@ -66,6 +66,7 @@ public class Utils {
     }
 
     public static Pair<DataInputStream, DataOutputStream> initializeSocket (@Context ServletContext servletContext, DataOutputStream dout, DataInputStream din) {
+        System.out.println("Connecting socket...");
         Pair<DataInputStream, DataOutputStream> pair = new Pair<>(din, dout);
         try {
 
@@ -84,6 +85,7 @@ public class Utils {
             int port = Integer.parseInt(RailwayApplication.properties.getProperty("SOCKET_PORT"));
             Socket socket = new Socket("localhost", port);
             pair = new Pair<>(new DataInputStream(socket.getInputStream()), new DataOutputStream(socket.getOutputStream()));
+            System.out.println("Socket connected!\n");
         }
         catch(Exception e){
             e.printStackTrace();

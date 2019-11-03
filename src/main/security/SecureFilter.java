@@ -22,14 +22,11 @@ public class SecureFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
 
-        System.out.println("Filter activated");
         if (!requestContext.getUriInfo().getPath().contains(SECURED_URL_PREFIX)){
-            System.out.println("Don't have url prefix");
             return;
         }
 
         List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
-        System.out.println(authHeader);
         if (authHeader != null && authHeader.size() > 0) {
             String authToken = authHeader.get(0);
 
@@ -51,7 +48,6 @@ public class SecureFilter implements ContainerRequestFilter {
                 ResultSet res = st.executeQuery("select exists(select login from registered_user where login=\""+username+"\" and password=\""+password+"\")" ) ;
                 res.next();
                 if (res.getString(1).equals("1")) {
-                    System.out.println("Authorized!");
                     return;
                 }
             } catch (Exception e) {
