@@ -8,7 +8,6 @@ function login() {
         }
     });
 
-    console.log("logging in...");
     $.get("/railway_station_service_war_exploded/services/items/secured/login", {}, function () {
         $.cookie('encripted', btoa(email + ":" + password), { path : '/'});
         console.log($.cookie('encripted'));

@@ -9,6 +9,7 @@ public class RouteBuyTicket {
     private String end_station;
     private String destTime;
     private String deptTime;
+    private int route_id;
 
 
     public RouteBuyTicket () {
@@ -50,5 +51,25 @@ public class RouteBuyTicket {
 
     public String getDeptTime() {
         return deptTime;
+    }
+
+    public void setTrain_id(String train_id) {
+        this.train_id = train_id;
+    }
+
+    public void setStart_station(String start_station) {
+        this.start_station = start_station;
+    }
+
+    public void setEnd_station(String end_station) {
+        this.end_station = end_station;
+    }
+
+    public int getRoute_id() {
+        return route_id;
+    }
+
+    public void setRoute_id(int route_id) {
+        this.route_id = route_id;
     }
 }

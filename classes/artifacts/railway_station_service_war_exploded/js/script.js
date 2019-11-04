@@ -3,13 +3,14 @@ let routeDate;
 function updateRoute(items) {
     let str = "<table class=\"table table-bordered\"><thead class=\'thead-dark\'><tr><th scope=\"col\">#</th>"
     str += "<th scope=\"col\">Departure</th><th scope=\"col\">Destination</th><th scope=\"col\">Time of Departure</th><th scope=\"col\">Date of Departure</th><th scope=\"col\">Time of Arrival</th>"
-    str += "<th scope=\"col\">Date of Arrival</th><th scope=\"col\">Route</th><th scope=\"col\"></th></tr></thead><tbody>";
+    str += "<th scope=\"col\">Date of Arrival</th><th scope=\"col\">Capacity</th><th scope=\"col\">Route</th><th scope=\"col\"></th></tr></thead><tbody>";
     routeDate = items;
     for (let i=0; i<items.length; i++) {
         console.log(items[i]);
         str +="<tr><th scope=\"row\">"+items[i].train_id+"</th><td>"+ items[i].dep +"</td><td>"+items[i].des + "</td>";
         str +="<td>" + items[i].start_date.split(" ")[0] + "</td><td>" + items[i].start_date.split(" ")[1] + "</td>";
         str +="<td>" + items[i].end_date.split(" ")[0] + "</td><td>" + items[i].end_date.split(" ")[1] + "</td>";
+        str +="<th scope=\"row\">"+items[i].capacity+"</th>";
         str +="<td><button type=\"submit\" onclick ='showMap(" + i +");' class=\"btn btn-primary\">Show Map</button></td> <td><button type=\"submit\" onclick ='buyTicket(" + i +");' class=\"btn btn-primary\">Buy ticket</button></td></tr>";
     }
     str += "</tbody></table>";
@@ -96,6 +97,7 @@ function buyTicket(index){
     let end_station = routeDate[index].des;
     let dest_time = routeDate[index].start_date;
     let dept_time = routeDate[index].end_date;
+    let route_id = routeDate[index].route_id;
     let cookie = $.cookie('encripted');
 
 
