@@ -7,7 +7,7 @@ function updateRoute(items) {
     routeDate = items;
     for (let i=0; i<items.length; i++) {
         console.log(items[i]);
-        str +="<tr><th scope=\"row\">"+items[i].train_id+"</th><td>"+ items[i].dep +"</td><td>"+items[i].des + "</td>";
+        str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i].train_id+"</th><td>"+ items[i].dep +"</td><td>"+items[i].des + "</td>";
         str +="<td>" + items[i].start_date.split(" ")[0] + "</td><td>" + items[i].start_date.split(" ")[1] + "</td>";
         str +="<td>" + items[i].end_date.split(" ")[0] + "</td><td>" + items[i].end_date.split(" ")[1] + "</td>";
         str +="<th scope=\"row\">"+items[i].capacity+"</th>";
@@ -104,15 +104,47 @@ function buyTicket(index){
     $.ajax({
         type: 'POST',
         url: "/railway_station_service_war_exploded/services/items/buyTicket",
+        success: function() {
+            alert('Successful purchase!');
+
+
+
+                e.preventDefault(); // avoid to execute the actual submit of the form.
+
+                var form = $(this);
+                var data = [];
+
+                $("form#routeForm :input").each(function () {
+                    var input = $(this); // This is the jquery object of the input, do what you will
+                    data.push(input.val());
+                });
+
+
+                let url = "/railway_station_service_war_exploded/services/items/" + data[0] + "/" + data[1] + "/" + data[4] + "-" + data[3] + "-" + data[2];
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (data) {
+                        if (data === "") {
+                            alert("Place doesn't exist");
+                        }
+                        updateRoute(JSON.parse(data));
+
+                    },
+                });
+
+
+        },
         data: JSON.stringify( {
             authToken: cookie,
             train_id: train_id,
             start_station: start_station,
             end_station: end_station,
             destTime: dest_time,
-            deptTime: dept_time
+            deptTime: dept_time,
+            route_id: route_id
         }),
-        success: function() { alert('Successful purchase!'); },
         fail: function(err) { alert(err) },
         contentType: "application/json",
         dataType: 'json'
@@ -136,6 +168,8 @@ $(document).ready(function () {
         $("#userprofile").hide();
         $("#signout").hide();
     }
+
+
 
 
     $("#routeForm").submit(function (e) {
