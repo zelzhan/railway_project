@@ -200,3 +200,42 @@ a:focus, a:hover {
 footer {
     padding: 40px 0;
 }
+
+/* css for reg, login, profile */
+.personal_details{
+  border-radius: 12px;
+  background-color: #364042;
+  padding: 15px;
+  color: #ffffff;
+}
+
+.tickets{
+  border-radius: 12px;
+  background-color: #364042;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+.personal_details ul li{
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+
+.title{
+  text-align: center;
+  color: #ffffff;
+}
+
+.list-group-item{
+  border: 0 !important;
+  background-color: transparent !important;
+}
+
+
+.form-div {
+  background-color: #364042;  
+  border-radius: 12px;
+  padding: 15px;
+  
+}
