@@ -25,25 +25,32 @@ function getUserData() {
             $("#phone").append(phone);
 
             pasts.forEach(function (past) {
+                let dept = past['dept_time'].split(" ");
+                let dest = past['dest_time'].split(" ");
                 $("#past").append("<tr>\n" +
                     "<th scope=\"col\">" + past['dept_station'] + "</th>\n" +
                     "<th scope=\"col\">" + past['dest_station'] + "</th>\n" +
-                    //"<th scope=\"col\">" + past['dept_exact_time'] + "</th>\n" +
-                    //"<th scope=\"col\">" + past['dest_exact_time'] + "</th>\n" +
-                    "<th scope=\"col\">" + past['dept_time'] + "</th>\n" +
-                    "<th scope=\"col\">" + past['dest_time'] + "</th>\n" +
+                    "<th scope=\"col\">" + dept[1].slice(0, -2) + "</th>\n" +
+                    "<th scope=\"col\">" + dest[1].slice(0, -2) + "</th>\n" +
+                    "<th scope=\"col\">" + dept[0] + "</th>\n" +
+                    "<th scope=\"col\">" + dest[0] + "</th>\n" +
+                    "<th scope=\"col\">" + "status" +"</th>" +
+                    "<th scope=\"col\"><button type=\"button\" class=\"btn btn-primary\">Cancel Ticket</button></th>" +
                     "</tr>")
             });
 
             futures.forEach(function (future) {
-                console.log(future);
+                let dept = future['dept_time'].split(" ");
+                let dest = future['dest_time'].split(" ");
                 $("#future").append("<tr>\n" +
                     "<th scope=\"col\">" + future['dept_station'] + "</th>\n" +
                     "<th scope=\"col\">" + future['dest_station'] + "</th>\n" +
-                    //"<th scope=\"col\">" + future['dept_exact_time'] + "</th>\n" +
-                    //"<th scope=\"col\">" + future['dest_exact_time'] + "</th>\n" +
-                    "<th scope=\"col\">" + future['dept_time'] + "</th>\n" +
-                    "<th scope=\"col\">" + future['dest_time'] + "</th>\n" +
+                    "<th scope=\"col\">" + dept[1].slice(0, -2) + "</th>\n" +
+                    "<th scope=\"col\">" + dest[1].slice(0, -2) + "</th>\n" +
+                    "<th scope=\"col\">" + dept[0] + "</th>\n" +
+                    "<th scope=\"col\">" + dest[0] + "</th>\n" +
+                    "<th scope=\"col\">" + "status" +"</th>" +
+                    "<th scope=\"col\"><button type=\"button\" class=\"btn btn-primary\">Cancel Ticket</button></th>" +
                     "</tr>")
             });
         }).fail( function () {
