@@ -6,7 +6,7 @@ function register() {
     var firstName = $("#firstName").val();
     var lastName = $("#lastName").val();
 
-    $.post("/railway_station_service_war_exploded/services/items/send", {
+    $.post("/railway_station_service_war_exploded/services/items/registration", {
         email: email,
         password: password,
         phone: phone,
