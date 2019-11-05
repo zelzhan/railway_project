@@ -114,6 +114,14 @@ public class RailwayService extends HttpServlet {
         return Response.ok().build();
     }
 
+    @POST
+    @Path("cancelTicket")
+    public Response cancelTicket(@QueryParam("ticket_id") int ticket_id){
+        System.out.println(ticket_id);
+        deleteTicket(connection, ticket_id);
+        return Response.ok().build();
+    }
+
     @GET
     @Path("secured/login")
     @Produces("text/html")

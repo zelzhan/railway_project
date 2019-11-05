@@ -33,13 +33,25 @@ public class SqlUtils {
             Statement st3 = connection.createStatement();
             ResultSet id2 = st3.executeQuery("select ID from station where name = \"" +route.getEnd_station()+ "\"");
             id2.next();
-            String s = id2.getString(1);
             Statement st = connection.createStatement();
-            st.executeUpdate("insert into ticket(train_id, start_station_id, end_station_id, departure_time, arrival_time, availability, client_id) values (" + Integer.parseInt(route.getTrain_id()) + "," + id1.getString(1) + "," + id2.getString(1) +" , \"" + route.getDeptTime() + "\", \"" + route.getDestTime() + "\", -1, (select id from registered_user where login = \"" + email + "\"))");
-
+            st.executeUpdate("insert into ticket(train_id, start_station_id, end_station_id, departure_time, arrival_time, ReservStatus, client_id) values (" + Integer.parseInt(route.getTrain_id()) + "," + id1.getString(1) + "," + id2.getString(1) +" , \"" + route.getDeptTime() + "\", \"" + route.getDestTime() + "\",\"Booked\" , (select id from registered_user where login = \"" + email + "\"))");
+            Statement st4 = connection.createStatement();
+            st4.executeUpdate("Update schedule Set availability=availability-1 Where route_id=" + route.getRoute_id());
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void deleteTicket(Connection connection, int ticket_id){
+        try {
+            Statement st = connection.createStatement();
+            st.executeUpdate("Update ticket Set ReservStatus = 'Cancelled' Where id="+ticket_id);
+            Statement st4 = connection.createStatement();
+            st4.executeUpdate("");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public static Response getUserProfile (Connection connection, String authToken) {
@@ -57,21 +69,21 @@ public class SqlUtils {
             res.next();
 
             //sql query for getting tickets past the given Currentdate
-            ResultSet prevT = st2.executeQuery("select distinct t.id, t.train_id,  s1.name, s2.name, t.departure_time, t.arrival_time from registered_user u, ticket t, station s1, station s2 where u.login = \""+email+"\" and s1.id=t.start_station_id and s2.id= t.end_station_id and t.client_id=u.id and t.departure_time < now();");
+            ResultSet prevT = st2.executeQuery("select distinct t.id, t.train_id,  s1.name, s2.name, t.departure_time, t.arrival_time, t.ReservStatus from registered_user u, ticket t, station s1, station s2 where u.login = \""+email+"\" and s1.id=t.start_station_id and s2.id= t.end_station_id and t.client_id=u.id and t.departure_time < now();");
 
             //sql query for getting tickets future the given Currentdate
-            ResultSet nextT = st3.executeQuery("select distinct t.id, t.train_id,  s1.name, s2.name, t.departure_time, t.arrival_time from registered_user u, ticket t, station s1, station s2 where u.login = \""+email+"\" and s1.id=t.start_station_id and s2.id= t.end_station_id and t.client_id=u.id and t.departure_time > now();");
+            ResultSet nextT = st3.executeQuery("select distinct t.id, t.train_id,  s1.name, s2.name, t.departure_time, t.arrival_time, t.ReservStatus from registered_user u, ticket t, station s1, station s2 where u.login = \""+email+"\" and s1.id=t.start_station_id and s2.id= t.end_station_id and t.client_id=u.id and t.departure_time > now();");
 
 
             ArrayList<Ticket> past = new ArrayList<>();
             ArrayList<Ticket> future = new ArrayList<>();
 
             while (prevT.next()) {
-                past.add(new Ticket(prevT.getString(1), prevT.getString(2), prevT.getString(3), prevT.getString(4), prevT.getString(5), prevT.getString(6)));
+                past.add(new Ticket(prevT.getString(1), prevT.getString(2), prevT.getString(3), prevT.getString(4), prevT.getString(5), prevT.getString(6), prevT.getString(7)));
             }
 
             while (nextT.next()) {
-                future.add(new Ticket(nextT.getString(1), nextT.getString(2), nextT.getString(3), nextT.getString(4), nextT.getString(5), nextT.getString(6)));
+                future.add(new Ticket(nextT.getString(1), nextT.getString(2), nextT.getString(3), nextT.getString(4), nextT.getString(5), nextT.getString(6), nextT.getString(7)));
             }
 
             Passenger user = new Passenger(res.getString(1), res.getString(2), res.getString(3), res.getString(4), past, future);
@@ -112,12 +124,12 @@ public class SqlUtils {
         List<Route> routes = new ArrayList();
         try {
             st = connection.createStatement();
-            ResultSet res = st.executeQuery("select * from (select distinct t2.name1 as d, t1.name1 as f, s1.departure_time, s1.exact_timei, s2.arrival_time, s2.exact_timef, s2.route_id from schedule s1, schedule s2, station d1, station d2, train t1, train t2 where  d1.name = \"" + depart + "\" and s1.departure_time = \"" + date + "\"  and d1.id = s1.station_i and s1.train_id = t1.id and d2.id = s2.station_f  and d2.name = \"" + dest + "\" and s2.train_id = t2.id) t where t.d = t.f");
+            ResultSet res = st.executeQuery("select * from (select distinct t2.name1 as d, t1.name1 as f, s1.departure_time, s2.arrival_time, s2.route_id, s1.availability from schedule s1, schedule s2, station d1, station d2, train t1, train t2 where  d1.name = \""+depart+"\" and date(s1.departure_time) = \""+date+"\"  and d1.id = s1.station_i and s1.train_id = t1.id and d2.id = s2.station_f  and d2.name = \""+dest+"\" and s2.train_id = t2.id) t where t.d = t.f");
             Statement st2 = connection.createStatement();
             while (res.next()) {
                 ResultSet train_id = st2.executeQuery("select id from train where name1=\""+res.getString(1)+"\"");
                 train_id.next();
-                Route route = new Route(depart, dest, train_id.getString(1), res.getString(3)+" "+res.getString(4), res.getString(5)+" "+res.getString(6), res.getInt(7));
+                Route route = new Route(depart, dest, train_id.getString(1), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6));
                 routes.add(route);
             };
         } catch (SQLException e) {
@@ -137,12 +149,10 @@ public class SqlUtils {
         String str = null;
         try {
             Statement st = connection.createStatement();
-            ResultSet res = st.executeQuery("select distinct s1.name, s2.name, s.exact_timei, s.exact_timef\n" +
-                    "from schedule s, station s1, station s2 where s1.id = s.station_i and s2.id = s.station_f and \n" +
-                    "s.route_id =" + route + " and s.departure_time =" + datey + "");
+            ResultSet res = st.executeQuery("select * from (select distinct t2.name1 as d, t1.name1 as f, s1.departure_time, s2.arrival_time, s2.route_id, s1.availability from schedule s1, schedule s2, station d1, station d2, train t1, train t2 where  d1.name = \""+depart+"\" and date(s1.departure_time) = \""+datey+"\"  and d1.id = s1.station_i and s1.train_id = t1.id and d2.id = s2.station_f  and d2.name = \'"+dest+"\' and s2.train_id = t2.id) t where t.d = t.f");
             while (res.next()) {
                 Route r = new Route(res.getString(1), res.getString(2), "blabla",
-                        res.getString(3), res.getString(4), route);
+                        res.getString(3), res.getString(4), route, res.getInt(5));
                 params.add(r);
                 s += res.getString(1) + ", ";
             }
