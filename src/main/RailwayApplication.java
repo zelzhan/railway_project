@@ -23,6 +23,8 @@ public class RailwayApplication extends Application {
     public RailwayApplication() throws IOException {
         singletons.add(new RailwayService());
         singletons.add(new SecuredService());
+        singletons.add(new AgentService());
+        singletons.add(new ManagerService());
     }
 
 
@@ -47,7 +49,10 @@ public class RailwayApplication extends Application {
 
         HashSet<Class<?>> classes = new HashSet<>();
         classes.add(SecureFilter.class);
+        classes.add(AgentService.class);
+        classes.add(ManagerService.class);
         classes.add(RailwayService.class);
+
         return classes;
     }
     @Override

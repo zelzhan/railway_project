@@ -80,7 +80,6 @@ public class Utils {
             // Wait until the python script will run
             TimeUnit.SECONDS.sleep(5);
 
-
             // Initialize socket
             int port = Integer.parseInt(RailwayApplication.properties.getProperty("SOCKET_PORT"));
             Socket socket = new Socket("localhost", port);
