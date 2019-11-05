@@ -104,38 +104,7 @@ function buyTicket(index){
     $.ajax({
         type: 'POST',
         url: "/railway_station_service_war_exploded/services/items/buyTicket",
-        success: function() {
-            alert('Successful purchase!');
-
-
-
-                e.preventDefault(); // avoid to execute the actual submit of the form.
-
-                var form = $(this);
-                var data = [];
-
-                $("form#routeForm :input").each(function () {
-                    var input = $(this); // This is the jquery object of the input, do what you will
-                    data.push(input.val());
-                });
-
-
-                let url = "/railway_station_service_war_exploded/services/items/" + data[0] + "/" + data[1] + "/" + data[4] + "-" + data[3] + "-" + data[2];
-
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    success: function (data) {
-                        if (data === "") {
-                            alert("Place doesn't exist");
-                        }
-                        updateRoute(JSON.parse(data));
-
-                    },
-                });
-
-
-        },
+        success: function() { alert('Successful purchase!'); },
         data: JSON.stringify( {
             authToken: cookie,
             train_id: train_id,
