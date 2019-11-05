@@ -46,8 +46,8 @@ public class SqlUtils {
         try {
             Statement st = connection.createStatement();
             st.executeUpdate("Update ticket Set ReservStatus = 'Cancelled' Where id="+ticket_id);
-            Statement st4 = connection.createStatement();
-            st4.executeUpdate("");
+//            Statement st4 = connection.createStatement();
+//            st4.executeUpdate("");
         } catch (Exception e){
             e.printStackTrace();
         }
