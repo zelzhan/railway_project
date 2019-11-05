@@ -5,10 +5,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.sql.Connection;
 
 @Path("manager")
 public class ManagerService extends HttpServlet {
-    public ManagerService (){
+    Connection connection;
+    public ManagerService (Connection connection){
+        this.connection = connection;
         System.out.println("Manager service activated!");
     }
 

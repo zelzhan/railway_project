@@ -37,10 +37,10 @@ public class RailwayService extends HttpServlet {
     DataInputStream din;
     boolean initalized;
 
-    public RailwayService() throws IOException {
+    public RailwayService(Connection connection) throws IOException {
         this.graph = initalizeGraph(graph);
         this.initalized = false;
-
+        this.connection = connection;
     }
 
     @GET
@@ -48,7 +48,6 @@ public class RailwayService extends HttpServlet {
     public Response init(@Context ServletContext servletContext) {
 
         if (!this.initalized){
-            connection = initializeDatabase(connection, servletContext);
             Pair<DataInputStream, DataOutputStream> pair = initializeSocket(servletContext, this.dout, this.din);
             this.din = pair.getKey();
             this.dout = pair.getValue();

@@ -5,12 +5,17 @@ import main.security.SecuredService;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Context;
+
+import static main.Utils.initializeDatabase;
 
 
 @ApplicationPath("/services")
@@ -19,12 +24,18 @@ public class RailwayApplication extends Application {
     private Set<Class<?>> empty = new HashSet<Class<?>>();
     public static final String PROPERTIES_FILE = "config.properties";
     public static Properties properties = new Properties();
+    Connection connection;
 
-    public RailwayApplication() throws IOException {
-        singletons.add(new RailwayService());
-        singletons.add(new SecuredService());
-        singletons.add(new AgentService());
-        singletons.add(new ManagerService());
+    public RailwayApplication(@Context ServletContext servletContext) throws IOException {
+
+
+        readProperties();
+
+        this.connection = initializeDatabase(this.connection, servletContext);
+        singletons.add(new RailwayService(this.connection));
+        singletons.add(new SecuredService(this.connection));
+        singletons.add(new AgentService(this.connection));
+        singletons.add(new ManagerService(this.connection));
     }
 
 
@@ -44,8 +55,6 @@ public class RailwayApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-
-        readProperties();
 
         HashSet<Class<?>> classes = new HashSet<>();
         classes.add(SecureFilter.class);
