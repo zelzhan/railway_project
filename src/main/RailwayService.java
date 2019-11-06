@@ -37,10 +37,9 @@ public class RailwayService extends HttpServlet {
     DataInputStream din;
     boolean initalized;
 
-    public RailwayService() throws IOException {
-        this.graph = initalizeGraph(graph);
+    public RailwayService() {
+        this.graph = initalizeGraph();
         this.initalized = false;
-
     }
 
     @GET
@@ -59,13 +58,12 @@ public class RailwayService extends HttpServlet {
 
     @GET
     @Path("{depart}/{dest}/{date}/{red}/{route}")
-    public Response getData1(@PathParam("depart") String depart,
+    public Response getMapData(@PathParam("depart") String depart,
                              @PathParam("dest") String dest,
                              @PathParam("date") String datey,
                              @PathParam("red") String dateh,
-                             @PathParam("route") int route) throws IOException {
+                             @PathParam("route") int route) {
 
-        List<Route> params = new ArrayList();
         String result = findMapRoute(connection, route, datey, depart, dest, this.din, this.dout);
         Gson gson = new Gson();
         return Response.ok(gson.toJson(result)).build();
@@ -73,12 +71,11 @@ public class RailwayService extends HttpServlet {
 
     @GET
     @Path("{depart}/{dest}/{date}")
-    public Response getData(@PathParam("depart") String depart,
+    public Response getRouteData(@PathParam("depart") String depart,
                             @PathParam("dest") String dest,
                             @PathParam("date") String date) {
 
         List<Route> params = findRoute(depart, dest, date, connection);
-
         Gson gson = new Gson();
         return Response.ok(gson.toJson(params)).build();
     }
@@ -90,7 +87,6 @@ public class RailwayService extends HttpServlet {
                                  @FormParam("firstName") String firstName, @FormParam("lastName") String lastName) {
 
         return register(connection, email, firstName, lastName, password, phone);
-
     }
 
     @POST
@@ -99,7 +95,6 @@ public class RailwayService extends HttpServlet {
     public Response userProfile(@FormParam("authToken") String authToken) {
 
         return getUserProfile(connection, authToken);
-
     }
 
     @POST
@@ -125,7 +120,7 @@ public class RailwayService extends HttpServlet {
     @GET
     @Path("secured/login")
     @Produces("text/html")
-    public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
+    public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         return Response.status(Response.Status.ACCEPTED).build();
     }
 }

@@ -16,17 +16,15 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("/services")
 public class RailwayApplication extends Application {
     private Set<Object> singletons = new HashSet<Object>();
-    private Set<Class<?>> empty = new HashSet<Class<?>>();
     public static final String PROPERTIES_FILE = "config.properties";
     public static Properties properties = new Properties();
 
-    public RailwayApplication() throws IOException {
+    public RailwayApplication() {
         singletons.add(new RailwayService());
         singletons.add(new SecuredService());
         singletons.add(new AgentService());
         singletons.add(new ManagerService());
     }
-
 
     private Properties readProperties() {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE);
@@ -41,7 +39,6 @@ public class RailwayApplication extends Application {
         return properties;
     }
 
-
     @Override
     public Set<Class<?>> getClasses() {
 
@@ -55,6 +52,7 @@ public class RailwayApplication extends Application {
 
         return classes;
     }
+
     @Override
     public Set<Object> getSingletons() {
         return singletons;

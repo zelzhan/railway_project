@@ -1,12 +1,11 @@
-let cookie = $.cookie('encripted');
+let cookie = $.cookie('encrypted');
 
 function logout() {
-    $.removeCookie('encripted', { path: '/'});
+    $.removeCookie('encrypted', { path: '/'});
     window.location.replace("/railway_station_service_war_exploded");
 }
 
 function removeTicket(id) {
-
     $.ajaxSetup({
         headers:{
             'Authorization': "Basic " + cookie
@@ -25,9 +24,7 @@ function getUserData() {
         }
     });
 
-
-
-    if(typeof $.cookie('encripted') === "undefined"){
+    if(typeof $.cookie('encrypted') === "undefined"){
         console.log("Cookie doesn't exists");
     } else{
         $.post("/railway_station_service_war_exploded/services/items/secured/userProfile", {
@@ -71,15 +68,10 @@ function getUserData() {
                     "<th scope=\"col\">" + future['status'] +"</th>" +
                     "<th scope=\"col\"><button type=\"button\" onclick='removeTicket(" + future.id +")' class=\"btn btn-primary\" id=\"" + future.id + "\">Cancel Ticket</button></th>" +
                     "</tr>")
-
             });
-        }).fail( function () {
-
         });
     }
 }
-
-
 
 $(document).ready(function () {
     getUserData();
