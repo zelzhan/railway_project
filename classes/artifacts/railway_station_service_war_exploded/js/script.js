@@ -18,6 +18,33 @@ function updateRoute(items) {
     $("#table-table").append(str);
 }
 
+function showTickets() {
+    let data = []
+    $("form#routeForm :input").each(function () {
+        var input = $(this); // This is the jquery object of the input, do what you will
+
+        data.push(input.val());
+    });
+    console.log(data);
+
+
+
+    let url = "/railway_station_service_war_exploded/services/items/" + data[0] + "/" + data[1] + "/" + data[4] + "-" + data[3] + "-" + data[2];
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (data) {
+            if (data === "") {
+                alert("Place doesn't exist");
+            }
+            updateRoute(JSON.parse(data));
+
+        },
+    });
+
+}
+
 function showMap(index) {
     let items = routeDate[index];
     let url = "/railway_station_service_war_exploded/services/items/" + items['dep']
@@ -104,7 +131,6 @@ function buyTicket(index){
     $.ajax({
         type: 'POST',
         url: "/railway_station_service_war_exploded/services/items/buyTicket",
-        success: function() { alert('Successful purchase!'); },
         data: JSON.stringify( {
             authToken: cookie,
             train_id: train_id,
@@ -114,9 +140,15 @@ function buyTicket(index){
             deptTime: dept_time,
             route_id: route_id
         }),
+        success: function() {
+
+            alert('Successful purchase!');
+            showTickets();
+
+
+        },
         fail: function(err) { alert(err) },
-        contentType: "application/json",
-        dataType: 'json'
+        contentType: "application/json"
     })
 
 }
@@ -145,27 +177,6 @@ $(document).ready(function () {
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
 
-        var form = $(this);
-        var data = [];
-
-        $("form#routeForm :input").each(function () {
-            var input = $(this); // This is the jquery object of the input, do what you will
-            data.push(input.val());
-        });
-
-
-        let url = "/railway_station_service_war_exploded/services/items/" + data[0] + "/" + data[1] + "/" + data[4] + "-" + data[3] + "-" + data[2];
-
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function (data) {
-                if (data === "") {
-                    alert("Place doesn't exist");
-                }
-                updateRoute(JSON.parse(data));
-
-            },
-        });
+        showTickets();
     });
 });

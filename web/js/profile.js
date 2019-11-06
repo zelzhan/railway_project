@@ -7,14 +7,23 @@ function logout() {
 
 function removeTicket(id) {
     $.ajaxSetup({
-        headers:{
+        headers: {
             'Authorization': "Basic " + cookie
         }
     });
 
-    $.post(encodeURI("/railway_station_service_war_exploded/services/items/cancelTicket?ticket_id=" + id)), {}, function (res) {
-        alert("Ticket successfully cancelled!");
-    }}
+    $.ajax({
+        type: "POST",
+        url: encodeURI("/railway_station_service_war_exploded/services/items/cancelTicket?ticket_id=" + id),
+        success: function () {
+            alert("Ticket successfully cancelled!");
+            location.reload();
+
+        }
+    });
+
+}
+
 
 function getUserData() {
 
@@ -30,7 +39,6 @@ function getUserData() {
         $.post("/railway_station_service_war_exploded/services/items/secured/userProfile", {
             authToken: cookie
         }, function (out) {
-            console.log(out);
             let data = JSON.parse(out);
             let full_name = data['first_name'] + " " + data['last_name'];
             let phone = data['phone'];
@@ -57,7 +65,14 @@ function getUserData() {
             futures.forEach(function (future) {
                 let dept = future['dept_time'].split(" ");
                 let dest = future['dest_time'].split(" ");
-                console.log(future.id);
+
+                let append = "";
+                if (future['status'] == "Cancelled") {
+                    append = "<th scope=\"col\">" + "Done!" +"</th>"
+                } else {
+                    append = "<th scope=\"col\"><button type=\"button\" onclick='removeTicket(" + future.id + ")' class=\"btn btn-primary\" id=\"" + future.id + "\">Cancel Ticket</button></th>";
+                }
+
                 $("#future").append("<tr>\n" +
                     "<th scope=\"col\">" + future['dept_station'] + "</th>\n" +
                     "<th scope=\"col\">" + future['dest_station'] + "</th>\n" +
@@ -65,11 +80,11 @@ function getUserData() {
                     "<th scope=\"col\">" + dest[1].slice(0, -2) + "</th>\n" +
                     "<th scope=\"col\">" + dept[0] + "</th>\n" +
                     "<th scope=\"col\">" + dest[0] + "</th>\n" +
-                    "<th scope=\"col\">" + future['status'] +"</th>" +
-                    "<th scope=\"col\"><button type=\"button\" onclick='removeTicket(" + future.id +")' class=\"btn btn-primary\" id=\"" + future.id + "\">Cancel Ticket</button></th>" +
-                    "</tr>")
-            });
-        });
+                    "<th scope=\"col\">" + future['status'] +"</th>" + append + "</tr>")
+                }
+
+            );
+        })
     }
 }
 
