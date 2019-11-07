@@ -53,7 +53,7 @@
       <!-- <div class="mx-auto"> -->
         <!-- <div class="container"> -->
         <div class="row mx-auto">
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="personal_details">
                     <h5>Personal details:</h5>
                     <ul class="list-group">
@@ -62,11 +62,10 @@
                         <li class="list-group-item">Phone: <span id="phone"></span></li>
                         <li class="list-group-item">Working hours: <span id="phone"></span></li>
                         <li class="list-group-item">Salary: <span id="phone"></span></li>
-                        <button type="button" class="btn btn-primary" id="paycheck">Pay&nbspcheck</button> 
+                        <button type="button" class="btn btn-primary mx-auto" id="paycheck">Pay&nbspcheck</button> 
                     </ul>
                 </div>
-            </div>
-            <div class="col-md-10">
+                <div class="personal_details">
                 <form id="routeForm">
                   <div class="form-group">
                     <div class="row">
@@ -84,7 +83,7 @@
                     <div class="row">
                       <div class="col">
                         <label>Day</label>
-                        <input type="text" class="form-control" id="day-input" placeholder="Enter day">
+                        <input type="text" class="form-control" id="day-input" placeholder="Day">
                       </div>
                       <div class="col">
                         <label>Month</label>
@@ -112,8 +111,12 @@
                   </div>
                   <button type="submit" class="btn btn-primary" id="search-route">Search</button>
             </form>
+            </div>
+            </div>
+            <div class="col-md-9">
+                
                 <div class="agent-tickets">
-                    <h2 class="title mx-auto">Trips</h2>
+                    <!-- <h2 class="title mx-auto">Trips</h2> -->
                     <table class="table table-bordered">
                         <thead class="thead-dark">
                         <tr>
@@ -128,7 +131,7 @@
                         </tr>
                         </thead>
                         <tbody id="agent-tickets">
-                           
+                          
                         </tbody>
                     </table>
                 </div>
