@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
+import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -37,6 +38,7 @@ public class RailwayService extends HttpServlet {
     DataInputStream din;
     boolean initalized;
 
+
     public RailwayService(Connection connection) throws IOException {
         this.graph = initalizeGraph(graph);
         this.initalized = false;
@@ -54,6 +56,17 @@ public class RailwayService extends HttpServlet {
             this.initalized = true;
         }
         return Response.ok().build();
+    }
+
+    @GET
+    @Path("getRole")
+    public Response getRole(ContainerRequestContext requestContext) {
+        String authToken = getTokenFromHeader(requestContext);
+        String email = getEmailFromToken(authToken);
+        String role = getRoleFromEmail(connection, email);
+        Gson gson = new Gson();
+        role = role.replace("\"", "");
+        return Response.ok(gson.toJson(role)).build();
     }
 
     @GET
@@ -75,9 +88,7 @@ public class RailwayService extends HttpServlet {
     public Response getData(@PathParam("depart") String depart,
                             @PathParam("dest") String dest,
                             @PathParam("date") String date) {
-
         List<Route> params = findRoute(depart, dest, date, connection);
-
         Gson gson = new Gson();
         return Response.ok(gson.toJson(params)).build();
     }
@@ -116,7 +127,7 @@ public class RailwayService extends HttpServlet {
     @POST
     @Path("cancelTicket")
     public Response cancelTicket(@QueryParam("ticket_id") int ticket_id){
-        System.out.println(ticket_id);
+
         deleteTicket(connection, ticket_id);
         return Response.ok().build();
     }

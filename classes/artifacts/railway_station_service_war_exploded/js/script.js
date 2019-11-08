@@ -141,11 +141,8 @@ function buyTicket(index){
             route_id: route_id
         }),
         success: function() {
-
             alert('Successful purchase!');
             showTickets();
-
-
         },
         fail: function(err) { alert(err) },
         contentType: "application/json"

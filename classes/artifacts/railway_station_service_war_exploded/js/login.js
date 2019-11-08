@@ -10,7 +10,14 @@ function login() {
 
     $.get("/railway_station_service_war_exploded/services/items/secured/login", {}, function () {
         $.cookie('encripted', btoa(email + ":" + password), { path : '/'});
+
+        $.get("/railway_station_service_war_exploded/services/items/getRole", {}, function (res) {
+            res = res.replace("\"", "");
+            $.cookie('role', res );
+        });
+
         console.log($.cookie('encripted'));
+
         window.location.replace("/railway_station_service_war_exploded/");
         alert("login is successful.")
     }).fail( function () {
