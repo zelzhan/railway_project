@@ -3,7 +3,7 @@ package main.wrappers;
 import javax.swing.*;
 
 public class RouteBuyTicket {
-    private String authToken;
+    private String email;
     private String train_id;
     private String start_station;
     private String end_station;
@@ -16,8 +16,9 @@ public class RouteBuyTicket {
 
     }
 
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+
+    public void setAuthToken(String email) {
+        this.email = email;
     }
 
     public void setDestTime(String destTime) {
@@ -28,8 +29,8 @@ public class RouteBuyTicket {
         this.deptTime = deptTime;
     }
 
-    public String getAuthToken() {
-        return authToken;
+    public String getEmail() {
+        return email;
     }
 
     public String getTrain_id() {

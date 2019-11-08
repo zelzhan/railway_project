@@ -1,12 +1,14 @@
 package main;
 
 import com.google.gson.Gson;
+import javafx.util.Pair;
 import main.wrappers.Passenger;
 import main.wrappers.Route;
 import main.wrappers.RouteBuyTicket;
 import main.wrappers.Ticket;
 import org.glassfish.jersey.internal.util.Base64;
 
+import javax.swing.*;
 import javax.ws.rs.core.Response;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -42,9 +44,7 @@ public class SqlUtils {
 
     public static void buyTicket (Connection connection, RouteBuyTicket route) {
         try {
-            String decodedString = Base64.decodeAsString(route.getAuthToken());
-            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
-            String email = tokenizer.nextToken();
+            String email = route.getEmail();
             Statement st2 = connection.createStatement();
             ResultSet id1 = st2.executeQuery("select ID from station where name = \"" +route.getStart_station() + "\"");
             id1.next();
@@ -64,6 +64,8 @@ public class SqlUtils {
         try {
             Statement st = connection.createStatement();
             st.executeUpdate("Update ticket Set ReservStatus = 'Cancelled' Where id="+ticket_id);
+            Statement st4 = connection.createStatement();
+            st4.executeUpdate("Update schedule set availability = availability +1 where train_id=(select train_id from ticket where id="+ticket_id);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -94,17 +96,60 @@ public class SqlUtils {
             ArrayList<Ticket> future = new ArrayList<>();
 
             while (prevT.next()) {
-                past.add(new Ticket(prevT.getString(1), prevT.getString(2), prevT.getString(3), prevT.getString(4), prevT.getString(5), prevT.getString(6), prevT.getString(7)));
+                past.add(new Ticket(email,prevT.getString(1), prevT.getString(2), prevT.getString(3), prevT.getString(4), prevT.getString(5), prevT.getString(6), prevT.getString(7)));
             }
 
             while (nextT.next()) {
-                future.add(new Ticket(nextT.getString(1), nextT.getString(2), nextT.getString(3), nextT.getString(4), nextT.getString(5), nextT.getString(6), nextT.getString(7)));
+                future.add(new Ticket(email,nextT.getString(1), nextT.getString(2), nextT.getString(3), nextT.getString(4), nextT.getString(5), nextT.getString(6), nextT.getString(7)));
             }
 
             Passenger user = new Passenger(res.getString(1), res.getString(2), res.getString(3), res.getString(4), past, future);
 
             Gson gson = new Gson();
             return Response.ok(gson.toJson(user)).build();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void updateSchedule(Connection connection, String authToken, String new_schedule, String email){
+        try {
+            Statement st = connection.createStatement();
+            st.executeQuery("update  regular_employee set schedule =\""+new_schedule+"\" where login =\""+email+"\"");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static Response getManagerProfile(Connection connection, String authToken){
+        //I need Samal's query
+        return Response.ok().build();
+    }
+
+    public static Response getAgentProfile (Connection connection, String authToken) {
+
+        try {
+            String decodedString = Base64.decodeAsString(authToken);
+            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
+            String email = tokenizer.nextToken();
+            Statement st = connection.createStatement();
+            Statement st2 = connection.createStatement();
+            Statement st3 = connection.createStatement();
+            ResultSet tickets = st2.executeQuery("select e.login, t.* from registered_user e, ticket t\n" +
+                    "where e.id=t.client_id and  t.departure_time >  now();\n");
+
+            ArrayList<Pair<Passenger, Ticket>> alltickets = new ArrayList<>();
+
+            while (tickets.next()) {
+                ResultSet res = st.executeQuery("select u.first_name, u.last_name, u.phone, u.login from registered_user u where u.login = \"" + tickets.getString(1) + "\"");
+                res.next();
+                alltickets.add(new Pair<>(new Passenger(res.getString(1), res.getString(2), res.getString(3), res.getString(4)),
+                        new Ticket(tickets.getString(1),tickets.getString(2), tickets.getString(4), tickets.getString(5), tickets.getString(6), tickets.getString(7), tickets.getString(8), tickets.getString(9))));
+            }
+            Gson gson = new Gson();
+            return Response.ok(gson.toJson(alltickets)).build();
         } catch (SQLException e) {
             e.printStackTrace();
         }

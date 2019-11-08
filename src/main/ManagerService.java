@@ -1,11 +1,12 @@
 package main;
 
 import javax.servlet.http.HttpServlet;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.sql.Connection;
+
+import static main.SqlUtils.*;
 
 @Path("manager")
 public class ManagerService extends HttpServlet {
@@ -15,10 +16,23 @@ public class ManagerService extends HttpServlet {
         System.out.println("Manager service activated!");
     }
 
-    @GET
-    @Path("test")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String secureMethod() {
-        return "TEST Manager API";
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("/secured/managerProfile")
+    public Response managerProfile(@FormParam("authToken") String authToken) {
+
+        return getManagerProfile(connection, authToken);
+
     }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("/secured/updateSchedule")
+    public Response updatScheduleManager(@FormParam("authToken") String authToken, @FormParam("schedule") String schedule, @FormParam("agentEmail") String agentEmail) {
+        return updateSchedule(connection, authToken, schedule, agentEmail);
+
+    }
+
+
+
 }

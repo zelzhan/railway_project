@@ -127,12 +127,16 @@ function buyTicket(index){
     let route_id = routeDate[index].route_id;
     let cookie = $.cookie('encripted');
 
+    let emailAndPassword = atob(cookie);
+    let email = emailAndPassword.split(":")[0];
+
+    console.log(email);
 
     $.ajax({
         type: 'POST',
         url: "/railway_station_service_war_exploded/services/items/buyTicket",
         data: JSON.stringify( {
-            authToken: cookie,
+            email: email,
             train_id: train_id,
             start_station: start_station,
             end_station: end_station,
