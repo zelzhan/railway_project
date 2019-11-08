@@ -47,7 +47,7 @@ public class SqlUtils {
             Statement st = connection.createStatement();
             st.executeUpdate("Update ticket Set ReservStatus = 'Cancelled' Where id="+ticket_id);
             Statement st4 = connection.createStatement();
-            st4.executeUpdate("");
+            st4.executeUpdate("Update schedule set availability = availability +1 where train_id=(select train_id from ticket where id="+ticket_id);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -94,6 +94,21 @@ public class SqlUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void updateSchedule(Connection connection, String authToken, String new_schedule, String email){
+        try {
+            Statement st = connection.createStatement();
+            st.executeQuery("update  regular_employee set schedule =\""+new_schedule+"\" where login =\""+email+"\"");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static Response getManagerProfile(Connection connection, String authToken){
+        //I need Samal's query
+        return Response.ok().build();
     }
 
     public static Response getAgentProfile (Connection connection, String authToken) {

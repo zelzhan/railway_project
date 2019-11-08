@@ -33,12 +33,8 @@ public class AgentService extends HttpServlet {
     public Response agentProfile(ContainerRequestContext requestContext) {
 
         List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
-
-
         String authToken = authHeader.get(0);
-
         authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
-
         return getAgentProfile(connection, authToken);
     }
 
@@ -48,9 +44,7 @@ public class AgentService extends HttpServlet {
     public Response agentNewTickets(String js) {
         Gson gson  = new Gson();
         RouteBuyTicket route = gson.fromJson(js, RouteBuyTicket.class);
-
         buyTicket(connection, route);
-
         return Response.ok().build();
     }
 }
