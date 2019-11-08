@@ -125,9 +125,9 @@ public class Utils {
     }
 
 
-    public static Graph initalizeGraph(Graph graph) {
+    public static Graph initializeGraph() {
 
-        graph = new Graph();
+        Graph graph = new Graph();
         graph.addVertex("6");
         graph.addVertex("5");
         graph.addVertex("2");

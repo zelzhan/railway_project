@@ -21,23 +21,18 @@ import static main.Utils.initializeDatabase;
 @ApplicationPath("/services")
 public class RailwayApplication extends Application {
     private Set<Object> singletons = new HashSet<Object>();
-    private Set<Class<?>> empty = new HashSet<Class<?>>();
     public static final String PROPERTIES_FILE = "config.properties";
     public static Properties properties = new Properties();
-    Connection connection;
+    private Connection connection;
 
-    public RailwayApplication(@Context ServletContext servletContext) throws IOException {
-
-
+    public RailwayApplication(@Context ServletContext servletContext) {
         readProperties();
-
         this.connection = initializeDatabase(this.connection, servletContext);
         singletons.add(new RailwayService(this.connection));
         singletons.add(new SecuredService(this.connection));
         singletons.add(new AgentService(this.connection));
         singletons.add(new ManagerService(this.connection));
     }
-
 
     private Properties readProperties() {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE);
@@ -52,7 +47,6 @@ public class RailwayApplication extends Application {
         return properties;
     }
 
-
     @Override
     public Set<Class<?>> getClasses() {
 
@@ -64,6 +58,7 @@ public class RailwayApplication extends Application {
 
         return classes;
     }
+
     @Override
     public Set<Object> getSingletons() {
         return singletons;
