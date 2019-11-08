@@ -2,10 +2,7 @@ package main;
 
 import com.google.gson.Gson;
 import javafx.util.Pair;
-import main.wrappers.Passenger;
-import main.wrappers.Route;
-import main.wrappers.RouteBuyTicket;
-import main.wrappers.Ticket;
+import main.wrappers.*;
 import org.glassfish.jersey.internal.util.Base64;
 
 import javax.swing.*;
@@ -105,9 +102,34 @@ public class SqlUtils {
         }
     }
 
-
+// Managers profile returns all info about manager and all agents
     public static Response getManagerProfile(Connection connection, String authToken){
-        //I need Samal's query
+
+        try{
+            String decodedString = Base64.decodeAsString(authToken);
+            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
+            String email = tokenizer.nextToken();
+
+            Statement st3 = connection.createStatement();
+
+            //sql query for getting all personal info by email
+            ResultSet res1 = st3.executeQuery("select u.first_name, u.last_name, u.phone, u.login from registered_user u where u.login = \"" + email + "\"");
+            res1.next();
+
+            Statement st = connection.createStatement();
+            ResultSet agents = st.executeQuery("select r.login, u.first_name, u.last_name, s.name as station, r.salary, r.schedule from registered_user u, regular_employee r, station s where s.id=r.stationN and u.id = r.id;");
+            ArrayList<Agent> allagents = new ArrayList<>();
+            while(agents.next()){
+                allagents.add(new Agent(agents.getString(2), agents.getString(3),agents.getString(1), agents.getString(6),agents.getInt(5),agents.getString(4)));
+            }
+            Pair<Passenger, ArrayList<Agent>> result = new Pair<Passenger, ArrayList<Agent>>( new Passenger(res1.getString(1), res1.getString(2),agents.getString(3), agents.getString(4)), allagents);
+
+
+            Gson gson = new Gson();
+            return Response.ok(gson.toJson(result)).build();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return Response.ok().build();
     }
 

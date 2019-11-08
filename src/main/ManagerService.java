@@ -29,8 +29,8 @@ public class ManagerService extends HttpServlet {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/updateSchedule")
     public Response updatScheduleManager(@FormParam("authToken") String authToken, @FormParam("schedule") String schedule, @FormParam("agentEmail") String agentEmail) {
-        return updateSchedule(connection, authToken, schedule, agentEmail);
-
+        updateSchedule(connection, authToken, schedule, agentEmail);
+        return Response.ok().build();
     }
 
 
