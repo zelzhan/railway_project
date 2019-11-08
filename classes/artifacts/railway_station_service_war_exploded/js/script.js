@@ -1,3 +1,17 @@
+function cookieCheck() {
+    if (typeof $.cookie('encrypted') != "undefined") {
+        $("#login").hide();
+        $("#signup").hide();
+        $("#userprofile").show();
+        $("#signout").show();
+    } else {
+        $("#login").show();
+        $("#signup").show();
+        $("#userprofile").hide();
+        $("#signout").hide();
+    }
+}
+
 let routeDate;
 
 function updateRoute(items) {
@@ -22,12 +36,8 @@ function showTickets() {
     let data = []
     $("form#routeForm :input").each(function () {
         var input = $(this); // This is the jquery object of the input, do what you will
-
         data.push(input.val());
     });
-    console.log(data);
-
-
 
     let url = "/railway_station_service_war_exploded/services/items/" + data[0] + "/" + data[1] + "/" + data[4] + "-" + data[3] + "-" + data[2];
 
@@ -39,7 +49,6 @@ function showTickets() {
                 alert("Place doesn't exist");
             }
             updateRoute(JSON.parse(data));
-
         },
     });
 
@@ -53,15 +62,15 @@ function showMap(index) {
     $.ajax({
         type: "GET",
         url: url,
-        success: function (data) {
+        success: function () {
             window.location.replace("map.html");
         },
     });
 }
 
 function sendFormRoute() {
-    var depToSend = $("#dep-input").val().toString();
-    var desToSend = $("#des-input").val().toString();
+    let depToSend = $("#dep-input").val().toString();
+    let desToSend = $("#des-input").val().toString();
 
     if (depToSend.match("\\w+") && desToSend.match("\\w+")) {
         $.post("services/items/" + "{" + depToSend + "}/{" + desToSend + "}/{" + $("#day-input").val().toString() + "-"
@@ -69,12 +78,8 @@ function sendFormRoute() {
             getRouteItems();
         })
     } else {
-        window.alert("Please, check your input");
+       alert("Please, check your input");
     }
-}
-
-function myProfile() {
-    window.location.replace("/railway_station_service_war_exploded/profile.html");
 }
 
 function getRouteItems() {
@@ -93,50 +98,25 @@ function getRouteItems() {
     });
 }
 
-
-function test() {
-
-    $.ajaxSetup({
-        headers:{
-            'Authorization': "Basic " + $.cookie('encripted')
-        }
-    });
-
-    $.get("/railway_station_service_war_exploded/services/secured/message", {}, function () {
-        alert("Authentication is successful.");
-    }).fail( function () {
-        alert("Authentication failed.")
-    });
-
-}
-
-
 function logout() {
-    $.removeCookie('encripted', { path: '/'});
+    $.removeCookie('encrypted', { path: '/'});
     window.location.replace("/railway_station_service_war_exploded");
 }
 
-
 function buyTicket(index){
-    console.log(routeDate[index]);
     let train_id = routeDate[index].train_id;
     let start_station = routeDate[index].dep;
     let end_station = routeDate[index].des;
     let dest_time = routeDate[index].start_date;
     let dept_time = routeDate[index].end_date;
     let route_id = routeDate[index].route_id;
-    let cookie = $.cookie('encripted');
-
-    let emailAndPassword = atob(cookie);
-    let email = emailAndPassword.split(":")[0];
-
-    console.log(email);
+    let cookie = $.cookie('encrypted');
 
     $.ajax({
         type: 'POST',
         url: "/railway_station_service_war_exploded/services/items/buyTicket",
         data: JSON.stringify( {
-            email: email,
+            authToken: cookie,
             train_id: train_id,
             start_station: start_station,
             end_station: end_station,
@@ -155,29 +135,15 @@ function buyTicket(index){
 }
 
 $(document).ready(function () {
-    $.get("/railway_station_service_war_exploded/services/items/initialize", {}, function (res) {
-        console.log("Succeesfully initialized!")
+    $.get("/railway_station_service_war_exploded/services/items/initialize", {}, function () {
+        console.log("Successfully initialized!");
     });
-
-    if (typeof $.cookie('encripted') != "undefined") {
-        $("#login").hide();
-        $("#signup").hide();
-        $("#userprofile").show();
-        $("#signout").show();
-    } else {
-        $("#login").show();
-        $("#signup").show();
-        $("#userprofile").hide();
-        $("#signout").hide();
-    }
-
-
-
-
-    $("#routeForm").submit(function (e) {
-
-        e.preventDefault(); // avoid to execute the actual submit of the form.
-
+    cookieCheck();
+    $("#search-route").on('click', function() {
         showTickets();
     });
+
+
+
+
 });

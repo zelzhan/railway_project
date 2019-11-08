@@ -75,6 +75,7 @@ public class Utils {
         String username = RailwayApplication.properties.getProperty("USERNAME");
         String password = RailwayApplication.properties.getProperty("PASSWORD");
 
+
         System.out.println("Connecting database...");
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();

@@ -136,10 +136,14 @@ function buyTicket(index){
 
 $(document).ready(function () {
     $.get("/railway_station_service_war_exploded/services/items/initialize", {}, function () {
-        console.log("Successfully initialized!")
+        console.log("Successfully initialized!");
     });
     cookieCheck();
     $("#search-route").on('click', function() {
         showTickets();
     });
+
+
+
+
 });
