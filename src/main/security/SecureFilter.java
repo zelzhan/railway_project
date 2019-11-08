@@ -55,6 +55,7 @@ public class SecureFilter implements ContainerRequestFilter {
             }
         }
 
+        System.out.println();
 
         Response unauthorizedStatus = Response
                 .status(Response.Status.UNAUTHORIZED)

@@ -18,12 +18,9 @@ function removeTicket(id) {
         success: function () {
             alert("Ticket successfully cancelled!");
             location.reload();
-
         }
     });
-
 }
-
 
 function getUserData() {
 
@@ -82,7 +79,6 @@ function getUserData() {
                     "<th scope=\"col\">" + dest[0] + "</th>\n" +
                     "<th scope=\"col\">" + future['status'] +"</th>" + append + "</tr>")
                 }
-
             );
         })
     }

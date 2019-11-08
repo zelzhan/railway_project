@@ -35,23 +35,24 @@ public class RailwayService extends HttpServlet {
     Connection connection;
     DataOutputStream dout;
     DataInputStream din;
-    boolean initalized;
+    boolean initialized;
 
-    public RailwayService(Connection connection) throws IOException {
-        this.graph = initalizeGraph();
-        this.initalized = false;
+    RailwayService(Connection connection){
+        this.graph = initializeGraph();
+        this.initialized = false;
         this.connection = connection;
+        System.out.println("Railway is activated!");
     }
 
     @GET
     @Path("initialize")
     public Response init(@Context ServletContext servletContext) {
 
-        if (!this.initalized){
+        if (!this.initialized){
             Pair<DataInputStream, DataOutputStream> pair = initializeSocket(servletContext, this.dout, this.din);
             this.din = pair.getKey();
             this.dout = pair.getValue();
-            this.initalized = true;
+            this.initialized = true;
         }
         return Response.ok().build();
     }

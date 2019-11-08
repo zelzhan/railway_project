@@ -23,9 +23,9 @@ public class RailwayApplication extends Application {
     private Set<Object> singletons = new HashSet<Object>();
     public static final String PROPERTIES_FILE = "config.properties";
     public static Properties properties = new Properties();
-    Connection connection;
+    private Connection connection;
 
-    public RailwayApplication(@Context ServletContext servletContext) throws IOException {
+    public RailwayApplication(@Context ServletContext servletContext) {
         readProperties();
         this.connection = initializeDatabase(this.connection, servletContext);
         singletons.add(new RailwayService(this.connection));

@@ -94,7 +94,7 @@ public class Utils {
     }
 
 
-    public static Graph initalizeGraph() {
+    public static Graph initializeGraph() {
 
         Graph graph = new Graph();
         graph.addVertex("6");

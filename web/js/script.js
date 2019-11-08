@@ -36,12 +36,8 @@ function showTickets() {
     let data = []
     $("form#routeForm :input").each(function () {
         var input = $(this); // This is the jquery object of the input, do what you will
-
         data.push(input.val());
     });
-    console.log(data);
-
-
 
     let url = "/railway_station_service_war_exploded/services/items/" + data[0] + "/" + data[1] + "/" + data[4] + "-" + data[3] + "-" + data[2];
 
@@ -53,7 +49,6 @@ function showTickets() {
                 alert("Place doesn't exist");
             }
             updateRoute(JSON.parse(data));
-
         },
     });
 
@@ -139,15 +134,12 @@ function buyTicket(index){
 
 }
 
-function init(){
+$(document).ready(function () {
     $.get("/railway_station_service_war_exploded/services/items/initialize", {}, function () {
         console.log("Successfully initialized!")
     });
-}
-
-$(document).ready(function () {
-    init();
     cookieCheck();
-    showTickets();
+    $("#search-route").on('click', function() {
+        showTickets();
     });
 });
