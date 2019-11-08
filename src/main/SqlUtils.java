@@ -26,9 +26,7 @@ public class SqlUtils {
 
     public static void buyTicket (Connection connection, RouteBuyTicket route) {
         try {
-            String decodedString = Base64.decodeAsString(route.getAuthToken());
-            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
-            String email = tokenizer.nextToken();
+            String email = route.getEmail();
             Statement st2 = connection.createStatement();
             ResultSet id1 = st2.executeQuery("select ID from station where name = \"" +route.getStart_station() + "\"");
             id1.next();
@@ -107,10 +105,6 @@ public class SqlUtils {
             Statement st = connection.createStatement();
             Statement st2 = connection.createStatement();
             Statement st3 = connection.createStatement();
-
-            //sql query for getting all personal info by email
-
-            //sql query for getting all future tickets for different passangers
             ResultSet tickets = st2.executeQuery("select e.login, t.* from registered_user e, ticket t\n" +
                     "where e.id=t.client_id and  t.departure_time >  now();\n");
 
@@ -119,7 +113,6 @@ public class SqlUtils {
             while (tickets.next()) {
                 ResultSet res = st.executeQuery("select u.first_name, u.last_name, u.phone, u.login from registered_user u where u.login = \"" + tickets.getString(1) + "\"");
                 res.next();
-                //(String email,String id, String train_id, String dept_station, String dest_station, String dept_time, String dest_time, String status)
                 alltickets.add(new Pair<>(new Passenger(res.getString(1), res.getString(2), res.getString(3), res.getString(4)),
                         new Ticket(tickets.getString(1),tickets.getString(2), tickets.getString(4), tickets.getString(5), tickets.getString(6), tickets.getString(7), tickets.getString(8), tickets.getString(9))));
             }
