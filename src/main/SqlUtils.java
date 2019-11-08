@@ -46,12 +46,9 @@ public class SqlUtils {
         try {
             Statement st = connection.createStatement();
             st.executeUpdate("Update ticket Set ReservStatus = 'Cancelled' Where id="+ticket_id);
-//            Statement st4 = connection.createStatement();
-//            st4.executeUpdate("");
         } catch (Exception e){
             e.printStackTrace();
         }
-
     }
 
     public static Response getUserProfile (Connection connection, String authToken) {
@@ -117,7 +114,6 @@ public class SqlUtils {
         return Response.ok().build();
     }
 
-
     public static List<Route> findRoute(String depart, String dest, String date, Connection connection) {
         Statement st;
 
@@ -139,10 +135,7 @@ public class SqlUtils {
         return routes;
     }
 
-
-
     public static String findMapRoute(Connection connection, int route, String datey, String depart, String dest, DataInputStream din, DataOutputStream dout) {
-
 
         List<Route> params = new ArrayList();
         String s = "";
@@ -171,6 +164,4 @@ public class SqlUtils {
         return str;
 
     }
-
-
 }

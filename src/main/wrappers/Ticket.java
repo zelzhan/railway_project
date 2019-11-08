@@ -18,5 +18,4 @@ public class Ticket {
         this.dest_time = dest_time;
         this.status = status;
     }
-
 }
