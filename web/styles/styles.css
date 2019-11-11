@@ -70,7 +70,8 @@
     width: 100%;
     height: auto;
     min-height: 400px;
-    padding: 250px 0;
+/*     padding: 250px 0; */
+    padding: 0;
     background: linear-gradient(to bottom, rgba(22, 22, 22, 0.3) 0%, rgba(22, 22, 22, 0.7) 75%, #161616 100%), url("../img/train-depo.jpg");
     background-position: center;
     background-size: cover;
@@ -88,10 +89,10 @@
     -webkit-background-clip: text;
 }
 
-.top-header {
+/* .top-header {
     height: 100vh;
     padding: 0;
-}
+} */
 .top-header h1 {
     font-size: 4.5rem;
     line-height: 6.5rem;
