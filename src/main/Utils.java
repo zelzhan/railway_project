@@ -7,6 +7,7 @@ import org.glassfish.jersey.internal.util.Base64;
 import javax.servlet.ServletContext;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.net.Socket;
@@ -14,6 +15,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -126,6 +129,8 @@ public class Utils {
     }
 
 
+
+
     public static Graph initializeGraph() {
 
         Graph graph = new Graph();
@@ -154,5 +159,30 @@ public class Utils {
 
         graph.printAllPaths("6", "1");
         return graph;
+    }
+
+    public static void makeLog(HttpHeaders headers, String message, String requestType){
+        String contentType = headers.getRequestHeader("Content-Type").get(0);
+        System.out.println(contentType);
+
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        String currentDate = formatter.format(date);
+
+        try
+        {
+            String filename= "MyFile.txt";
+            FileWriter fw = new FileWriter(filename,true); //the true will append the new data
+            fw.write(message + "\n" +
+                    "Request type: " + requestType + "\n" +
+                    "Content type: " + contentType + "\n" +
+                    "Date: " + currentDate+ "\n\n");//appends the string to the file
+            fw.close();
+        }
+        catch(Exception ioe)
+        {
+            System.err.println("IOException: " + ioe.getMessage());
+        }
+
     }
 }

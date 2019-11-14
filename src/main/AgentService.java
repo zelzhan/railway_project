@@ -7,6 +7,8 @@ import org.glassfish.jersey.internal.util.Base64;
 import javax.servlet.http.HttpServlet;
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
@@ -14,6 +16,7 @@ import java.util.List;
 
 import static main.SqlUtils.buyTicket;
 import static main.SqlUtils.getAgentProfile;
+import static main.Utils.*;
 
 @Path("agent")
 public class AgentService extends HttpServlet {
@@ -30,21 +33,27 @@ public class AgentService extends HttpServlet {
 
     @POST
     @Path("/secured/agentProfile")
-    public Response agentProfile(ContainerRequestContext requestContext) {
+    public Response agentProfile(ContainerRequestContext requestContext, @Context HttpHeaders headers) {
 
         List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
         String authToken = authHeader.get(0);
         authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
+
+        String email = getEmailFromToken(authToken);
+        makeLog(headers,"Agent with email "+email, "POST");
         return getAgentProfile(connection, authToken);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("buyTicketAgent")
-    public Response agentNewTickets(String js) {
+    public Response agentNewTickets(String js, ContainerRequestContext requestContext, @Context HttpHeaders headers) {
         Gson gson  = new Gson();
         RouteBuyTicket route = gson.fromJson(js, RouteBuyTicket.class);
         buyTicket(connection, route);
+        String authToken = getTokenFromHeader(requestContext);
+        String email = getEmailFromToken(authToken);
+        makeLog(headers,"Agent with email "+email, "POST");
         return Response.ok().build();
     }
 }
