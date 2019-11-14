@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
+import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -104,10 +105,12 @@ public class RailwayService extends HttpServlet {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("buyTicket")
-    public Response postNewTickets(String js) {
+    public Response postNewTickets(String js, ContainerRequestContext requestContext) {
         Gson gson  = new Gson();
         RouteBuyTicket route = gson.fromJson(js, RouteBuyTicket.class);
 
+        String authToken = getTokenFromHeader(requestContext);
+        String email = getEmailFromToken(authToken); 
         buyTicket(connection, route);
 
         return Response.ok().build();

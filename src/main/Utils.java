@@ -5,12 +5,11 @@ import main.graph.Graph;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import java.io.*;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -122,5 +121,28 @@ public class Utils {
 
         graph.printAllPaths("6", "1");
         return graph;
+    }
+    public static void makeLog(HttpHeaders headers, String message){
+        String contentType = headers.getRequestHeader("Content-Type").get(0);
+        System.out.println(contentType);
+
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        String currentDate = formatter.format(date);
+
+        try
+        {
+            String filename= "MyFile.txt";
+            FileWriter fw = new FileWriter(filename,true); //the true will append the new data
+            fw.write(message + "\n" +
+                    "Content type: " + contentType + "\n" +
+                    "Date: " + currentDate+ "\n\n");//appends the string to the file
+            fw.close();
+        }
+        catch(Exception ioe)
+        {
+            System.err.println("IOException: " + ioe.getMessage());
+        }
+
     }
 }
