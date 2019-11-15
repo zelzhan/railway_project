@@ -33,7 +33,7 @@ function updateRoute(items) {
 }
 
 function showTickets() {
-    let data = []
+    let data = [];
     $("form#routeForm :input").each(function () {
         var input = $(this); // This is the jquery object of the input, do what you will
         data.push(input.val());
@@ -51,7 +51,6 @@ function showTickets() {
             updateRoute(JSON.parse(data));
         },
     });
-
 }
 
 function showMap(index) {
@@ -131,7 +130,6 @@ function buyTicket(index){
         fail: function(err) { alert(err) },
         contentType: "application/json"
     })
-
 }
 
 $(document).ready(function () {

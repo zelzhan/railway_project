@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import static main.SqlUtils.getAgentProfile;
+import static main.SqlUtils.getUserAgentProfile;
 
 @Path("agent")
 public class AgentService extends HttpServlet {
@@ -31,12 +32,23 @@ public class AgentService extends HttpServlet {
 
         List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
 
-
         String authToken = authHeader.get(0);
 
         authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
 
         return getAgentProfile(connection, authToken);
+    }
+
+    @POST
+    @Path("/secured/userAgent")
+    public Response userAgent(ContainerRequestContext requestContext) {
+        List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
+
+        String authToken = authHeader.get(0);
+
+        authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
+
+        return getUserAgentProfile(connection, authToken);
     }
 }
 
