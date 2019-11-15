@@ -10,8 +10,7 @@ import javax.ws.rs.core.Response;
 import java.sql.Connection;
 import java.util.List;
 
-import static main.SqlUtils.getAgentProfile;
-import static main.SqlUtils.getUserAgentProfile;
+import static main.SqlUtils.*;
 
 @Path("agent")
 public class AgentService extends HttpServlet {
@@ -49,6 +48,17 @@ public class AgentService extends HttpServlet {
         authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
 
         return getUserAgentProfile(connection, authToken);
+    }
+
+    @POST
+    @Path("/secured/getTicket/{ticketID}")
+    public Response getUserTicket(ContainerRequestContext requestContext, @PathParam("ticketID") String ticketID) {
+        List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
+
+        String authToken = authHeader.get(0);
+
+        authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
+        return getTicket(connection, ticketID);
     }
 }
 

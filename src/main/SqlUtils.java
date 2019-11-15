@@ -210,4 +210,20 @@ public class SqlUtils {
 
         return str;
     }
+
+    public static Response getTicket (Connection connection, String ticketID) {
+        try{
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery("select e.login, t.id, t.train_id, r.name1, s1.name, s2.name, t.departure_time, t.arrival_time, t.ReservStatus\n" +
+                    "from registered_user e, ticket t, station s1, station s2, train r " +
+                    "where e.id=t.client_id and r.id=t.train_id and s1.id=t.start_station_id and s2.id=end_station_id and t.id=\'"+ ticketID + "\'");
+            res.next();
+            Ticket ticket = new Ticket(res.getString(1), res.getString(2), res.getString(3), res.getString(5), res.getString(6), res.getString(7), res.getString(8), res.getString(9));
+            Gson gson = new Gson();
+            return Response.ok(gson.toJson(ticket)).build();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
