@@ -2,19 +2,50 @@ package main;
 
 import javafx.util.Pair;
 import main.graph.Graph;
+import org.glassfish.jersey.internal.util.Base64;
 
 import javax.servlet.ServletContext;
+import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import java.io.*;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 
 public class Utils {
+
+    private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
+    private static final String AUTHORIZATION_HEADER_PREFIX = "Basic ";
+
+
+    public static String getTokenFromHeader(ContainerRequestContext requestContext) {
+        List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
+        if (authHeader == null || authHeader.size() <= 0) {
+            Response unauthorizedStatus = Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity("Don't have rights for this resource")
+                    .build();
+            requestContext.abortWith(unauthorizedStatus);
+        }
+        String authToken = authHeader.get(0);
+        return authToken;
+
+    }
+
+    public static String getEmailFromToken(String authToken) {
+        authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
+        String decodedString = Base64.decodeAsString(authToken);
+        StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
+        String email = tokenizer.nextToken();
+        return email;
+    }
 
     public static void importSQL(Connection conn, InputStream in) throws SQLException {
         Scanner s = new Scanner(in);
@@ -43,6 +74,7 @@ public class Utils {
         String url = "jdbc:mysql://localhost:3306/javabase?" + "allowPublicKeyRetrieval=true&useSSL=false";
         String username = RailwayApplication.properties.getProperty("USERNAME");
         String password = RailwayApplication.properties.getProperty("PASSWORD");
+
 
         System.out.println("Connecting database...");
         try {

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
+import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -55,6 +56,17 @@ public class RailwayService extends HttpServlet {
             this.initialized = true;
         }
         return Response.ok().build();
+    }
+
+    @GET
+    @Path("getRole")
+    public Response getRole(ContainerRequestContext requestContext) {
+        String authToken = getTokenFromHeader(requestContext);
+        String email = getEmailFromToken(authToken);
+        String role = getRoleFromEmail(connection, email);
+        Gson gson = new Gson();
+        role = role.replace("\"", "");
+        return Response.ok(gson.toJson(role)).build();
     }
 
     @GET

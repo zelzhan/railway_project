@@ -1,5 +1,7 @@
 package main;
 
+import com.google.gson.Gson;
+import main.wrappers.RouteBuyTicket;
 import org.glassfish.jersey.internal.util.Base64;
 
 import javax.servlet.http.HttpServlet;
@@ -30,12 +32,19 @@ public class AgentService extends HttpServlet {
     public Response agentProfile(ContainerRequestContext requestContext) {
 
         List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
-
         String authToken = authHeader.get(0);
-
         authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
-
         return getAgentProfile(connection, authToken);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("buyTicketAgent")
+    public Response agentNewTickets(String js) {
+        Gson gson  = new Gson();
+        RouteBuyTicket route = gson.fromJson(js, RouteBuyTicket.class);
+        buyTicket(connection, route);
+        return Response.ok().build();
     }
 
     @POST

@@ -21,6 +21,24 @@ import java.util.StringTokenizer;
 
 public class SqlUtils {
 
+    public static String getRoleFromEmail(Connection connection, String email) {
+        Statement st = null;
+        try {
+            st = connection.createStatement();
+            String query = "select role from registered_user where login = '"+ email+"'";
+
+            ResultSet id = st.executeQuery(query);
+            id.next();
+            return id.getString(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+
+    }
+
     public static void buyTicket (Connection connection, RouteBuyTicket route) {
         try {
             String decodedString = Base64.decodeAsString(route.getAuthToken());
@@ -45,6 +63,8 @@ public class SqlUtils {
         try {
             Statement st = connection.createStatement();
             st.executeUpdate("Update ticket Set ReservStatus = 'Cancelled' Where id="+ticket_id);
+            Statement st4 = connection.createStatement();
+            st4.executeUpdate("Update schedule set availability = availability +1 where train_id=(select train_id from ticket where id="+ticket_id);
         } catch (Exception e){
             e.printStackTrace();
         }
