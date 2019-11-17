@@ -8,9 +8,19 @@ public class Graph {
     private Map<String, List<String>> adjVertices;
     public ArrayList<List<String>> prevPaths;
 
+
+
     public Graph () {
         adjVertices = new HashMap<>();
     }
+
+
+
+    public ArrayList<List<String>> getAllPaths(String dep, String des) {
+        printAllPaths(dep, des);
+        return prevPaths;
+    }
+
 
     public void addEdge(String label1, String label2) {
         adjVertices.get(label1).add(label2);
