@@ -22,21 +22,6 @@ function removeTicket(id) {
     });
 }
 
-function notify(items) {
-    var login = items['login'];
-    var message = $("#message").val();
-
-    $.post("/railway_station_service_war_exploded/services/items/send_notify", {
-        login: login,
-        message: message
-    }, function () {
-        alert("Notification message is created")
-        window.location.replace("/railway_station_service_war_exploded/profile.html");
-    }).fail( function () {
-        alert("Notification message is not created")
-    });
-}
-
 function getUserData() {
 
     $.ajaxSetup({
@@ -45,6 +30,7 @@ function getUserData() {
         }
     });
 
+    console.log(cookie);
     if(typeof $.cookie('encrypted') === "undefined"){
         console.log("Cookie doesn't exists");
     } else{

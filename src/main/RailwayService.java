@@ -35,8 +35,8 @@ public class RailwayService extends HttpServlet {
     DataInputStream din;
     boolean initialized;
 
-    RailwayService(Connection connection){
-        this.graph = initializeGraph();
+    RailwayService(Connection connection, Graph graph){
+        this.graph = graph;
         this.initialized = false;
         this.connection = connection;
         System.out.println("Railway is activated!");

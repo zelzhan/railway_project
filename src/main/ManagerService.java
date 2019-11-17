@@ -1,6 +1,7 @@
 package main;
 
 import com.google.gson.Gson;
+import main.graph.Graph;
 import main.wrappers.Agent;
 
 import javax.servlet.ServletContext;
@@ -21,8 +22,10 @@ import static main.SqlUtils.*;
 @Path("manager")
 public class ManagerService extends HttpServlet {
     Connection connection;
-    public ManagerService (Connection connection){
+    Graph graph;
+    public ManagerService (Connection connection, Graph graph){
         this.connection = connection;
+        this.graph = graph;
         System.out.println("Manager service activated!");
     }
 
