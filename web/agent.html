@@ -34,7 +34,7 @@
             <a class="nav-link js-scroll-trigger" href="index.html">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+            <a class="nav-link js-scroll-trigger" href="#">Contact</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="agent.html" id="userprofile">My Profile</a>
@@ -55,14 +55,18 @@
         <div class="row mx-auto">
             <div class="col-md-3">
                 <div class="personal_details">
-                    <h5>Personal details:</h5>
+                    <h5>Personal details</h5>
                     <ul class="list-group">
                         <li class="list-group-item">Full name: <span id="full_name"></span></li>
                         <li class="list-group-item">Email: <span id="email"></span></li>
                         <li class="list-group-item">Phone: <span id="phone"></span></li>
-                        <li class="list-group-item">Working hours: <span id="phone"></span></li>
-                        <li class="list-group-item">Salary: <span id="phone"></span></li>
-                        <button type="button" class="btn btn-primary mx-auto" id="paycheck">Pay&nbspcheck</button> 
+                        <li class="list-group-item">Working hours: <span id="work-hours"></span></li>
+                        <li class="list-group-item">Salary: <span id="salary"></span></li>
+                        <div class="row">
+                            <button type="button" style="padding: 12px 8px;" class="btn btn-primary mx-auto" id="paycheck">Pay&nbspcheck</button>
+                            <button type="button" style="padding: 12px 8px;" class="btn btn-primary mx-auto" id="create-ticket">Create&nbspticket</button>
+                        </div>
+
                     </ul>
                 </div>
                 <div class="personal_details">
@@ -114,7 +118,7 @@
             </div>
             </div>
             <div class="col-md-9">
-                
+
                 <div class="agent-tickets">
                     <!-- <h2 class="title mx-auto">Trips</h2> -->
                     <table class="table table-bordered">
@@ -130,8 +134,8 @@
                             <th scope="col">Cancel ticket</th>
                         </tr>
                         </thead>
-                        <tbody id="agent-tickets">
-                          
+                        <tbody id="agent-tickets" style="background-color: white">
+
                         </tbody>
                     </table>
                 </div>
@@ -158,8 +162,6 @@
   <!-- Plugin JavaScript -->
   <script src="js/jquery-easing/jquery.easing.min.js"></script>
 
-  <!-- Custom scripts for this template -->
-  <script src="js/animation.js"></script>
 
 </body>
 
