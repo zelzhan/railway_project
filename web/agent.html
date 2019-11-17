@@ -3,116 +3,72 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-    <title>EVe booking</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap core CSS -->
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
-    <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet">
-    <link href="styles/styles.css" rel="stylesheet">
 
-    <script crossorigin="anonymous" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="js/jquery.cookie.js"></script>
-    <script src="js/agent.js"></script>
+  <title>EVe booking</title>
+
+  <!-- Bootstrap core CSS -->
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link href="styles/styles.css" rel="stylesheet">
+  
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="js/jquery.cookie.js"></script>
+  <script src="js/agent.js"></script>
+
 </head>
 
 <body id="page-top">
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="main-top-bar">
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="main-top-bar">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">EVe booking</a>
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">EVe booking</a>
 
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="agent.html" id="agent.html">My Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="singout" onclick="logout();">Sign out</a>
-                </li>
-            </ul>
-        </div>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="agent.html" id="userprofile">My Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="logout();" href="#" id="singout">Sign out</a>
+          </li>
+        </ul>
+      </div>
     </div>
-</nav>
+  </nav>
 
-<!-- Header -->
-<header class="top-header">
+  <!-- Header -->
+  <header class="top-header">
     <div class="d-flex align-items-center" style="padding-top: 100px;">
-        <!-- <div class="mx-auto"> -->
+      <!-- <div class="mx-auto"> -->
         <!-- <div class="container"> -->
         <div class="row mx-auto">
             <div class="col-md-3">
                 <div class="personal_details">
-                    <h5>Personal details:</h5>
+                    <h5>Personal details</h5>
                     <ul class="list-group">
                         <li class="list-group-item">Full name: <span id="full_name"></span></li>
                         <li class="list-group-item">Email: <span id="email"></span></li>
                         <li class="list-group-item">Phone: <span id="phone"></span></li>
-                        <li class="list-group-item">Working hours: <span id="workHours"></span></li>
+                        <li class="list-group-item">Working hours: <span id="work-hours"></span></li>
                         <li class="list-group-item">Salary: <span id="salary"></span></li>
-                        <button class="btn btn-primary mx-auto" id="paycheck" type="button">Pay&nbspcheck</button>
-                    </ul>
-                </div>
-                <div class="personal_details">
-                    <form id="routeForm">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col">
-                                    <label>Departure City</label>
-                                    <input class="form-control" id="dep" placeholder="Astana" type="text">
-                                </div>
-                                <div class="col">
-                                    <label>Destination City</label>
-                                    <input class="form-control" id="des" placeholder="Almaty" type="text">
-                                </div>
-                            </div>
+                        <div class="row">
+                            <button type="button" style="padding: 12px 8px;" class="btn btn-primary mx-auto" id="paycheck">Pay&nbspcheck</button>
+                            <button type="button" style="padding: 12px 8px;" class="btn btn-primary mx-auto" id="createTicket">Create&nbspticket</button>
                         </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col">
-                                    <label>Day</label>
-                                    <input class="form-control" id="day-input" placeholder="Day" type="text">
-                                </div>
-                                <div class="col">
-                                    <label>Month</label>
-                                    <select class="form-control" id="month-input">
-                                        <option selected>Choose</option>
-                                        <option>01</option>
-                                        <option>02</option>
-                                        <option>03</option>
-                                        <option>04</option>
-                                        <option>05</option>
-                                        <option>06</option>
-                                        <option>07</option>
-                                        <option>08</option>
-                                        <option>09</option>
-                                        <option>10</option>
-                                        <option>11</option>
-                                        <option>12</option>
-                                    </select>
-                                </div>
-                                <div class="col">
-                                    <label>Year</label>
-                                    <input class="form-control" id="year-input" placeholder="Year" type="text">
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" id="search-route" type="submit">Search</button>
-                    </form>
+                  </ul>
                 </div>
             </div>
             <div class="col-md-9">
@@ -132,35 +88,34 @@
                             <th scope="col">Cancel ticket</th>
                         </tr>
                         </thead>
-                        <tbody id="agent-tickets">
+                        <tbody id="agent-tickets" style="background-color: white">
 
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
-        <!-- </div> -->
+    
+      <!-- </div> -->
     </div>
-</header>
+  </header>
 
-<!-- Footer -->
-<footer class="bg-black small text-center text-white-50">
+
+  <!-- Footer -->
+  <footer class="bg-black small text-center text-white-50">
     <div class="container">
-        Copyright &copy; EVe booking
+      Copyright &copy; EVe booking
     </div>
-</footer>
+  </footer>
 
 
-<!-- Bootstrap core JavaScript -->
+  <!-- Bootstrap core JavaScript -->
+  
+  <script src="js/bootstrap-js/bootstrap.bundle.min.js"></script>
 
-<script src="js/bootstrap-js/bootstrap.bundle.min.js"></script>
+  <!-- Plugin JavaScript -->
+  <script src="js/jquery-easing/jquery.easing.min.js"></script>
 
-<!-- Plugin JavaScript -->
-<script src="js/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for this template -->
-<script src="js/animation.js"></script>
 
 </body>
 
