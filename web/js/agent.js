@@ -80,9 +80,8 @@ function getTickets() {
                     appendText = appendText + "<th scope=\"col\">" + "Done!" +"</th></tr>";
                 } else {
                     appendText = appendText + "<th scope=\"col\">" + "<button type=\"button\" onclick='cancelTicket(" + ticket['id'] + ")' class=\"btn btn-primary\">Cancel Ticket</button>" + "</th></tr>";
+                    $("#agent-tickets").append(appendText);
                 }
-                $("#agent-tickets").append(appendText);
-
                 });
             },
         fail: function(err) {
