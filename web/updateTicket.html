@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -20,7 +19,8 @@
     <script crossorigin="anonymous" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="js/jquery.cookie.js"></script>
-    <script src="js/agent.js"></script>
+    <script src="js/updateTickets.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -28,7 +28,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="main-top-bar">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">EVe booking</a>
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">EVe booking asdasdsadas</a>
 
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
@@ -111,25 +111,43 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary" id="search-route" type="submit">Search</button>
+                        <button class="btn btn-primary" id="search-route" type="button">Search</button>
                     </form>
                 </div>
             </div>
             <div class="col-md-9">
-
                 <div class="agent-tickets">
-                    <!-- <h2 class="title mx-auto">Trips</h2> -->
                     <table class="table table-bordered">
                         <thead class="thead-dark">
                         <tr>
+                            <th scope="col">#</th>
                             <th scope="col">Departure City</th>
                             <th scope="col">Destination City</th>
-                            <th scope="col">Departure time</th>
-                            <th scope="col">Departure Date</th>
-                            <th scope="col">Arrival time</th>
-                            <th scope="col">Arrival Date</th>
-                            <th scope="col">Update ticket</th>
-                            <th scope="col">Cancel ticket</th>
+                            <th scope="col">Date of Departure</th>
+                            <th scope="col">Time of Departure</th>
+                            <th scope="col">Date of Arrival</th>
+                            <th scope="col">Time of Arrival</th>
+                            <th scope="col">Owner</th>
+                        </tr>
+                        </thead>
+                        <tbody id="old-ticket">
+
+                        </tbody>
+                    </table>
+
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Departure City</th>
+                            <th scope="col">Destination City</th>
+                            <th scope="col">Date of Departure</th>
+                            <th scope="col">Time of Departure</th>
+                            <th scope="col">Date of Arrival</th>
+                            <th scope="col">Time of Arrival</th>
+                            <th scope="col">Capacity</th>
+                            <th scope="col">Route</th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody id="agent-tickets">
@@ -143,6 +161,7 @@
         <!-- </div> -->
     </div>
 </header>
+
 
 <!-- Footer -->
 <footer class="bg-black small text-center text-white-50">
