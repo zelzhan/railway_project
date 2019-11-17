@@ -19,6 +19,8 @@
   
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="js/jquery.cookie.js"></script>
+  <script src="js/agent.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -62,11 +64,7 @@
                         <li class="list-group-item">Phone: <span id="phone"></span></li>
                         <li class="list-group-item">Working hours: <span id="work-hours"></span></li>
                         <li class="list-group-item">Salary: <span id="salary"></span></li>
-                        <div class="row">
-                            <button type="button" style="padding: 12px 8px;" class="btn btn-primary mx-auto" id="paycheck">Pay&nbspcheck</button>
-                            <button type="button" style="padding: 12px 8px;" class="btn btn-primary mx-auto" id="create-ticket">Create&nbspticket</button>
-                        </div>
-
+                        <button type="button" style="padding: 12px 8px;" class="btn btn-primary mx-auto" id="paycheck">Pay&nbspcheck</button>
                     </ul>
                 </div>
                 <div class="personal_details">
@@ -84,34 +82,8 @@
                 </div>
                 </div>
                   <div class="form-group">
-                    <div class="row">
-                      <div class="col">
-                        <label>Day</label>
-                        <input type="text" class="form-control" id="day-input" placeholder="Day">
-                      </div>
-                      <div class="col">
-                        <label>Month</label>
-                        <select class="form-control" id="month-input">
-                          <option selected>Choose</option>
-                          <option>01</option>
-                          <option>02</option>
-                          <option>03</option>
-                          <option>04</option>
-                          <option>05</option>
-                          <option>06</option>
-                          <option>07</option>
-                          <option>08</option>
-                          <option>09</option>
-                          <option>10</option>
-                          <option>11</option>
-                          <option>12</option>
-                        </select>
-                      </div>
-                      <div class="col">
-                        <label>Year</label>
-                        <input type="text" class="form-control" id="year-input" placeholder="Year">
-                      </div>
-                    </div>
+                      <label>Passenger email</label>
+                      <input type="text" class="form-control" id="pass-email" placeholder="example@email.com">
                   </div>
                   <button type="submit" class="btn btn-primary" id="search-route">Search</button>
             </form>
