@@ -119,10 +119,10 @@ public class SqlUtils {
         }
     }
 
-    public static void updateSalaryHistory(Connection connection, String authToken, String employee_id){
+    public static void updateSalaryHistory(Connection connection, String authToken, String login, String salary){
         try {
             Statement st = connection.createStatement();
-            st.executeQuery("u");
+            st.executeQuery("insert into salaryHistory(employee_id, payrollDate, salary) values("+login+", now(), "+salary+")");
         } catch (SQLException e) {
             e.printStackTrace();
         }
