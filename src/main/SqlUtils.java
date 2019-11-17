@@ -148,28 +148,25 @@ public class SqlUtils {
         return Response.ok().build();
     }
 
-    public static Response getAgentProfile (Connection connection, String authToken) {
+    public static Response getAgentProfile (Connection connection) {
 
         try {
-            String decodedString = Base64.decodeAsString(authToken);
-            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
-            String email = tokenizer.nextToken();
             Statement st = connection.createStatement();
             Statement st2 = connection.createStatement();
-            Statement st3 = connection.createStatement();
-            ResultSet tickets = st2.executeQuery("select e.login, t.* from registered_user e, ticket t\n" +
-                    "where e.id=t.client_id and  t.departure_time >  now();\n");
 
-            ArrayList<Pair<Passenger, Ticket>> alltickets = new ArrayList<>();
+            ResultSet tickets = st2.executeQuery("select e.login, t.id, t.train_id, s1.name, s2.name, t.departure_time, t.arrival_time, t.ReservStatus from registered_user e, ticket t, station s1, station s2 " +
+                    "where e.id=t.client_id and t.departure_time >  now() and s1.id=t.start_station_id and s2.id = t.end_station_id;\n");
+
+            ArrayList<Pair<Passenger, Ticket>> allTickets = new ArrayList<>();
 
             while (tickets.next()) {
                 ResultSet res = st.executeQuery("select u.first_name, u.last_name, u.phone, u.login from registered_user u where u.login = \"" + tickets.getString(1) + "\"");
                 res.next();
-                alltickets.add(new Pair<>(new Passenger(res.getString(1), res.getString(2), res.getString(3), res.getString(4)),
-                        new Ticket(tickets.getString(1),tickets.getString(2), tickets.getString(4), tickets.getString(5), tickets.getString(6), tickets.getString(7), tickets.getString(8), tickets.getString(9))));
+                allTickets.add(new Pair<>(new Passenger(res.getString(1), res.getString(2), res.getString(3), res.getString(4)),
+                        new Ticket(tickets.getString(1),tickets.getString(2), tickets.getString(3), tickets.getString(4), tickets.getString(5), tickets.getString(6), tickets.getString(7), tickets.getString(8))));
             }
             Gson gson = new Gson();
-            return Response.ok(gson.toJson(alltickets)).build();
+            return Response.ok(gson.toJson(allTickets)).build();
         } catch (SQLException e) {
             e.printStackTrace();
         }

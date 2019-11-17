@@ -30,11 +30,7 @@ public class AgentService extends HttpServlet {
     @POST
     @Path("/secured/agentProfile")
     public Response agentProfile(ContainerRequestContext requestContext) {
-
-        List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
-        String authToken = authHeader.get(0);
-        authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
-        return getAgentProfile(connection, authToken);
+        return getAgentProfile(connection);
     }
 
     @POST
@@ -62,11 +58,6 @@ public class AgentService extends HttpServlet {
     @POST
     @Path("/secured/getTicket/{ticketID}")
     public Response getUserTicket(ContainerRequestContext requestContext, @PathParam("ticketID") String ticketID) {
-        List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
-
-        String authToken = authHeader.get(0);
-
-        authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
         return getTicket(connection, ticketID);
     }
 }
