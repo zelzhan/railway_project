@@ -72,4 +72,5 @@ public class RouteBuyTicket {
     public void setRoute_id(String route_id) {
         this.route_id = route_id;
     }
+
 }

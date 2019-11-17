@@ -116,18 +116,7 @@ function cancelTicket(id) {
 }
 
 function getUrlParameter(sParam) {
-    var sPageURL = window.location.search.substring(1),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-        }
-    }
+    return localStorage[sParam];
 }
 
 function buyTicket(index){
@@ -139,12 +128,12 @@ function buyTicket(index){
     let dept_time = routeData[index].end_date;
     let route_id = routeData[index].route_id;
     let cookie = $.cookie('encrypted');
-
+    let email = atob(cookie).split(":")[0];
     $.ajax({
         type: 'POST',
         url: "/railway_station_service_war_exploded/services/items/buyTicket",
         data: JSON.stringify( {
-            authToken: cookie,
+            email: email,
             train_id: train_id,
             start_station: start_station,
             end_station: end_station,

@@ -7,43 +7,8 @@ function logout() {
 }
 
 function updateTicket(id){
-
-    // cancelTicket(id);
-    window.location.replace("http://localhost:8080/railway_station_service_war_exploded/updateTicket.html?id="+id);
-
-    // let ticket = ticketData[index]['value'];
-    // let train_id = ticket['train_id'];
-    // let start_station = ticket['dept_station'];
-    // let end_station = ticket['dept_station'];
-    // let dest_time = ticket['dest_time'];
-    // let dept_time = ticket['dept_time'];
-    // let route_id = ticket['route_id'];
-    // let cookie = $.cookie('encrypted');
-    //
-    // $.ajaxSetup({
-    //     headers:{
-    //         'Authorization': "Basic " + cookie
-    //     }
-    // });
-    //
-    // $.ajax({
-    //     type: 'POST',
-    //     url: "/railway_station_service_war_exploded/services/items/updateTicket",
-    //     data: JSON.stringify( {
-    //         train_id: train_id,
-    //         start_station: start_station,
-    //         end_station: end_station,
-    //         destTime: dest_time,
-    //         deptTime: dept_time,
-    //         route_id: route_id
-    //     }),
-    //     success: function() {
-    //         alert('Successful purchase!');
-    //         showTickets();
-    //     },
-    //     fail: function(err) { alert(err) },
-    //     contentType: "application/json"
-    // })
+    localStorage.setItem( 'id', id);
+    window.location.replace("http://localhost:8080/railway_station_service_war_exploded/updateTicket.html");
 }
 
 function cancelTicket(id) {

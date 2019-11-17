@@ -5,7 +5,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
-
 import static main.SqlUtils.*;
 
 @Path("manager")
@@ -20,9 +19,7 @@ public class ManagerService extends HttpServlet {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/managerProfile")
     public Response managerProfile(@FormParam("authToken") String authToken) {
-
         return getManagerProfile(connection, authToken);
-
     }
 
     @POST
@@ -32,7 +29,4 @@ public class ManagerService extends HttpServlet {
         updateSchedule(connection, authToken, schedule, agentEmail);
         return Response.ok().build();
     }
-
-
-
 }

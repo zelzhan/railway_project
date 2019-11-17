@@ -35,15 +35,11 @@ public class SqlUtils {
         }
 
         return null;
-
-
     }
 
     public static void buyTicket (Connection connection, RouteBuyTicket route) {
         try {
-            String decodedString = Base64.decodeAsString(route.getAuthToken());
-            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
-            String email = tokenizer.nextToken();
+            String email = route.getEmail();
             Statement st2 = connection.createStatement();
             ResultSet id1 = st2.executeQuery("select ID from station where name = \"" +route.getStart_station() + "\"");
             id1.next();
@@ -64,7 +60,7 @@ public class SqlUtils {
             Statement st = connection.createStatement();
             st.executeUpdate("Update ticket Set ReservStatus = 'Cancelled' Where id="+ticket_id);
             Statement st4 = connection.createStatement();
-            st4.executeUpdate("Update schedule set availability = availability +1 where train_id=(select train_id from ticket where id="+ticket_id);
+            st4.executeUpdate("Update schedule set availability = availability +1 where train_id=(select train_id from ticket where id="+ticket_id + ")");
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -112,30 +108,68 @@ public class SqlUtils {
         return null;
     }
 
+    public static void updateSchedule(Connection connection, String authToken, String new_schedule, String email){
+        try {
+            Statement st = connection.createStatement();
+            st.executeQuery("update  regular_employee set schedule =\""+new_schedule+"\" where login =\""+email+"\"");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+// Managers profile returns all info about manager and all agents
+    public static Response getManagerProfile(Connection connection, String authToken){
+
+        try{
+            String decodedString = Base64.decodeAsString(authToken);
+            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
+            String email = tokenizer.nextToken();
+
+            Statement st3 = connection.createStatement();
+
+            //sql query for getting all personal info by email
+            ResultSet res1 = st3.executeQuery("select u.first_name, u.last_name, u.phone, u.login from registered_user u where u.login = \"" + email + "\"");
+            res1.next();
+
+            Statement st = connection.createStatement();
+            ResultSet agents = st.executeQuery("select r.login, u.first_name, u.last_name, s.name as station, r.salary, r.schedule from registered_user u, regular_employee r, station s where s.id=r.stationN and u.id = r.id;");
+            ArrayList<Agent> allagents = new ArrayList<>();
+            while(agents.next()){
+                allagents.add(new Agent(agents.getString(2), agents.getString(3),agents.getString(1), agents.getString(6),agents.getInt(5),agents.getString(4)));
+            }
+            Pair<Passenger, ArrayList<Agent>> result = new Pair<Passenger, ArrayList<Agent>>( new Passenger(res1.getString(1), res1.getString(2),agents.getString(3), agents.getString(4)), allagents);
+
+
+            Gson gson = new Gson();
+            return Response.ok(gson.toJson(result)).build();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return Response.ok().build();
+    }
+
     public static Response getAgentProfile (Connection connection, String authToken) {
 
         try {
             String decodedString = Base64.decodeAsString(authToken);
+            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
+            String email = tokenizer.nextToken();
             Statement st = connection.createStatement();
             Statement st2 = connection.createStatement();
+            Statement st3 = connection.createStatement();
+            ResultSet tickets = st2.executeQuery("select e.login, t.* from registered_user e, ticket t\n" +
+                    "where e.id=t.client_id and  t.departure_time >  now();\n");
 
-            //sql query for getting all personal info by email
-
-            //sql query for getting all future tickets for different passengers
-            ResultSet tickets = st2.executeQuery("select e.login, t.id, t.train_id, s1.name, s2.name, t.departure_time, t.arrival_time, t.ReservStatus from registered_user e, ticket t, station s1, station s2\n" +
-                    "where e.id=t.client_id and  t.departure_time >  now() and t.start_station_id = s1.id and t.end_station_id = s2.id;\n");
-
-            ArrayList<Pair<Passenger, Ticket>> allTickets = new ArrayList<>();
+            ArrayList<Pair<Passenger, Ticket>> alltickets = new ArrayList<>();
 
             while (tickets.next()) {
                 ResultSet res = st.executeQuery("select u.first_name, u.last_name, u.phone, u.login from registered_user u where u.login = \"" + tickets.getString(1) + "\"");
                 res.next();
-                //(String email, String id, String train_id, String dept_station, String dest_station, String dept_time, String dest_time, String status)
-                allTickets.add(new Pair<>(new Passenger(res.getString(1), res.getString(2), res.getString(3), res.getString(4)),
-                        new Ticket(tickets.getString(1),tickets.getString(2), tickets.getString(3), tickets.getString(4), tickets.getString(5), tickets.getString(6), tickets.getString(7), tickets.getString(8))));
+                alltickets.add(new Pair<>(new Passenger(res.getString(1), res.getString(2), res.getString(3), res.getString(4)),
+                        new Ticket(tickets.getString(1),tickets.getString(2), tickets.getString(4), tickets.getString(5), tickets.getString(6), tickets.getString(7), tickets.getString(8), tickets.getString(9))));
             }
             Gson gson = new Gson();
-            return Response.ok(gson.toJson(allTickets)).build();
+            return Response.ok(gson.toJson(alltickets)).build();
         } catch (SQLException e) {
             e.printStackTrace();
         }
