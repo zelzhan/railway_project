@@ -44,7 +44,7 @@ public class ManagerService extends HttpServlet {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/createRoute")
     public Response createRoute (@FormParam("stations") ArrayList<String> stations, @FormParam("departure_time") String departure_time) {
-        //TODO add query to create routes   
+        //TODO add query to create routes
         return Response.ok().build();
     }
 
