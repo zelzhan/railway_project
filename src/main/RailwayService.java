@@ -5,10 +5,7 @@ import com.google.gson.JsonObject;
 import javafx.util.Pair;
 import jdk.nashorn.internal.parser.JSONParser;
 import main.graph.Graph;
-import main.wrappers.Passenger;
-import main.wrappers.Route;
-import main.wrappers.RouteBuyTicket;
-import main.wrappers.Ticket;
+import main.wrappers.*;
 import org.glassfish.jersey.internal.util.Base64;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -89,6 +86,29 @@ public class RailwayService extends HttpServlet {
                             @PathParam("date") String date) {
 
         List<Route> params = findRoute(depart, dest, date, connection);
+        Gson gson = new Gson();
+        return Response.ok(gson.toJson(params)).build();
+    }
+
+    @GET
+    @Path("get_notify")
+    public Response getNotify(@Context ServletContext servletContext) {
+        List<Message> params = new ArrayList<>();
+
+        try {
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery("select u.login, m.IssueDate, m.msg from message m, registered_user u where m.manager_id=u.id and m.IssueDate>now()");
+            res.next();
+
+            while (res.next()) {
+                Message msg = new Message(res.getString(1), res.getString(2), res.getString(3));
+                params.add(msg);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         Gson gson = new Gson();
         return Response.ok(gson.toJson(params)).build();
     }
