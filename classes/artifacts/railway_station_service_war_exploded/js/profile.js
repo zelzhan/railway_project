@@ -1,12 +1,11 @@
-let cookie = $.cookie('encripted');
+let cookie = $.cookie('encrypted');
 
 function logout() {
-    $.removeCookie('encripted', { path: '/'});
+    $.removeCookie('encrypted', { path: '/'});
     window.location.replace("/railway_station_service_war_exploded");
 }
 
 function removeTicket(id) {
-
     $.ajaxSetup({
         headers: {
             'Authorization': "Basic " + cookie
@@ -19,12 +18,9 @@ function removeTicket(id) {
         success: function () {
             alert("Ticket successfully cancelled!");
             location.reload();
-
         }
     });
-
 }
-
 
 function getUserData() {
 
@@ -34,15 +30,13 @@ function getUserData() {
         }
     });
 
-
-
-    if(typeof $.cookie('encripted') === "undefined"){
+    console.log(cookie);
+    if(typeof $.cookie('encrypted') === "undefined"){
         console.log("Cookie doesn't exists");
     } else{
         $.post("/railway_station_service_war_exploded/services/items/secured/userProfile", {
             authToken: cookie
         }, function (out) {
-            console.log(out);
             let data = JSON.parse(out);
             let full_name = data['first_name'] + " " + data['last_name'];
             let phone = data['phone'];
@@ -69,8 +63,6 @@ function getUserData() {
             futures.forEach(function (future) {
                 let dept = future['dept_time'].split(" ");
                 let dest = future['dest_time'].split(" ");
-                console.log(future.id);
-
 
                 let append = "";
                 if (future['status'] == "Cancelled") {
@@ -78,8 +70,6 @@ function getUserData() {
                 } else {
                     append = "<th scope=\"col\"><button type=\"button\" onclick='removeTicket(" + future.id + ")' class=\"btn btn-primary\" id=\"" + future.id + "\">Cancel Ticket</button></th>";
                 }
-
-                console.log(append);
 
                 $("#future").append("<tr>\n" +
                     "<th scope=\"col\">" + future['dept_station'] + "</th>\n" +
@@ -90,13 +80,10 @@ function getUserData() {
                     "<th scope=\"col\">" + dest[0] + "</th>\n" +
                     "<th scope=\"col\">" + future['status'] +"</th>" + append + "</tr>")
                 }
-
             );
         })
     }
 }
-
-
 
 $(document).ready(function () {
     getUserData();

@@ -110,7 +110,7 @@ INSERT INTO registered_user (login, password, first_name,last_name, phone, role)
 INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ('gigi.employee@ex.com', 'gigiemployee123', 'Gigi', 'Employee', '87654566776', 'agent');
 INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ('robert.employee@ex.com', 'robertemployee123', 'Robert', 'Employee', '89998887766', 'agent');
 INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ('michael.employee@ex.com', 'michaelemployee123', 'Michael', 'Employee', '89009998880', 'agent');
-INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ( 'sean.employee@ex.com', 'seanemployee123', 'Sean', 'Jones', '85675675667', 'agent');
+INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ('sean.employee@ex.com', 'seanemployee123', 'Sean', 'Jones', '85675675667', 'agent');
 INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ('mark.employee@ex.com', 'markemployee123', 'Mark', 'Employee', '83455433445', 'agent');
 
 INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ('ellen.agent@ex.com', 'ellenagent123', 'Ellen', 'Agent', '87776667766', 'agent');
