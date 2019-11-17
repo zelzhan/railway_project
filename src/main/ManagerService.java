@@ -70,10 +70,11 @@ public class ManagerService extends HttpServlet {
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Path("/secured/payroll")
-    public Response makePayroll(@FormParam("authToken") String authToken, @FormParam("employee_id") String employee_id) {
+    @Path("/secured/{login}/{salary}")
+    public Response makePayroll(@FormParam("authToken") String authToken, @FormParam("login") String login,
+                                @FormParam("salary") String salary) {
 
-        updateSalaryHistory(connection, authToken, employee_id);
+        updateSalaryHistory(connection, authToken, login, salary);
         return Response.ok().build();
 
     }
