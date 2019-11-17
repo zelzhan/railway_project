@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Agent {
 
-
     String first_name;
     String last_name;
     String email;

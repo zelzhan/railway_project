@@ -1,6 +1,7 @@
 package main;
 
 import com.google.gson.Gson;
+import main.wrappers.Agent;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -39,6 +40,15 @@ public class ManagerService extends HttpServlet {
             e.printStackTrace();}
 
         return Response.ok().build();
+    }
+
+    @GET
+    @Path("/secured/listOfEmployees")
+    public Response allEmployees() {
+
+        List<Agent> result = findAllEmployees(connection);
+        Gson gson = new Gson();
+        return Response.ok(gson.toJson(result)).build();
     }
 
     @POST

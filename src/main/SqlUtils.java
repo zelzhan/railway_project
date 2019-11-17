@@ -229,6 +229,26 @@ public class SqlUtils {
         return routes;
     }
 
+    public static List<Agent> findAllEmployees(Connection connection) {
+        Statement st;
+        List<Agent> employees = new ArrayList();
+        try {
+            st = connection.createStatement();
+            ResultSet res = st.executeQuery("select u.first_name, u.last_name, e.salary, e.login, e.schedule, e.stationN\n" +
+                    "from registered_user u, regular_employee e where\n" +
+                    "u.id = e.id ");
+            while (res.next()) {
+                Agent employee = new Agent(res.getString(1), res.getString(2),
+                        res.getString(4), res.getString(5), res.getInt(3), res.getString(6));
+                employees.add(employee);
+            };
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return employees;
+    }
+
     public static String findMapRoute(Connection connection, int route, String datey, String depart, String dest, DataInputStream din, DataOutputStream dout) {
 
         List<Route> params = new ArrayList();

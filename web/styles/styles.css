@@ -70,7 +70,7 @@
     width: 100%;
     height: auto;
     min-height: 400px;
-/*     padding: 250px 0; */
+    /*     padding: 250px 0; */
     padding: 0;
     background: linear-gradient(to bottom, rgba(22, 22, 22, 0.3) 0%, rgba(22, 22, 22, 0.7) 75%, #161616 100%), url("../img/train-depo.jpg");
     background-position: center;
@@ -203,39 +203,61 @@ footer {
 
 /* css for reg, login, profile */
 .personal_details{
-  border-radius: 12px;
-  background-color: #364042;
-  padding: 15px;
-  color: #ffffff;
+    border-radius: 12px;
+    background-color: #364042;
+    padding: 15px;
+    color: #ffffff;
 }
 
 .tickets{
-  border-radius: 12px;
-  background-color: #364042;
-  padding: 15px;
-  margin-bottom: 20px;
+    border-radius: 12px;
+    background-color: #364042;
+    padding: 15px;
+    margin-bottom: 20px;
 }
 .personal_details ul li{
-  font-size: 14px;
-  margin: 0;
-  padding: 0;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
 }
 
 
 .title{
-  text-align: center;
-  color: #ffffff;
+    text-align: center;
+    color: #ffffff;
 }
 
 .list-group-item{
-  border: 0 !important;
-  background-color: transparent !important;
+    border: 0 !important;
+    background-color: transparent !important;
 }
 
 
 .form-div {
-  background-color: #364042;  
-  border-radius: 12px;
-  padding: 15px;
-  
+    background-color: #364042;
+    border-radius: 12px;
+    padding: 15px;
+
+}
+
+
+/* notification-box */
+#notification-box {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: #364042; /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+    font-size: 18px; /* Increase font size */
+}
+
+#notification-box:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
 }
