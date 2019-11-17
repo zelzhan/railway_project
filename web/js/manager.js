@@ -33,6 +33,18 @@ function createListOfEmployees(items) {
     $("#manager-agents").append(str);
 }
 
+function payroll(index) {
+    let items = employeeData[index];
+    let url = "/railway_station_service_war_exploded/services/manager/secured/" + items['login'] + "/" + items['salary'];
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function () {
+        },
+    });
+}
+
 function getUserData() {
 
     $.ajaxSetup({
