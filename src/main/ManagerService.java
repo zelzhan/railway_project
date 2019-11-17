@@ -3,6 +3,7 @@ package main;
 import com.google.gson.Gson;
 import main.graph.Graph;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServlet;
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -29,7 +30,7 @@ public class ManagerService extends HttpServlet {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/getAllRoutes")
-    public Response CreateRoute (ContainerRequestContext requestContext, @FormParam("departure") String departure, @FormParam("destination") String destination) {
+    public Response getAllRoutes (ContainerRequestContext requestContext, @FormParam("departure") String departure, @FormParam("destination") String destination) {
         String token = getTokenFromHeader(requestContext);
 
         ArrayList<List<String>> paths = graph.getAllPaths(departure, destination);
@@ -37,6 +38,17 @@ public class ManagerService extends HttpServlet {
 
         return Response.ok(gson.toJson(paths)).build();
     }
+
+
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("/secured/createRoute")
+    public Response createRoute (@FormParam("stations") ArrayList<String> stations, @FormParam("departure_time") String departure_time) {
+        //TODO add query to create routes   
+        return Response.ok().build();
+    }
+
+
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
