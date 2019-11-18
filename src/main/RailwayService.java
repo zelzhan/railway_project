@@ -66,6 +66,17 @@ public class RailwayService extends HttpServlet {
     }
 
     @GET
+    @Path("existsEmail/{email}")
+    public Response existsEmail(@PathParam("email") String email) {
+        Gson gson = new Gson();
+        if(emailExists(connection, email)){
+            return Response.ok(gson.toJson("true")).build();
+        }else{
+            return Response.ok(gson.toJson("false")).build();
+        }
+    }
+
+    @GET
     @Path("{depart}/{dest}/{date}/{red}/{route}")
     public Response getMapData(@PathParam("depart") String depart,
                              @PathParam("dest") String dest,
