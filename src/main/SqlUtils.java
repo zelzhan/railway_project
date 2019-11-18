@@ -21,19 +21,16 @@ import java.util.StringTokenizer;
 public class SqlUtils {
 
     public static String getRoleFromEmail(Connection connection, String email) {
-        Statement st = null;
         try {
-            st = connection.createStatement();
+            Statement st = connection.createStatement();
             String query = "select role from registered_user where login = '"+ email+"'";
-
             ResultSet id = st.executeQuery(query);
             id.next();
             return id.getString(1);
         } catch (Exception e) {
-            e.printStackTrace();
+            return e.getMessage();
         }
-
-        return null;
+//        return null;
     }
 
     public static void buyTicket (Connection connection, RouteBuyTicket route) {

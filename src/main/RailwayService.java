@@ -62,7 +62,6 @@ public class RailwayService extends HttpServlet {
         String email = getEmailFromToken(authToken);
         String role = getRoleFromEmail(connection, email);
         Gson gson = new Gson();
-        role = role.replace("\"", "");
         return Response.ok(gson.toJson(role)).build();
     }
 

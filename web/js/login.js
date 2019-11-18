@@ -11,13 +11,20 @@ function login() {
     $.get("/railway_station_service_war_exploded/services/items/secured/login", {}, function () {
         $.cookie('encrypted', btoa(email + ":" + password), { path : '/'});
 
-        $.get("/railway_station_service_war_exploded/services/items/getRole", {}, function (res) {
-            res = res.replaceAll("\"", "");
-            console.log(res);
-            $.cookie('role', res );
+        $.ajaxSetup({
+            headers:{
+                'Authorization': "Basic " + btoa(email + ":" + password)
+            }
         });
-        home();
-        alert("login is successful.")
+
+        $.get("/railway_station_service_war_exploded/services/items/getRole", {}, function (res) {
+            res = res.split("\"").join("");
+            console.log(res);
+            $.cookie('role', res, { path : '/'} );
+            home();
+            alert("login is successful.")
+        });
+
     }).fail( function (err) {
         console.log(err);
         alert("login is not successful.")
