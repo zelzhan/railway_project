@@ -65,12 +65,9 @@ public class SqlUtils {
         }
     }
 
-    public static Response getUserProfile (Connection connection, String authToken) {
+    public static Response getUserProfile (Connection connection, String email) {
 
         try {
-            String decodedString = Base64.decodeAsString(authToken);
-            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
-            String email = tokenizer.nextToken();
             Statement st = connection.createStatement();
             Statement st2 = connection.createStatement();
             Statement st3 = connection.createStatement();

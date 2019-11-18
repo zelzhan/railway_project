@@ -125,9 +125,9 @@ public class RailwayService extends HttpServlet {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/userProfile")
-    public Response userProfile(@FormParam("authToken") String authToken) {
-
-        return getUserProfile(connection, authToken);
+    public Response userProfile(ContainerRequestContext requestContext) {
+        String authToken = getTokenFromHeader(requestContext);
+        return getUserProfile(connection, getEmailFromToken(authToken));
     }
 
     @POST
@@ -136,9 +136,7 @@ public class RailwayService extends HttpServlet {
     public Response postNewTickets(String js) {
         Gson gson  = new Gson();
         RouteBuyTicket route = gson.fromJson(js, RouteBuyTicket.class);
-
         buyTicket(connection, route);
-
         return Response.ok().build();
     }
 
