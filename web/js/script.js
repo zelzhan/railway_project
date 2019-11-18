@@ -20,7 +20,6 @@ function updateRoute(items) {
     str += "<th scope=\"col\">Date of Arrival</th><th scope=\"col\">Capacity</th><th scope=\"col\">Route</th><th scope=\"col\"></th></tr></thead><tbody>";
     routeDate = items;
     for (let i=0; i<items.length; i++) {
-        console.log(items[i]);
         str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i].train_id+"</th><td>"+ items[i].dep +"</td><td>"+items[i].des + "</td>";
         str +="<td>" + items[i].start_date.split(" ")[0] + "</td><td>" + items[i].start_date.split(" ")[1] + "</td>";
         str +="<td>" + items[i].end_date.split(" ")[0] + "</td><td>" + items[i].end_date.split(" ")[1] + "</td>";

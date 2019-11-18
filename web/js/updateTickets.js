@@ -2,7 +2,7 @@ let cookie = $.cookie('encrypted');
 let routeData;
 
 function showTickets() {
-    let data = []
+    let data = [];
     $("form#routeForm :input").each(function () {
         var input = $(this); // This is the jquery object of the input, do what you will
         data.push(input.val());
