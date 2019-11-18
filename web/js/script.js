@@ -77,7 +77,7 @@ function sendFormRoute() {
             getRouteItems();
         })
     } else {
-       alert("Please, check your input");
+        alert("Please, check your input");
     }
 }
 

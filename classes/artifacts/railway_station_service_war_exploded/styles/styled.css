@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+.main-body {
+    min-height: 100%;
+    padding: 0px;
+}
+
+.container-wrap {
+    width: 100%;
+}
+
+.toppanel {
+    color: #fff;
+    min-height: 0;
+    height: auto;
+    margin-bottom: 20px;
+    background-color: #404040
+}
+
+.row::before {
+    display: table;
+}
+
+.row {
+    display: table;
+}
+
+.row::after {
+    display: table;
+}
+
+.welcome-msg {
+    font-size: 24px;
+    padding: 5px 0;
+}
+
+.profile-div {
+    text-decoration: none;
+    display: inline-block;
+    color: #fff;
+    margin-bottom: 2px;
+    background-color: transparent !Important;
+}
+
+.profile-top {
+    text-decoration: none;
+    display: inline-block;
+    color: #fff;
+    font-size: 16px;
+    margin: 10px 4px;
+}
+
+.welcome-msg {
+    display: inline-block;
+    padding: 5px 2px;
+    margin: 10px 0;
+}
+
+.main-container {
+    padding: 20px;
+}
+
+.form-div {
+    margin: 5px;
+    padding: 5px 10px 5px 10px;
+    border: 1px solid gray;
+    border-radius: 12px;
+    background-color: #404040;
+    /* background-color: rgba(0, 0, 0, 0.2); */
+}
+
+.form-group {
+    color:  #fff;
+}
+.train-table {
+    min-height: 50px;
+    overflow: auto;
+    padding-bottom: 190px;
+}
+
+.footer {
+    background-color: #404040;
+    position: relative;
+    height: 170px;
+    margin-top: -170px;
+    clear: both;
+    padding: 0px;
+}
+
+.footer-ul {
+    color:  #fff;
+    /*margin: 5px 10px 0px 50px;*/
+}
+
+.list-group-item{
+    border: 0 !important;
+}
+
+.contact_list {
+    background-color: transparent !Important;
+}
+
+.list_of_tickets a {
+    color: black !important;
+    font-size: 14px;
+}
+
+.auth{
+    margin: 0;
+}
+
+.title{
+    text-align: center;
+}
+
+.personal_details ul li{
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
