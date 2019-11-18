@@ -1,10 +1,3 @@
-let cookie = $.cookie('encrypted');
-
-function logout() {
-    $.removeCookie('encrypted', { path: '/'});
-    window.location.replace("/railway_station_service_war_exploded");
-}
-
 function notify(items) {
     var login = items['login'];
     var message = $("#message").val();
@@ -13,12 +6,13 @@ function notify(items) {
         login: login,
         message: message
     }, function () {
-        alert("Notification message is created")
+        alert("Notification message is created");
         window.location.replace("/railway_station_service_war_exploded/manager.html");
     }).fail( function () {
         alert("Notification message is not created")
     });
 }
+
 let employeeData;
 function createListOfEmployees(items) {
     let str = "";
@@ -48,7 +42,7 @@ function getUserData() {
 
     $.ajaxSetup({
         headers:{
-            'Authorization': "Basic " + cookie
+            'Authorization': "Basic " + getCookie()
         }
     });
 
@@ -56,10 +50,10 @@ function getUserData() {
         console.log("Cookie doesn't exists");
     } else{
         $.post("/railway_station_service_war_exploded/services/manager/secured/managerProfile", {
-            authToken: cookie
+            authToken: getCookie()
         }, function (out) {
             let data = JSON.parse(out);
-            let first_name = data['first_name']
+            let first_name = data['first_name'];
             let last_name = data['last_name'];
             let phone = data['phone'];
             let email = data['email'];

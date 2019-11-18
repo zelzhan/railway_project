@@ -1,18 +1,9 @@
-let cookie = $.cookie('encrypted');
 let routeData;
 
 function showTickets() {
-    let data = [];
-    $("form#routeForm :input").each(function () {
-        var input = $(this); // This is the jquery object of the input, do what you will
-        data.push(input.val());
-    });
-
-    let url = "/railway_station_service_war_exploded/services/items/" + data[0] + "/" + data[1] + "/" + data[4] + "-" + data[3] + "-" + data[2];
-
     $.ajax({
         type: "GET",
-        url: url,
+        url: getTicketsUrl(),
         success: function (out) {
             let appendText = "";
             if (out === "") {
@@ -45,7 +36,7 @@ function showTickets() {
 function getOldTicket(){
     $.ajaxSetup({
         headers:{
-            'Authorization': "Basic " + cookie
+            'Authorization': "Basic " + getCookie()
         }
     });
 
@@ -75,46 +66,6 @@ function getOldTicket(){
 
 }
 
-function getProfile() {
-    $.ajaxSetup({
-        headers:{
-            'Authorization': "Basic " + cookie
-        }
-    });
-
-    $.ajax({
-        type: 'POST',
-        url: "/railway_station_service_war_exploded/services/agent/secured/userAgent",
-        success: function(out) {
-            let data = JSON.parse(out);
-            $("#full_name").append(data["first_name"]+" "+data["last_name"]);
-            $("#email").append(data["email"]);
-            $("#phone").append(data["phone"]);
-            $("#workHours").append(data["workingHours"]);
-            $("#salary").append(data["salary"]);
-        },
-        fail: function(err) { console.log(err) },
-        contentType: "application/json"
-    });
-}
-
-function cancelTicket(id) {
-    $.ajaxSetup({
-        headers: {
-            'Authorization': "Basic " + cookie
-        }
-    });
-
-    $.ajax({
-        type: "POST",
-        url: encodeURI("/railway_station_service_war_exploded/services/items/cancelTicket?ticket_id=" + id),
-        success: function () {
-            alert("Ticket successfully cancelled!");
-            location.reload();
-        }
-    });
-}
-
 function getUrlParameter(sParam) {
     return localStorage[sParam];
 }
@@ -127,8 +78,7 @@ function buyTicket(index){
     let dest_time = routeData[index].start_date;
     let dept_time = routeData[index].end_date;
     let route_id = routeData[index].route_id;
-    let cookie = $.cookie('encrypted');
-    let email = atob(cookie).split(":")[0];
+    let email = atob(getCookie()).split(":")[0];
     $.ajax({
         type: 'POST',
         url: "/railway_station_service_war_exploded/services/items/buyTicket",

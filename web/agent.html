@@ -3,54 +3,57 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-  <title>EVe booking</title>
+    <title>EVe booking</title>
 
-  <!-- Bootstrap core CSS -->
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <!-- Custom fonts for this template -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  <link href="styles/styles.css" rel="stylesheet">
-  
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="js/jquery.cookie.js"></script>
-  <script src="js/agent.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <link href="styles/styles.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/agent.js"></script>
 
 </head>
 
 <body id="page-top">
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="main-top-bar">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="main-top-bar">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">EVe booking</a>
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">EVe booking</a>
 
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="index.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#">Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="agent.html" id="userprofile">My Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" onclick="logout();" href="#" id="singout">Sign out</a>
-          </li>
-        </ul>
-      </div>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="agent.html" id="userprofile">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="logout();" href="#" id="singout">Sign out</a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </nav>
+</nav>
 
-  <!-- Header -->
-  <header class="top-header">
+<!-- Header -->
+<header class="top-header">
     <div class="d-flex align-items-center" style="padding-top: 100px;">
         <div class="row mx-auto">
             <div class="col-md-3">
@@ -63,10 +66,14 @@
                         <li class="list-group-item">Working hours: <span id="work-hours"></span></li>
                         <li class="list-group-item">Salary: <span id="salary"></span></li>
                         <div class="row">
-                            <button type="button" class="btn btn-primary mx-auto agent-button" id="paycheck">Pay&nbspcheck</button>
-                            <button type="button" class="btn btn-primary mx-auto agent-button" id="createTicket">Create&nbspticket</button>
+                            <button type="button" class="btn btn-primary mx-auto agent-button" id="paycheck">
+                                Pay&nbspcheck
+                            </button>
+                            <button type="button" class="btn btn-primary mx-auto agent-button" onclick="createTicket()"
+                                    id="createTicket">Create&nbspticket
+                            </button>
                         </div>
-                  </ul>
+                    </ul>
                 </div>
             </div>
             <div class="col-md-9">
@@ -92,20 +99,20 @@
             </div>
         </div>
     </div>
-  </header>
+</header>
 
-  <!-- Footer -->
-  <footer class="bg-black small text-center text-white-50">
+<!-- Footer -->
+<footer class="bg-black small text-center text-white-50">
     <div class="container">
-      Copyright &copy; EVe booking
+        Copyright &copy; EVe booking
     </div>
-  </footer>
+</footer>
 
-  <!-- Bootstrap core JavaScript -->
-  
-  <script src="js/bootstrap-js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap core JavaScript -->
 
-  <!-- Plugin JavaScript -->
-  <script src="js/jquery-easing/jquery.easing.min.js"></script>
+<script src="js/bootstrap-js/bootstrap.bundle.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="js/jquery-easing/jquery.easing.min.js"></script>
 </body>
 </html>
