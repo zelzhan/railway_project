@@ -30,7 +30,6 @@ function getUserData() {
         }
     });
 
-    console.log(cookie);
     if(typeof $.cookie('encrypted') === "undefined"){
         console.log("Cookie doesn't exists");
     } else{

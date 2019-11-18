@@ -5,7 +5,6 @@ import javafx.util.Pair;
 import main.wrappers.*;
 import org.glassfish.jersey.internal.util.Base64;
 
-import javax.swing.*;
 import javax.ws.rs.core.Response;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -144,7 +143,7 @@ public class SqlUtils {
             ResultSet agents = st.executeQuery("select r.login, u.first_name, u.last_name, s.name as station, r.salary, r.schedule from registered_user u, regular_employee r, station s where s.id=r.stationN and u.id = r.id;");
             ArrayList<Agent> allagents = new ArrayList<>();
             while(agents.next()){
-                allagents.add(new Agent(agents.getString(2), agents.getString(3),agents.getString(1), agents.getString(6),agents.getInt(5),agents.getString(4)));
+                allagents.add(new Agent(agents.getString(2), agents.getString(3),agents.getString(1), agents.getString(6),agents.getString(5),agents.getString(4)));
             }
             Pair<Passenger, ArrayList<Agent>> result = new Pair<Passenger, ArrayList<Agent>>( new Passenger(res1.getString(1), res1.getString(2),agents.getString(3), agents.getString(4)), allagents);
 
@@ -191,7 +190,6 @@ public class SqlUtils {
             ResultSet res = st.executeQuery("select u.first_name, u.last_name, u.phone, u.login, e.salary, e.schedule from registered_user u, regular_employee e where u.login = \"" + email + "\" and e.login = u.login");
             res.next();
             Agent agent = new Agent(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
-
             Gson gson = new Gson();
             return Response.ok(gson.toJson(agent)).build();
         }catch (Exception e){
@@ -238,7 +236,6 @@ public class SqlUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return routes;
     }
 
@@ -252,7 +249,7 @@ public class SqlUtils {
                     "u.id = e.id ");
             while (res.next()) {
                 Agent employee = new Agent(res.getString(1), res.getString(2),
-                        res.getString(4), res.getString(5), res.getInt(3), res.getString(6));
+                        res.getString(4), res.getString(5), res.getString(3), res.getString(6));
                 employees.add(employee);
             };
         } catch (SQLException e) {

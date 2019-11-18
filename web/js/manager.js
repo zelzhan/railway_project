@@ -24,7 +24,6 @@ function createListOfEmployees(items) {
     let str = "";
     employeeData = items;
     for (let i=0; i<items.length; i++) {
-        console.log(items[i]);
         str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i].first_name+"</th><td>"+ items[i].last_name +"</td><td>"+items[i].salary + "</td>";
         str +="<td>" + items[i].email + "</td><td>" + items[i].schedule + "</td>";
         str +="<td><button type=\"submit\" onclick ='payroll(" + i +");' class=\"btn btn-primary\">Paycheck</button></td></tr>";
@@ -59,7 +58,6 @@ function getUserData() {
         $.post("/railway_station_service_war_exploded/services/manager/secured/managerProfile", {
             authToken: cookie
         }, function (out) {
-            console.log("getUserData: " + out);
             let data = JSON.parse(out);
             let first_name = data['first_name']
             let last_name = data['last_name'];
@@ -83,7 +81,6 @@ function ListOfEmployees() {
         type: "GET",
         url: url,
         success: function (data) {
-            console.log("list of Employees: " + data);
             createListOfEmployees(JSON.parse(data));
         },
     });

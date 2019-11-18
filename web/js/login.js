@@ -18,8 +18,8 @@ function login() {
 
         window.location.replace("/railway_station_service_war_exploded/");
         alert("login is successful.")
-    }).fail( function (data) {
-        console.log(data);
+    }).fail( function (err) {
+        console.log(err);
         alert("login is not successful.")
     });
 }
