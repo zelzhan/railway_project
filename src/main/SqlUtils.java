@@ -297,4 +297,18 @@ public class SqlUtils {
         }
         return null;
     }
+
+    public static boolean emailExists (Connection connection, String email){
+        try{
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery("select exists (select r.id from registered_user r where r.login=\'"+email+"\')");
+            res.next();
+            if (res.getString(1).equals("1")) {
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
