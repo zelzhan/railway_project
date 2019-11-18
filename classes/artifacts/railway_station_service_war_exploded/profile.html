@@ -19,9 +19,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="js/jquery.cookie.js"></script>
     <link href="styles/styles.css" rel="stylesheet">
+    <script src="js/utils.js"></script>
     <script src="js/profile.js" type="text/javascript"> </script>
-
-
 </head>
 
 <body id="page-top">
@@ -40,7 +39,7 @@
                     <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="profile.html" id="userprofile">My Profile</a>
+                    <a class="nav-link" onclick="profile()" id="userprofile">My Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" onclick="logout();" href="#" id="singout">Sign out</a>
@@ -69,7 +68,7 @@
             <div class="col-md-10">
                 <div class="past tickets">
                     <h2 class="title mx-auto">Upcoming trips</h2>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-profile">
                         <thead class="thead-dark">
                         <tr>
                             <th scope="col">Departure City</th>
@@ -89,7 +88,7 @@
                 </div>
                 <div class="future tickets">
                     <h2 class="title mx-auto">Past trips</h2>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-profile">
                         <thead class="thead-dark">
                         <tr>
                             <th scope="col">Departure City</th>

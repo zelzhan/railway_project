@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+
 public class SqlUtils {
 
     public static String getRoleFromEmail(Connection connection, String email) {
@@ -254,6 +255,30 @@ public class SqlUtils {
         }
 
         return employees;
+    }
+
+    public static List<ArrayList<String>> findAllTrains(Connection connection) {
+        Statement st;
+        List<ArrayList<String>> trains = new ArrayList();
+        try {
+            st = connection.createStatement();
+            ResultSet res = st.executeQuery("select distinct t.route_id, r.name1, s1.name, t.departure_time, s2.name, t.arrival_time\n" +
+                    "from schedule t, station s1, station s2, train r\n" +
+                    "where s1.id=t.station_i and s2.id=t.station_f and t.train_id=r.id\n" +
+                    "order by t.route_id");
+            while (res.next()) {
+                ArrayList<String> train = new ArrayList<>();
+                train.add(res.getString(2));
+                train.add(res.getString(3));
+                train.add(res.getString(4));
+                train.add(res.getString(5));
+                trains.add(train);
+            };
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return trains;
     }
 
     public static String findMapRoute(Connection connection, int route, String datey, String depart, String dest, DataInputStream din, DataOutputStream dout) {

@@ -1,17 +1,3 @@
-function cookieCheck() {
-    if (typeof $.cookie('encrypted') != "undefined") {
-        $("#login").hide();
-        $("#signup").hide();
-        $("#userprofile").show();
-        $("#signout").show();
-    } else {
-        $("#login").show();
-        $("#signup").show();
-        $("#userprofile").hide();
-        $("#signout").hide();
-    }
-}
-
 function register() {
     let email = $("#email").val();
     let password = $("#inputPassword").val();
@@ -27,7 +13,7 @@ function register() {
         lastName: lastName
     }, function () {
         alert("Registration is successful.");
-        window.location.replace("/railway_station_service_war_exploded/");
+        home();
     }).fail( function () {
         alert("Registration is not successful.")
     });
@@ -35,7 +21,6 @@ function register() {
 
 
 $(document).ready(function () {
-
     cookieCheck();
     $("#submit-reg").on('click', function () {
         register();

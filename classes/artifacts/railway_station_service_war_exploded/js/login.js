@@ -13,13 +13,13 @@ function login() {
 
         $.get("/railway_station_service_war_exploded/services/items/getRole", {}, function (res) {
             res = res.replaceAll("\"", "");
+            console.log(res);
             $.cookie('role', res );
         });
-
-        window.location.replace("/railway_station_service_war_exploded/");
+        home();
         alert("login is successful.")
-    }).fail( function (data) {
-        console.log(data);
+    }).fail( function (err) {
+        console.log(err);
         alert("login is not successful.")
     });
 }
