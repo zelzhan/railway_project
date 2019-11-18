@@ -10,8 +10,24 @@ function agent() {
     redirect("agent");
 }
 
-function profile() {
+function passenger() {
     redirect("profile");
+}
+
+function manager() {
+    redirect("manager");
+}
+
+function profile() {
+    if(getRole()==="agent"){
+        agent();
+    } else if(getRole()==="manager"){
+        manager();
+    } else if(getRole()==="passenger"){
+        passenger();
+    } else{
+        alert("Wrong role");
+    }
 }
 
 function home() {
@@ -87,4 +103,8 @@ function getTicketsUrl(){
 
 function getCookie(){
     return $.cookie('encrypted');
+}
+
+function getRole() {
+    return $.cookie('role');
 }

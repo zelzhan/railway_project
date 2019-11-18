@@ -67,7 +67,7 @@ function ListOfEmployees() {
 
     $.ajaxSetup({
         headers:{
-            'Authorization': "Basic " + cookie
+            'Authorization': "Basic " + getCookie()
         }
     });
 
@@ -80,7 +80,6 @@ function ListOfEmployees() {
     });
 
 }
-
 
 $(document).ready(function () {
     // getUserData();
