@@ -5,7 +5,10 @@ import com.google.gson.JsonObject;
 import javafx.util.Pair;
 import jdk.nashorn.internal.parser.JSONParser;
 import main.graph.Graph;
-import main.wrappers.*;
+import main.wrappers.Passenger;
+import main.wrappers.Route;
+import main.wrappers.RouteBuyTicket;
+import main.wrappers.Ticket;
 import org.glassfish.jersey.internal.util.Base64;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.ws.http.HTTPBinding;
 import java.io.*;
 import java.net.Socket;
 import java.sql.*;
@@ -69,13 +74,24 @@ public class RailwayService extends HttpServlet {
     @GET
     @Path("{depart}/{dest}/{date}/{red}/{route}")
     public Response getMapData(@PathParam("depart") String depart,
-                             @PathParam("dest") String dest,
-                             @PathParam("date") String datey,
-                             @PathParam("red") String dateh,
-                             @PathParam("route") int route) {
+                               @PathParam("dest") String dest,
+                               @PathParam("date") String datey,
+                               @PathParam("red") String dateh,
+                               @PathParam("route") int route,
+                               @Context HttpHeaders headers,
+                               ContainerRequestContext requestContext) {
 
         String result = findMapRoute(connection, route, datey, depart, dest, this.din, this.dout);
         Gson gson = new Gson();
+        List<String> authHeader = requestContext.getHeaders().get("Authorization");
+        if (authHeader != null && authHeader.size() > 0) {
+            makeLog(headers, "Unauthorized user ", "GET");
+        }else{
+            String authToken = getTokenFromHeader(requestContext);
+            String email = getEmailFromToken(authToken);
+            makeLog(headers, "Passenger with email "+ email, "GET");
+        }
+
         return Response.ok(gson.toJson(result)).build();
     }
 
@@ -83,7 +99,22 @@ public class RailwayService extends HttpServlet {
     @Path("{depart}/{dest}/{date}")
     public Response getRouteData(@PathParam("depart") String depart,
                             @PathParam("dest") String dest,
-                            @PathParam("date") String date) {
+                            @PathParam("date") String date,
+                                 @Context HttpHeaders headers,
+                                 ContainerRequestContext requestContext) {
+
+
+        System.out.println("ONE");
+        List<String> authHeader = requestContext.getHeaders().get("Authorization");
+        System.out.println("authHeader");
+        System.out.println(authHeader);
+        if (authHeader != null && authHeader.size() > 0) {
+            makeLog(headers, "Unauthorized user ", "GET");
+        } else {
+            String authToken = getTokenFromHeader(requestContext);
+            String email = getEmailFromToken(authToken);
+            makeLog(headers, "Passenger with email "+ email, "GET");
+        }
 
         List<Route> params = findRoute(depart, dest, date, connection);
         Gson gson = new Gson();
@@ -117,9 +148,16 @@ public class RailwayService extends HttpServlet {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("registration")
     public Response postListItem(@FormParam("email") String email, @FormParam("password") String password, @FormParam("phone") String phone,
-                                 @FormParam("firstName") String firstName, @FormParam("lastName") String lastName) {
+                                 @FormParam("firstName") String firstName, @FormParam("lastName") String lastName, @Context HttpHeaders headers) {
+        Response resp = register(connection, email, firstName, lastName, password, phone);
+        if (resp.getStatus() == Response.Status.CONFLICT.getStatusCode()){
+            makeLog(headers,"Failed registration ", "POST");
+        } else {
+            makeLog(headers, "Passenger registered with email " + email, "POST");
+        }
 
-        return register(connection, email, firstName, lastName, password, phone);
+
+        return resp;
     }
 
     @POST
@@ -127,7 +165,9 @@ public class RailwayService extends HttpServlet {
     @Path("/secured/userProfile")
     public Response userProfile(ContainerRequestContext requestContext) {
         String authToken = getTokenFromHeader(requestContext);
-        return getUserProfile(connection, getEmailFromToken(authToken));
+        String email = getEmailFromToken(authToken);
+        makeLog(headers, "Passenger with email" + email, "POST");
+        return getUserProfile(connection, email);
     }
 
     @POST
@@ -136,7 +176,9 @@ public class RailwayService extends HttpServlet {
     public Response postNewTickets(String js) {
         Gson gson  = new Gson();
         RouteBuyTicket route = gson.fromJson(js, RouteBuyTicket.class);
+
         buyTicket(connection, route);
+
         return Response.ok().build();
     }
 
@@ -144,6 +186,9 @@ public class RailwayService extends HttpServlet {
     @Path("cancelTicket")
     public Response cancelTicket(@QueryParam("ticket_id") int ticket_id){
         deleteTicket(connection, ticket_id);
+        String authToken = getTokenFromHeader(requestContext);
+        String email = getEmailFromToken(authToken);
+        makeLog(headers,"Passenger with email " + email, "POST");
         return Response.ok().build();
     }
 
@@ -151,6 +196,7 @@ public class RailwayService extends HttpServlet {
     @Path("secured/login")
     @Produces("text/html")
     public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+
         return Response.status(Response.Status.ACCEPTED).build();
     }
 }
