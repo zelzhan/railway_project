@@ -5,10 +5,7 @@ import com.google.gson.JsonObject;
 import javafx.util.Pair;
 import jdk.nashorn.internal.parser.JSONParser;
 import main.graph.Graph;
-import main.wrappers.Passenger;
-import main.wrappers.Route;
-import main.wrappers.RouteBuyTicket;
-import main.wrappers.Ticket;
+import main.wrappers.*;
 import org.glassfish.jersey.internal.util.Base64;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -173,7 +170,7 @@ public class RailwayService extends HttpServlet {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/userProfile")
-    public Response userProfile(ContainerRequestContext requestContext) {
+    public Response userProfile(ContainerRequestContext requestContext, HttpHeaders headers) {
         String authToken = getTokenFromHeader(requestContext);
         String email = getEmailFromToken(authToken);
         makeLog(headers, "Passenger with email" + email, "POST");
@@ -194,7 +191,7 @@ public class RailwayService extends HttpServlet {
 
     @POST
     @Path("cancelTicket")
-    public Response cancelTicket(@QueryParam("ticket_id") int ticket_id){
+    public Response cancelTicket(@QueryParam("ticket_id") int ticket_id, ContainerRequestContext requestContext, HttpHeaders headers){
         deleteTicket(connection, ticket_id);
         String authToken = getTokenFromHeader(requestContext);
         String email = getEmailFromToken(authToken);
