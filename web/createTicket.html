@@ -19,7 +19,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="js/jquery.cookie.js"></script>
     <script src="js/utils.js"></script>
-    <script src="js/agent.js"></script>
+    <script src="js/createTicket.js"></script>
 
 </head>
 
@@ -39,7 +39,7 @@
                     <a class="nav-link js-scroll-trigger" href="#">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="agent.html" id="userprofile">My Profile</a>
+                    <a class="nav-link" onclick="profile()" id="userprofile">My Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" onclick="logout();" href="#" id="singout">Sign out</a>
@@ -69,11 +69,11 @@
                     </ul>
                 </div>
                 <div class="personal_details">
+                    <div class="form-group">
+                        <label>Passenger email</label>
+                        <input type="text" class="form-control" id="pass-email" placeholder="example@email.com">
+                    </div>
                     <form id="routeForm">
-                        <div class="form-group">
-                            <label>Passenger email</label>
-                            <input type="text" class="form-control" id="pass-email" placeholder="example@email.com">
-                        </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
@@ -116,26 +116,28 @@
                                 </div>
                             </div>
                         </div>
-
-                        <button type="submit" class="btn btn-primary" id="search-route">Search</button>
+                        <button type="button" class="btn btn-primary" id="search-route">Search</button>
                     </form>
                 </div>
             </div>
             <div class="col-md-9">
                 <div class="agent-tickets">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-profile">
                         <thead class="thead-dark">
                         <tr>
+                            <th scope="col">#</th>
                             <th scope="col">Departure City</th>
                             <th scope="col">Destination City</th>
-                            <th scope="col">Departure time</th>
-                            <th scope="col">Departure Date</th>
-                            <th scope="col">Arrival time</th>
-                            <th scope="col">Arrival Date</th>
-                            <th scope="col">Create ticket</th>
+                            <th scope="col">Date of Departure</th>
+                            <th scope="col">Time of Departure</th>
+                            <th scope="col">Date of Arrival</th>
+                            <th scope="col">Time of Arrival</th>
+                            <th scope="col">Capacity</th>
+                            <th scope="col">Route</th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
-                        <tbody id="create-tickets" class="table-profile">
+                        <tbody id="agent-tickets" class="table-profile">
                         </tbody>
                     </table>
                 </div>

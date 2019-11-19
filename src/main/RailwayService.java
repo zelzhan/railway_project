@@ -67,8 +67,18 @@ public class RailwayService extends HttpServlet {
         String email = getEmailFromToken(authToken);
         String role = getRoleFromEmail(connection, email);
         Gson gson = new Gson();
-        role = role.replace("\"", "");
         return Response.ok(gson.toJson(role)).build();
+    }
+
+    @GET
+    @Path("existsEmail/{email}")
+    public Response existsEmail(@PathParam("email") String email) {
+        Gson gson = new Gson();
+        if(emailExists(connection, email)){
+            return Response.ok(gson.toJson("true")).build();
+        }else{
+            return Response.ok(gson.toJson("false")).build();
+        }
     }
 
     @GET

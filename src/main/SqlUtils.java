@@ -22,19 +22,16 @@ import java.util.StringTokenizer;
 public class SqlUtils {
 
     public static String getRoleFromEmail(Connection connection, String email) {
-        Statement st = null;
         try {
-            st = connection.createStatement();
+            Statement st = connection.createStatement();
             String query = "select role from registered_user where login = '"+ email+"'";
-
             ResultSet id = st.executeQuery(query);
             id.next();
             return id.getString(1);
         } catch (Exception e) {
-            e.printStackTrace();
+            return e.getMessage();
         }
-
-        return null;
+//        return null;
     }
 
     public static void buyTicket (Connection connection, RouteBuyTicket route) {
@@ -324,5 +321,19 @@ public class SqlUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static boolean emailExists (Connection connection, String email){
+        try{
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery("select exists (select r.id from registered_user r where r.login=\'"+email+"\')");
+            res.next();
+            if (res.getString(1).equals("1")) {
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 }

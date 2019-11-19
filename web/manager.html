@@ -39,7 +39,7 @@
                     <a class="nav-link js-scroll-trigger" href="#">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="agent.html" id="userprofile">My Profile</a>
+                    <a class="nav-link" onclick="profile()" id="userprofile">My Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" onclick="logout();" href="#" id="singout">Sign out</a>
@@ -49,9 +49,8 @@
     </div>
 </nav>
 
-<!-- Header -->
-<header class="top-header">
-    <div class="d-flex align-items-center" style="padding-top: 100px;">
+<div class="div-profile">
+    <div class="d-flex align-items-center">
         <!-- <div class="mx-auto"> -->
         <!-- <div class="container"> -->
         <div class="row mx-auto">
@@ -88,11 +87,9 @@
 
             <div class="col-md-8">
                 <div class="agent-tickets">
-                    <!-- <h2 class="title mx-auto">Trips</h2> -->
                     <table class="table table-bordered">
                         <thead class="thead-dark">
                         <tr>
-<!--                            <th scope="col">ID</th>-->
                             <th scope="col">First&nbspname</th>
                             <th scope="col">Last&nbspname</th>
                             <th scope="col">Salary</th>
@@ -108,12 +105,21 @@
                 </div>
             </div>
         </div>
-
-        <!-- </div> -->
     </div>
-</header>
+</div>
 
+<!--<div class="container logs">-->
+<!--    <span>-->
+<!--        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis culpa cupiditate earum eos impedit itaque nemo reiciendis rem saepe, sint sunt veniam. Ad distinctio eum illum quisquam repellendus vel voluptatum.-->
+<!--    </span>-->
+<!--</div>-->
+<section class="about-section">
+    <div class="container logs">
+        <span id="">
 
+        </span>
+    </div>
+</section>
 <!-- Footer -->
 <footer class="bg-black small text-center text-white-50">
     <div class="container">
@@ -128,6 +134,7 @@
 
 <!-- Plugin JavaScript -->
 <script src="js/jquery-easing/jquery.easing.min.js"></script>
+<script src="js/animation.js"></script>
 
 
 </body>
