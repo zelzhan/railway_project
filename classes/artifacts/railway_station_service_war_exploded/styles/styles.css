@@ -296,3 +296,7 @@ footer {
     border-radius: 5px;
     max-height: 300px;
 }
+
+.logs_text{
+    margin-bottom: 0!important;
+}

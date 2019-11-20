@@ -7,6 +7,7 @@ import org.glassfish.jersey.internal.util.Base64;
 import javax.servlet.ServletContext;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.net.Socket;
@@ -14,6 +15,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -33,6 +36,7 @@ public class Utils {
                     .entity("Don't have rights for this resource")
                     .build();
             requestContext.abortWith(unauthorizedStatus);
+          return "";
         }
         String authToken = authHeader.get(0);
         return authToken;
@@ -41,6 +45,7 @@ public class Utils {
 
     public static String getEmailFromToken(String authToken) {
         authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
+
         String decodedString = Base64.decodeAsString(authToken);
         StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
         String email = tokenizer.nextToken();
@@ -154,5 +159,44 @@ public class Utils {
 
         graph.printAllPaths("6", "1");
         return graph;
+    }
+    public static void makeLog(HttpHeaders headers, String message, String requestType, @Context ServletContext servletContext,String url){
+        String contentType = "";
+        if (headers.getRequestHeader(HttpHeaders.CONTENT_TYPE)==null){
+            contentType = "does not accept any content";
+        }else{
+            contentType = headers.getRequestHeader(HttpHeaders.CONTENT_TYPE).get(0);
+        }
+
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        String currentDate = formatter.format(date);
+
+
+
+        String path = servletContext.getRealPath("/");
+        String pathToRoot = new File(path).getParentFile().getParentFile().getParent();
+
+
+
+
+
+        try
+        {
+            String filename= pathToRoot + "/logger.txt";
+            System.out.println("MyF");
+            FileWriter fw = new FileWriter(filename,true); //the true will append the new data
+            fw.write(message + "\n" +
+                    "Request type: " + requestType + "\n" +
+                    "Content type: " + contentType + "\n" +
+                    "Date: " + currentDate+"\n" +
+                    "URL: "+ url +"\n\n");//appends the string to the file
+            fw.close();
+        }
+        catch(Exception ioe)
+        {
+            System.err.println("IOException: " + ioe.getMessage());
+        }
+
     }
 }

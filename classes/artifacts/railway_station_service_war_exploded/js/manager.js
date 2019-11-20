@@ -81,8 +81,31 @@ function ListOfEmployees() {
 
 }
 
+function readTextFile() {
+    $.ajax({
+        type: 'GET',
+        url: "/railway_station_service_war_exploded/services/items/getLogs",
+        success: function(out) {
+            out = out.replace("\"","");
+            out = out.replace("\"","");
+            console.log(out);
+            let arr = out.split("\\n");
+            let str = "";
+            for(let i=0; i<arr.length; i++){
+                str+= "<p class='logs_text'>" + arr[i] +"</p>"
+            }
+            $("#logs").append(str);
+        },
+        fail: function(err) {
+            console.log(err);
+        },
+        contentType: "application/json"
+    })
+}
+
 $(document).ready(function () {
     // getUserData();
+    readTextFile();
     ListOfEmployees();
     $("#notifyAll").on('click', function () {
         notify();
