@@ -61,7 +61,7 @@ public class AgentService extends HttpServlet {
     }
 
     @GET
-    @Path("/secured/paychecklist/{email}")
+    @Path("/secured/payCheckList/{email}")
     public Response paycheckList(@PathParam("email") String email) {
 
         findAllPaychecks(connection, email);

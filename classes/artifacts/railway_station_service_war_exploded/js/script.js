@@ -104,14 +104,15 @@ function buyTicket(index){
 }
 
 function showNotification(items) {
+    console.log(items)
     let str = "";
     for (let i=0; i<items.length; i++) {
-        str +="<br>" + items.login + "<span class=\"lv0\"></span>);";
-        str +="<br>" + items.data + "<span class=\"lv1\"></span>);";
-        str +="<br>" + items.message + "<span class=\"lv2\"></span>);";
+        str +="<br>" + "<span class=\"lv0\">"+ items[i].login + "</span>";
+        str +="<br>" + "<span class=\"lv1\">"+ items[i].data + "</span>";
+        str +="<br>" + "<span class=\"lv2\">" + items[i].message +"</span>";
         }
-    $("#blabla").html("");
-    $("#blabla").append(str);
+    $("#notification-box").html("");
+    $("#notification-box").append(str);
 }
 
 function getRCCLent() {
@@ -120,6 +121,7 @@ function getRCCLent() {
         type: "GET",
         url: url,
         success: function (data) {
+            console.log(data)
             showNotification(JSON.parse(data));
         },
     });
@@ -129,8 +131,8 @@ $(document).ready(function () {
     $.get("/railway_station_service_war_exploded/services/items/initialize", {}, function () {
         console.log("Successfully initialized!");
     });
-    cookieCheck();
     getRCCLent();
+    cookieCheck();
     $("#search-route").on('click', function() {
         showTickets();
     });

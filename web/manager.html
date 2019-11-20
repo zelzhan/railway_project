@@ -21,6 +21,7 @@
     <script src="js/utils.js"></script>
     <script src="js/manager.js"></script>
 
+
 </head>
 
 <body id="page-top">
@@ -54,7 +55,7 @@
         <!-- <div class="mx-auto"> -->
         <!-- <div class="container"> -->
         <div class="row mx-auto">
-            <div class="col-md-4">
+            <div class="col-md-4 mx-auto">
                 <div class="personal_details">
                     <h5>Personal details</h5>
                     <ul class="list-group">
@@ -64,8 +65,8 @@
                         <li class="list-group-item">Working hours: <span id="work-hours"></span></li>
                         <li class="list-group-item">Salary: <span id="salary"></span></li>
                         <div class="row">
-                            <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="paycheck">Pay&nbspcheck</button>
-                            <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="notifyAll">Send notification</button>
+                            <button type="button" class="btn btn-primary mx-auto" id="paycheck">Pay&nbspcheck</button>
+                            <button type="button" class="btn btn-primary mx-auto" id="notify-button">Send notification</button>
 
                         </div>
 
@@ -73,20 +74,20 @@
                 </div>
                 <ul class="list-group list-group-horizontal buttons-list">
                     <li class="list-group-item">
-                        <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="look-agent">Show agents</button>
+                        <button type="button" class="btn btn-primary mx-auto" id="look-agent">Show agents</button>
                     </li>
                     <li class="list-group-item">
-                        <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="create-route">Create route</button>
+                        <button type="button" class="btn btn-primary mx-auto" id="look-routes">Show route</button>
                     </li>
                     <li class="list-group-item">
-                        <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="look-routes">Show routes</button>
+                        <a href="#" role="button" class="btn btn-primary mx-auto" id="create-route">Create route</a>
                     </li>
 
                 </ul>
             </div>
 
             <div class="col-md-8">
-                <div class="agent-tickets">
+                <div class="agent-tickets" id="main-block">
                     <table class="table table-bordered">
                         <thead class="thead-dark">
                         <tr>
@@ -113,13 +114,45 @@
 <!--        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis culpa cupiditate earum eos impedit itaque nemo reiciendis rem saepe, sint sunt veniam. Ad distinctio eum illum quisquam repellendus vel voluptatum.-->
 <!--    </span>-->
 <!--</div>-->
-<section class="about-section">
-    <div class="container logs">
-        <span id="">
 
-        </span>
+
+<!--<div class="about-section">-->
+<!--    <div class="btn-group btn-group-toggle" data-toggle="buttons">-->
+<!--        <label class="btn btn-secondary active">-->
+<!--            <input type="radio" name="options" id="option1" autocomplete="off" checked> Turn off-->
+<!--        </label>-->
+<!--        <label class="btn btn-secondary">-->
+<!--            <input type="radio" name="options" id="option2" autocomplete="off"> Turn on-->
+<!--        </label>-->
+<!--    </div>-->
+<!--    <div class="container logs">-->
+<!--            <p id="logs-span">-->
+
+<!--            </p>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div class="about-section">
+    <div class="card">
+        <div class="card-header">
+            <h5>Recorded logs</h5>
+        </div>
+        <div class="card-body">
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <button type="button" class="btn btn-default btn-sm" id="refresh-btn">
+                <span class="glyphicon glyphicon-refresh"></span> Refresh
+            </button>
+            <div class="container logs">
+                <span id="logs-span">
+
+                </span>
+            </div>
+        </div>
     </div>
-</section>
+</div>
 <!-- Footer -->
 <footer class="bg-black small text-center text-white-50">
     <div class="container">
