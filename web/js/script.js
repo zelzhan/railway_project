@@ -109,7 +109,7 @@ function buyTicket(index){
         }),
         success: function() {
             alert('Successful purchase!');
-            showTickets();
+            showTicketsMain();
         },
         fail: function(err) { alert(err) },
         contentType: "application/json"
