@@ -38,29 +38,6 @@ function getAllPaychecks() {
     });
 }
 
-function getProfile() {
-    $.ajaxSetup({
-        headers:{
-            'Authorization': "Basic " + getCookie()
-        }
-    });
-
-    $.ajax({
-        type: 'POST',
-        url: "/railway_station_service_war_exploded/services/agent/secured/userAgent",
-        success: function(out) {
-            let data = JSON.parse(out);
-            $("#full_name").append(data["first_name"]+" "+data["last_name"]);
-            $("#email").append(data["email"]);
-            $("#phone").append(data["phone"]);
-            $("#workHours").append(data["workingHours"]);
-            $("#salary").append(data["salary"]);
-        },
-        fail: function(err) { console.log(err) },
-        contentType: "application/json"
-    });
-}
-
 function getTickets() {
     $.ajaxSetup({
         headers:{

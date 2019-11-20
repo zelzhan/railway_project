@@ -75,14 +75,14 @@ public class ManagerService extends HttpServlet {
         return Response.ok(gson.toJson(result)).build();
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Path("/secured/managerProfile")
-    public Response managerProfile(@FormParam("authToken") String authToken) {
-
-        return getManagerProfile(connection, authToken);
-
-    }
+//    @POST
+//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+//    @Path("/secured/managerProfile")
+//    public Response managerProfile(@FormParam("authToken") String authToken) {
+//
+//        return getManagerProfile(connection, authToken);
+//
+//    }
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

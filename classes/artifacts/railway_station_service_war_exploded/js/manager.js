@@ -52,7 +52,9 @@ function getUserData() {
         $.post("/railway_station_service_war_exploded/services/manager/secured/managerProfile", {
             authToken: getCookie()
         }, function (out) {
+            console.log(out);
             let data = JSON.parse(out);
+            console.log(data);
             let first_name = data['first_name'];
             let last_name = data['last_name'];
             let phone = data['phone'];
@@ -100,7 +102,7 @@ function ListOfEmployees() {
 }
 
 $(document).ready(function () {
-    getUserData();
+    getProfile();
     ListOfEmployees();
     $("#notifyAll").on('click', function () {
         notify();
