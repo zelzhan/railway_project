@@ -118,35 +118,41 @@ public class SqlUtils {
     }
 
 // Managers profile returns all info about manager and all agents
-    public static Response getManagerProfile(Connection connection, String authToken){
-
-        try{
-            String decodedString = Base64.decodeAsString(authToken);
-            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
-            String email = tokenizer.nextToken();
-
-            Statement st3 = connection.createStatement();
-
-            //sql query for getting all personal info by email
-            ResultSet res1 = st3.executeQuery("select u.first_name, u.last_name, u.phone, u.login from registered_user u where u.login = \"" + email + "\"");
-            res1.next();
-
-            Statement st = connection.createStatement();
-            ResultSet agents = st.executeQuery("select r.login, u.first_name, u.last_name, s.name as station, r.salary, r.schedule from registered_user u, regular_employee r, station s where s.id=r.stationN and u.id = r.id;");
-            ArrayList<Agent> allagents = new ArrayList<>();
-            while(agents.next()){
-                allagents.add(new Agent(agents.getString(2), agents.getString(3),agents.getString(1), agents.getString(6),agents.getString(5),agents.getString(4)));
-            }
-            Pair<Passenger, ArrayList<Agent>> result = new Pair<Passenger, ArrayList<Agent>>( new Passenger(res1.getString(1), res1.getString(2),agents.getString(3), agents.getString(4)), allagents);
-
-
-            Gson gson = new Gson();
-            return Response.ok(gson.toJson(result)).build();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return Response.ok().build();
-    }
+//    public static Response getUserManagerProfile(Connection connection, String authToken){
+//
+//        try{
+//            String decodedString = Base64.decodeAsString(authToken);
+//            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
+//            String email = tokenizer.nextToken();
+//
+//            Statement st = connection.createStatement();
+//            ResultSet res = st.executeQuery("select u.first_name, u.last_name, u.phone, u.login, e.salary, e.schedule from registered_user u, regular_employee e where u.login = \"" + email + "\" and e.login = u.login");
+//            res.next();
+//            Agent agent = new Agent(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
+//            Gson gson = new Gson();
+//
+//            Statement st3 = connection.createStatement();
+//
+//            //sql query for getting all personal info by email
+//            ResultSet res1 = st3.executeQuery("select u.first_name, u.last_name, u.phone, u.login from registered_user u where u.login = \"" + email + "\"");
+//            res1.next();
+//
+//            Statement st = connection.createStatement();
+//            ResultSet agents = st.executeQuery("select r.login, u.first_name, u.last_name, s.name as station, r.salary, r.schedule from registered_user u, regular_employee r, station s where s.id=r.stationN and u.id = r.id;");
+//            ArrayList<Agent> allagents = new ArrayList<>();
+//            while(agents.next()){
+//                allagents.add(new Agent(agents.getString(2), agents.getString(3),agents.getString(1), agents.getString(6),agents.getString(5),agents.getString(4)));
+//            }
+//            Pair<Passenger, ArrayList<Agent>> result = new Pair<Passenger, ArrayList<Agent>>( new Passenger(res1.getString(1), res1.getString(2),agents.getString(3), agents.getString(4)), allagents);
+//
+//
+//            Gson gson = new Gson();
+//            return Response.ok(gson.toJson(result)).build();
+//        }catch (SQLException e){
+//            e.printStackTrace();
+//        }
+//        return Response.ok().build();
+//    }
 
     public static Response getAgentProfile (Connection connection) {
 
