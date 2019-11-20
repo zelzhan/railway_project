@@ -82,12 +82,12 @@ function ListOfEmployees() {
 }
 // notification form 
 function notify_form() {
-    let str = "<div class=\"input-group input-group-lg\">\n" +
+    let str = "<form><div class=\"input-group input-group-lg\">\n" +
         "  <input type=\"text\" class=\"form-control\" aria-label=\"Large\" aria-describedby=\"inputGroup-sizing-sm\">\n" +
-        "</div>";
+        "</div><button type=\"button\" class=\"btn btn-primary\" id=\"\">Submit</button></form>";
     $("#main-block").html(str);
+}
 
-    
 $(document).ready(function () {
     // getUserData();
     ListOfEmployees();
