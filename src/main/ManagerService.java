@@ -8,6 +8,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
 import java.sql.ResultSet;
+
+import com.google.gson.Gson;
+import main.graph.*;
+import main.wrappers.*;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -93,6 +97,5 @@ public class ManagerService extends HttpServlet {
         updateSalaryHistory(connection, authToken, login, salary);
         return Response.ok().build();
 
-
-
+    }
 }
