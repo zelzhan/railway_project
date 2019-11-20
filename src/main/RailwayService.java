@@ -59,7 +59,7 @@ public class RailwayService extends HttpServlet {
 
     @GET
     @Path("getRole")
-    public Response getRole(ContainerRequestContext requestContext) {
+    public Response getRole(@Context ContainerRequestContext requestContext) {
         String authToken = getTokenFromHeader(requestContext);
         authToken = authToken.split(" ")[1];
         String email = getEmailFromToken(authToken);
@@ -180,7 +180,6 @@ public class RailwayService extends HttpServlet {
     public Response postNewTickets(String js, @Context HttpHeaders headers, @Context ServletContext servletContext, @Context ContainerRequestContext requestContext) {
         Gson gson  = new Gson();
         RouteBuyTicket route = gson.fromJson(js, RouteBuyTicket.class);
-
         buyTicket(connection, route);
         makeLog(headers, "USer with email "+route.getEmail(), "POST", servletContext,requestContext.getUriInfo().getPath());
         return Response.ok().build();
@@ -234,5 +233,14 @@ public class RailwayService extends HttpServlet {
             e.printStackTrace();
             return Response.ok(gson.toJson(e.getMessage())).build();
         }
+    }
+
+    @GET
+    @Path("paychecklist/{email}")
+    public Response paycheckList(@PathParam("email") String email) {
+
+        findAllPaychecks(connection, email);
+        Gson gson = new Gson();
+        return Response.ok().build();
     }
 }

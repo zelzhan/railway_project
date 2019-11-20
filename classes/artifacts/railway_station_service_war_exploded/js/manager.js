@@ -52,7 +52,9 @@ function getUserData() {
         $.post("/railway_station_service_war_exploded/services/manager/secured/managerProfile", {
             authToken: getCookie()
         }, function (out) {
+            console.log(out);
             let data = JSON.parse(out);
+            console.log(data);
             let first_name = data['first_name'];
             let last_name = data['last_name'];
             let phone = data['phone'];
@@ -60,6 +62,24 @@ function getUserData() {
 
         })
     }
+}
+
+function getAllPaychecks() {
+
+    $.ajaxSetup({
+        headers:{
+            'Authorization': "Basic " + getCookie()
+        }
+    });
+    let email = atob(cookie).split(":")[0];
+    let url = "/railway_station_service_war_exploded/services/manager/secured/paychecklist/" + email;
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function () {
+            window.location.replace("paycheck.html");
+        },
+    });
 }
 
 function ListOfEmployees() {
@@ -81,36 +101,16 @@ function ListOfEmployees() {
 
 }
 
-function readTextFile() {
-    $.ajax({
-        type: 'GET',
-        url: "/railway_station_service_war_exploded/services/items/getLogs",
-        success: function(out) {
-            out = out.replace("\"","");
-            out = out.replace("\"","");
-            console.log(out);
-            let arr = out.split("\\n");
-            let str = "";
-            for(let i=0; i<arr.length; i++){
-                str+= "<p class='logs_text'>" + arr[i] +"</p>"
-            }
-            $("#logs").append(str);
-        },
-        fail: function(err) {
-            console.log(err);
-        },
-        contentType: "application/json"
-    })
-}
-
 $(document).ready(function () {
-    // getUserData();
-    readTextFile();
+    getProfile();
     ListOfEmployees();
     $("#notifyAll").on('click', function () {
         notify();
     });
     $("#makePayment").on('click', function () {
         ListOfEmployees();
+    });
+    $("#paycheck").on('click', function () {
+        getAllPaychecks();
     });
 });

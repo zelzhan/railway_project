@@ -3,6 +3,7 @@ package main;
 import com.google.gson.Gson;
 import main.graph.Graph;
 import main.wrappers.Agent;
+import main.wrappers.Paycheck;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.security.cert.CertPathChecker;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,10 +40,10 @@ public class ManagerService extends HttpServlet {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/send_notify")
-    public Response postNotification(@FormParam("login") String login, @FormParam("login") String date,  @FormParam("message") String message) {
+    public Response postNotification(@FormParam("login") String login, @FormParam("message") String message) {
         try {
             Statement st = connection.createStatement();
-            st.executeUpdate("Insert into message(manager_id, IssueDate, msg) values((select id from registered_user where login ="+login+"), "+date+","+message+")");
+            st.executeUpdate("Insert into message(manager_id, IssueDate, msg) values((select id from registered_user where login ="+login+"), now(),"+message+")");
 
         } catch (SQLException e) {
             e.printStackTrace();}
@@ -61,6 +63,15 @@ public class ManagerService extends HttpServlet {
         makeLog(headers, "User with email "+email, "POST", servletContext, requestContext.getUriInfo().getPath());
 
         return Response.ok(gson.toJson(result)).build();
+    }
+
+    @GET
+    @Path("/secured/paychecklist/{email}")
+    public Response paycheckList(@PathParam("email") String email) {
+
+        findAllPaychecks(connection, email);
+        Gson gson = new Gson();
+        return Response.ok().build();
     }
 
     @GET

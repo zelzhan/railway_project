@@ -22,7 +22,6 @@ import static main.Utils.*;
 @Path("agent")
 public class AgentService extends HttpServlet {
 
-
     private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
     private static final String AUTHORIZATION_HEADER_PREFIX = "Basic ";
 
@@ -83,6 +82,15 @@ public class AgentService extends HttpServlet {
         makeLog(headers, "User with email "+email, "POST", servletContext, requestContext.getUriInfo().getPath());
 
         return getTicket(connection, ticketID);
+    }
+
+    @GET
+    @Path("/secured/paychecklist/{email}")
+    public Response paycheckList(@PathParam("email") String email) {
+
+        findAllPaychecks(connection, email);
+        Gson gson = new Gson();
+        return Response.ok().build();
     }
 }
 
