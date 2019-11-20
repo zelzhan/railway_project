@@ -53,6 +53,10 @@ public class RailwayService extends HttpServlet {
             this.din = pair.getKey();
             this.dout = pair.getValue();
             this.initialized = true;
+            System.out.println("System is initialized!");
+
+        }else{
+            System.out.println("System is not initialized!");
         }
         return Response.ok().build();
     }

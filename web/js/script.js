@@ -104,8 +104,10 @@ function buyTicket(index){
 }
 
 $(document).ready(function () {
-    $.get("/railway_station_service_war_exploded/services/items/initialize", {}, function () {
+    $.get("/railway_station_service_war_exploded/services/items/initialize", {}, function (out) {
         console.log("Successfully initialized!");
+    }).catch(function (out) {
+        console.log(out);
     });
     cookieCheck();
     $("#search-route").on('click', function() {
