@@ -65,6 +65,16 @@ public class ManagerService extends HttpServlet {
         return Response.ok().build();
     }
 
+    @GET
+    @Path("/secured/listOfTrains")
+    public Response allTrains() {
+
+        List<ArrayList<String>> result = findAllTrains(connection);
+        Gson gson = new Gson();
+        System.out.println(result);
+        return Response.ok(gson.toJson(result)).build();
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/managerProfile")
@@ -92,7 +102,5 @@ public class ManagerService extends HttpServlet {
         return Response.ok().build();
 
     }
-
-
 
 }

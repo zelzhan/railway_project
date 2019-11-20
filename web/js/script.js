@@ -1,26 +1,11 @@
-function cookieCheck() {
-    if (typeof $.cookie('encrypted') != "undefined") {
-        $("#login").hide();
-        $("#signup").hide();
-        $("#userprofile").show();
-        $("#signout").show();
-    } else {
-        $("#login").show();
-        $("#signup").show();
-        $("#userprofile").hide();
-        $("#signout").hide();
-    }
-}
-
 let routeDate;
 
 function updateRoute(items) {
-    let str = "<table class=\"table table-bordered\"><thead class=\'thead-dark\'><tr><th scope=\"col\">#</th>"
-    str += "<th scope=\"col\">Departure</th><th scope=\"col\">Destination</th><th scope=\"col\">Time of Departure</th><th scope=\"col\">Date of Departure</th><th scope=\"col\">Time of Arrival</th>"
+    let str = "<table class=\"table table-bordered\"><thead class=\'thead-dark\'><tr><th scope=\"col\">#</th>";
+    str += "<th scope=\"col\">Departure</th><th scope=\"col\">Destination</th><th scope=\"col\">Time of Departure</th><th scope=\"col\">Date of Departure</th><th scope=\"col\">Time of Arrival</th>";
     str += "<th scope=\"col\">Date of Arrival</th><th scope=\"col\">Capacity</th><th scope=\"col\">Route</th><th scope=\"col\"></th></tr></thead><tbody>";
     routeDate = items;
     for (let i=0; i<items.length; i++) {
-        console.log(items[i]);
         str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i].train_id+"</th><td>"+ items[i].dep +"</td><td>"+items[i].des + "</td>";
         str +="<td>" + items[i].start_date.split(" ")[0] + "</td><td>" + items[i].start_date.split(" ")[1] + "</td>";
         str +="<td>" + items[i].end_date.split(" ")[0] + "</td><td>" + items[i].end_date.split(" ")[1] + "</td>";
@@ -33,17 +18,9 @@ function updateRoute(items) {
 }
 
 function showTickets() {
-    let data = [];
-    $("form#routeForm :input").each(function () {
-        var input = $(this); // This is the jquery object of the input, do what you will
-        data.push(input.val());
-    });
-
-    let url = "/railway_station_service_war_exploded/services/items/" + data[0] + "/" + data[1] + "/" + data[4] + "-" + data[3] + "-" + data[2];
-
     $.ajax({
         type: "GET",
-        url: url,
+        url: getTicketsUrl(),
         success: function (data) {
             if (data === "") {
                 alert("Place doesn't exist");
@@ -97,11 +74,6 @@ function getRouteItems() {
     });
 }
 
-function logout() {
-    $.removeCookie('encrypted', { path: '/'});
-    window.location.replace("/railway_station_service_war_exploded");
-}
-
 function buyTicket(index){
     let train_id = routeDate[index].train_id;
     let start_station = routeDate[index].dep;
@@ -109,8 +81,7 @@ function buyTicket(index){
     let dest_time = routeDate[index].start_date;
     let dept_time = routeDate[index].end_date;
     let route_id = routeDate[index].route_id;
-    let cookie = $.cookie('encrypted');
-    let email = atob(cookie).split(":")[0];
+    let email = atob(getCookie()).split(":")[0];
     $.ajax({
         type: 'POST',
         url: "/railway_station_service_war_exploded/services/items/buyTicket",

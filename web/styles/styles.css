@@ -64,6 +64,15 @@
     outline: none;
     border-bottom: 4px solid #64a19d;
 }
+.div-profile {
+    background: linear-gradient(to bottom, rgba(22, 22, 22, 0.3) 0%, rgba(22, 22, 22, 0.7) 75%, #161616 100%), url("../img/train-depo.jpg");
+    min-height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    padding-top: 20vh;
+}
 
 .top-header {
     position: relative;
@@ -150,6 +159,10 @@ form {
     color: white !important;
 }
 
+.table-profile {
+    background-color: #ffffff;
+}
+
 .about-section p {
     margin-bottom: 5rem;
 }
@@ -224,7 +237,6 @@ footer {
 }
 .tickets{
   border-radius: 12px;
-  background-color: #364042;
   padding: 15px;
   margin-bottom: 20px;
 }
@@ -272,4 +284,15 @@ footer {
 
 #notification-box:hover {
     background-color: #555; /* Add a dark-grey background on hover */
+}
+
+.agent-button{
+    padding: 12px 8px;
+}
+
+.logs {
+    overflow-y: auto;
+    background-color: #ffffff;
+    border-radius: 5px;
+    max-height: 300px;
 }

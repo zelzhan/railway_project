@@ -1,64 +1,6 @@
 function updateTicket(id){
     localStorage.setItem( 'id', id);
     updateTicketPage();
-    window.location.replace("http://localhost:8080/railway_station_service_war_exploded/updateTicket.html");
-}
-
-function cancelTicket(id) {
-    $.ajaxSetup({
-        headers: {
-            'Authorization': "Basic " + cookie
-        }
-    });
-
-    $.ajax({
-        type: "POST",
-        url: encodeURI("/railway_station_service_war_exploded/services/items/cancelTicket?ticket_id=" + id),
-        success: function () {
-            alert("Ticket successfully cancelled!");
-            location.reload();
-        }
-    });
-}
-function getAllPaychecks() {
-
-    $.ajaxSetup({
-        headers:{
-            'Authorization': "Basic " + cookie
-        }
-    });
-    let email = atob(cookie).split(":")[0];
-    let url = "/railway_station_service_war_exploded/services/agent/secured/paychecklist/" + email;
-    $.ajax({
-        type: "GET",
-        url: url,
-        success: function () {
-            window.location.replace("paycheck.html");
-        },
-    });
-}
-
-function getProfile() {
-    $.ajaxSetup({
-        headers:{
-            'Authorization': "Basic " + cookie
-        }
-    });
-
-    $.ajax({
-        type: 'POST',
-        url: "/railway_station_service_war_exploded/services/agent/secured/userAgent",
-        success: function(out) {
-            let data = JSON.parse(out);
-            $("#full_name").append(data["first_name"]+" "+data["last_name"]);
-            $("#email").append(data["email"]);
-            $("#phone").append(data["phone"]);
-            $("#workHours").append(data["workingHours"]);
-            $("#salary").append(data["salary"]);
-        },
-        fail: function(err) { console.log(err) },
-        contentType: "application/json"
-    });
 }
 
 function getTickets() {
@@ -103,7 +45,4 @@ function getTickets() {
 $(document).ready(function () {
     getProfile();
     getTickets();
-    $("#paycheck").on('click', function () {
-        getAllPaychecks();
-    });
 });

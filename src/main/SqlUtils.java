@@ -15,22 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+
 public class SqlUtils {
 
     public static String getRoleFromEmail(Connection connection, String email) {
-        Statement st = null;
         try {
-            st = connection.createStatement();
+            Statement st = connection.createStatement();
             String query = "select role from registered_user where login = '"+ email+"'";
-
             ResultSet id = st.executeQuery(query);
             id.next();
             return id.getString(1);
         } catch (Exception e) {
-            e.printStackTrace();
+            return e.getMessage();
         }
-
-        return null;
+//        return null;
     }
 
     public static void buyTicket (Connection connection, RouteBuyTicket route) {
@@ -62,12 +60,9 @@ public class SqlUtils {
         }
     }
 
-    public static Response getUserProfile (Connection connection, String authToken) {
+    public static Response getUserProfile (Connection connection, String email) {
 
         try {
-            String decodedString = Base64.decodeAsString(authToken);
-            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
-            String email = tokenizer.nextToken();
             Statement st = connection.createStatement();
             Statement st2 = connection.createStatement();
             Statement st3 = connection.createStatement();
@@ -140,7 +135,7 @@ public class SqlUtils {
             ResultSet agents = st.executeQuery("select r.login, u.first_name, u.last_name, s.name as station, r.salary, r.schedule from registered_user u, regular_employee r, station s where s.id=r.stationN and u.id = r.id;");
             ArrayList<Agent> allagents = new ArrayList<>();
             while(agents.next()){
-                allagents.add(new Agent(agents.getString(2), agents.getString(3),agents.getString(1), agents.getString(6),agents.getInt(5),agents.getString(4)));
+                allagents.add(new Agent(agents.getString(2), agents.getString(3),agents.getString(1), agents.getString(6),agents.getString(5),agents.getString(4)));
             }
             Pair<Passenger, ArrayList<Agent>> result = new Pair<Passenger, ArrayList<Agent>>( new Passenger(res1.getString(1), res1.getString(2),agents.getString(3), agents.getString(4)), allagents);
 
@@ -187,7 +182,6 @@ public class SqlUtils {
             ResultSet res = st.executeQuery("select u.first_name, u.last_name, u.phone, u.login, e.salary, e.schedule from registered_user u, regular_employee e where u.login = \"" + email + "\" and e.login = u.login");
             res.next();
             Agent agent = new Agent(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
-
             Gson gson = new Gson();
             return Response.ok(gson.toJson(agent)).build();
         }catch (Exception e){
@@ -234,7 +228,6 @@ public class SqlUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return routes;
     }
 
@@ -248,7 +241,7 @@ public class SqlUtils {
                     "u.id = e.id ");
             while (res.next()) {
                 Agent employee = new Agent(res.getString(1), res.getString(2),
-                        res.getString(4), res.getString(5), res.getInt(3), res.getString(6));
+                        res.getString(4), res.getString(5), res.getString(3), res.getString(6));
                 employees.add(employee);
             };
         } catch (SQLException e) {
@@ -256,6 +249,30 @@ public class SqlUtils {
         }
 
         return employees;
+    }
+
+    public static List<ArrayList<String>> findAllTrains(Connection connection) {
+        Statement st;
+        List<ArrayList<String>> trains = new ArrayList();
+        try {
+            st = connection.createStatement();
+            ResultSet res = st.executeQuery("select distinct t.route_id, r.name1, s1.name, t.departure_time, s2.name, t.arrival_time\n" +
+                    "from schedule t, station s1, station s2, train r\n" +
+                    "where s1.id=t.station_i and s2.id=t.station_f and t.train_id=r.id\n" +
+                    "order by t.route_id");
+            while (res.next()) {
+                ArrayList<String> train = new ArrayList<>();
+                train.add(res.getString(2));
+                train.add(res.getString(3));
+                train.add(res.getString(4));
+                train.add(res.getString(5));
+                trains.add(train);
+            };
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return trains;
     }
 
     public static void findAllPaychecks(Connection connection, String email) {
@@ -327,5 +344,19 @@ public class SqlUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static boolean emailExists (Connection connection, String email){
+        try{
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery("select exists (select r.id from registered_user r where r.login=\'"+email+"\')");
+            res.next();
+            if (res.getString(1).equals("1")) {
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 }

@@ -1,3 +1,4 @@
+function getUserData() {
 let cookie = $.cookie('encrypted');
 
 function logout() {
@@ -39,11 +40,10 @@ function getAllPaychecks() {
     });
 }
 
-function getUserData() {
 
     $.ajaxSetup({
         headers:{
-            'Authorization': "Basic " + cookie
+            'Authorization': "Basic " + getCookie()
         }
     });
 
@@ -52,7 +52,7 @@ function getUserData() {
         console.log("Cookie doesn't exists");
     } else{
         $.post("/railway_station_service_war_exploded/services/items/secured/userProfile", {
-            authToken: cookie
+            authToken: getCookie()
         }, function (out) {
             let data = JSON.parse(out);
             let full_name = data['first_name'] + " " + data['last_name'];
@@ -82,10 +82,10 @@ function getUserData() {
                 let dest = future['dest_time'].split(" ");
 
                 let append = "";
-                if (future['status'] == "Cancelled") {
+                if (future['status'] === "Cancelled") {
                     append = "<th scope=\"col\">" + "Done!" +"</th>"
                 } else {
-                    append = "<th scope=\"col\"><button type=\"button\" onclick='removeTicket(" + future.id + ")' class=\"btn btn-primary\" id=\"" + future.id + "\">Cancel Ticket</button></th>";
+                    append = "<th scope=\"col\"><button type=\"button\" onclick='cancelTicket(" + future.id + ")' class=\"btn btn-primary\" id=\"" + future.id + "\">Cancel Ticket</button></th>";
                 }
 
                 $("#future").append("<tr>\n" +

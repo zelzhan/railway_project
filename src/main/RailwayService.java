@@ -62,8 +62,18 @@ public class RailwayService extends HttpServlet {
         String email = getEmailFromToken(authToken);
         String role = getRoleFromEmail(connection, email);
         Gson gson = new Gson();
-        role = role.replace("\"", "");
         return Response.ok(gson.toJson(role)).build();
+    }
+
+    @GET
+    @Path("existsEmail/{email}")
+    public Response existsEmail(@PathParam("email") String email) {
+        Gson gson = new Gson();
+        if(emailExists(connection, email)){
+            return Response.ok(gson.toJson("true")).build();
+        }else{
+            return Response.ok(gson.toJson("false")).build();
+        }
     }
 
     @GET
@@ -125,9 +135,9 @@ public class RailwayService extends HttpServlet {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/userProfile")
-    public Response userProfile(@FormParam("authToken") String authToken) {
-
-        return getUserProfile(connection, authToken);
+    public Response userProfile(ContainerRequestContext requestContext) {
+        String authToken = getTokenFromHeader(requestContext);
+        return getUserProfile(connection, getEmailFromToken(authToken));
     }
 
     @POST
@@ -136,9 +146,7 @@ public class RailwayService extends HttpServlet {
     public Response postNewTickets(String js) {
         Gson gson  = new Gson();
         RouteBuyTicket route = gson.fromJson(js, RouteBuyTicket.class);
-
         buyTicket(connection, route);
-
         return Response.ok().build();
     }
 
