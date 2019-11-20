@@ -3,7 +3,9 @@ package main;
 import com.google.gson.Gson;
 import main.graph.Graph;
 import main.wrappers.Agent;
+import main.wrappers.CreateRoute;
 import main.wrappers.Paycheck;
+import main.wrappers.RouteBuyTicket;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +23,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import static main.SqlUtils.*;
 import static main.Utils.*;
@@ -86,17 +89,6 @@ public class ManagerService extends HttpServlet {
         return Response.ok(gson.toJson(result)).build();
     }
 
-//    @POST
-//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-//    @Path("/secured/managerProfile")
-//    public Response managerProfile(@FormParam("authToken") String authToken, @Context HttpHeaders headers, @Context ServletContext servletContext,
-//                                   @Context ContainerRequestContext requestContext) {
-//        String email = getEmailFromToken(authToken);
-//        makeLog(headers, "User with email "+email, "POST", servletContext, requestContext.getUriInfo().getPath());
-//
-//        return getManagerProfile(connection, authToken);
-//    }
-
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/updateSchedule")
@@ -122,6 +114,46 @@ public class ManagerService extends HttpServlet {
         updateSalaryHistory(connection, authToken, login, salary);
         return Response.ok().build();
 
+    }
+
+    @GET
+    @Path("/showRoutes/{dep}/{des}")
+    public Response getAllRoutes(@PathParam("dep") String dep, @PathParam("des") String des) {
+        Gson gson = new Gson();
+        return Response.ok(gson.toJson(graph.getAllPaths(dep, des))).build();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/secured/createRoute")
+    public Response createRoute(String js) {
+        Gson gson  = new Gson();
+        CreateRoute route = gson.fromJson(js, CreateRoute.class);
+        ArrayList<String> stations = route.getStations();
+
+        String date = route.getDepartureTime();
+
+        String station1;
+        String station2;
+        String train_id;
+        String route_id;
+
+
+        train_id = getTrainIdPlusOne(connection);
+        route_id = getRouteIdPlusOne(connection);
+
+        putTrainIdIntoDb(connection, train_id);
+
+        for (int i = 0; i + 1 < stations.size(); i++) {
+            station1 = stations.get(i);
+            station2 = stations.get(i+1);
+
+            putRouteIntoDb(connection, station1, station2, train_id, route_id, date);
+
+        }
+
+
+        return Response.ok().build();
     }
 
 }

@@ -37,7 +37,6 @@ function showTicketsMain() {
             if (data === "") {
                 alert("Place doesn't exist");
             }
-            console.log(data);
             updateRoute(JSON.parse(data));
         },
     });
