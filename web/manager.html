@@ -113,12 +113,28 @@
 <!--        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis culpa cupiditate earum eos impedit itaque nemo reiciendis rem saepe, sint sunt veniam. Ad distinctio eum illum quisquam repellendus vel voluptatum.-->
 <!--    </span>-->
 <!--</div>-->
-<section class="about-section">
-    <div class="container logs">
-        <span id="logs">
-        </span>
+<div class="about-section">
+    <div class="card">
+        <div class="card-header">
+            <h5>Recorded logs</h5>
+        </div>
+        <div class="card-body">
+            <label class="switch">
+                <input type="checkbox" id="startLogs" onclick="logging()">
+                <span class="slider round"></span>
+            </label>
+            <button type="button" class="btn btn-secondary btn-sm" id="refresh-btn" onclick="readTextFile()">
+                Refresh
+            </button>
+            <div class="container logs">
+                <span id="logs">
+
+                </span>
+            </div>
+        </div>
     </div>
-</section>
+</div>
+
 <!-- Footer -->
 <footer class="bg-black small text-center text-white-50">
     <div class="container">

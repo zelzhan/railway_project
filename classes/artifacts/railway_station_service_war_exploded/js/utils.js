@@ -142,7 +142,7 @@ function showTickets(buttonType) {
                         "<th scope=\"col\"><button type=\"submit\" onclick ='showMap(" + i + ");' class=\"btn btn-primary\">Show Map</button></th>";
                     if(buttonType==="createTicket"){
                         appendText+="<th scope=\"col\"><button type=\"button\" onclick='createTicket(" + i + ")' class=\"btn btn-primary\">Create Ticket</button></th></tr>";
-                    }else{
+                    }else if("updateTicket"){
                         appendText+="<th scope=\"col\"><button type=\"button\" onclick='updateTicket(" + i + ")' class=\"btn btn-primary\">Update Ticket</button></th></tr>";
                     }
                 });
