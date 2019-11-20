@@ -88,17 +88,16 @@ public class ManagerService extends HttpServlet {
         return Response.ok(gson.toJson(result)).build();
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Path("/secured/managerProfile")
-    public Response managerProfile(@FormParam("authToken") String authToken, @Context HttpHeaders headers, @Context ServletContext servletContext,
-                                   @Context ContainerRequestContext requestContext) {
-        String email = getEmailFromToken(authToken);
-        makeLog(headers, "User with email "+email, "POST", servletContext, requestContext.getUriInfo().getPath());
-
-        return getManagerProfile(connection, authToken);
-
-    }
+//    @POST
+//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+//    @Path("/secured/managerProfile")
+//    public Response managerProfile(@FormParam("authToken") String authToken, @Context HttpHeaders headers, @Context ServletContext servletContext,
+//                                   @Context ContainerRequestContext requestContext) {
+//        String email = getEmailFromToken(authToken);
+//        makeLog(headers, "User with email "+email, "POST", servletContext, requestContext.getUriInfo().getPath());
+//
+//        return getManagerProfile(connection, authToken);
+//    }
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
