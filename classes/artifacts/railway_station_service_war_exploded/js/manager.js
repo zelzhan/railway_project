@@ -62,6 +62,24 @@ function getUserData() {
     }
 }
 
+function getAllPaychecks() {
+
+    $.ajaxSetup({
+        headers:{
+            'Authorization': "Basic " + getCookie()
+        }
+    });
+    let email = atob(cookie).split(":")[0];
+    let url = "/railway_station_service_war_exploded/services/manager/secured/paychecklist/" + email;
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function () {
+            window.location.replace("paycheck.html");
+        },
+    });
+}
+
 function ListOfEmployees() {
     let url = "/railway_station_service_war_exploded/services/manager/secured/listOfEmployees";
 
@@ -82,12 +100,15 @@ function ListOfEmployees() {
 }
 
 $(document).ready(function () {
-    // getUserData();
+    getUserData();
     ListOfEmployees();
     $("#notifyAll").on('click', function () {
         notify();
     });
     $("#makePayment").on('click', function () {
         ListOfEmployees();
+    });
+    $("#paycheck").on('click', function () {
+        getAllPaychecks();
     });
 });

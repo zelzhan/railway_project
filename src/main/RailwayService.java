@@ -57,7 +57,7 @@ public class RailwayService extends HttpServlet {
 
     @GET
     @Path("getRole")
-    public Response getRole(ContainerRequestContext requestContext) {
+    public Response getRole(@Context ContainerRequestContext requestContext) {
         String authToken = getTokenFromHeader(requestContext);
         String email = getEmailFromToken(authToken);
         String role = getRoleFromEmail(connection, email);
@@ -162,5 +162,14 @@ public class RailwayService extends HttpServlet {
     @Produces("text/html")
     public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         return Response.status(Response.Status.ACCEPTED).build();
+    }
+
+    @GET
+    @Path("paychecklist/{email}")
+    public Response paycheckList(@PathParam("email") String email) {
+
+        findAllPaychecks(connection, email);
+        Gson gson = new Gson();
+        return Response.ok().build();
     }
 }
