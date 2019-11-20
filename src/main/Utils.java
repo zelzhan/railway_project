@@ -129,30 +129,48 @@ public class Utils {
     public static Graph initializeGraph() {
 
         Graph graph = new Graph();
-        graph.addVertex("6");
-        graph.addVertex("5");
-        graph.addVertex("2");
-        graph.addVertex("4");
-        graph.addVertex("3");
-        graph.addVertex("8");
-        graph.addVertex("1");
-        graph.addVertex("3");
-        graph.addVertex("7");
-        graph.addVertex("10");
-        graph.addVertex("9");
+        graph.addVertex("Astana");
+        graph.addVertex("Kokshetau");
+        graph.addVertex("Petropavl");
+        graph.addVertex("Kostanay");
+        graph.addVertex("Pavlodar");
+        graph.addVertex("Uralsk");
+        graph.addVertex("Aktobe");
+        graph.addVertex("Atyrau");
+        graph.addVertex("Aktobe");
+        graph.addVertex("Aktau");
+        graph.addVertex("Kyzylorda");
+        graph.addVertex("Shymkent");
 
-        graph.addEdge("6", "5");
-        graph.addEdge("5", "2");
-        graph.addEdge("2", "4");
-        graph.addEdge("4", "3");
-        graph.addEdge("3", "7");
-        graph.addEdge("3", "1");
-        graph.addEdge("6", "9");
-        graph.addEdge("9", "10");
-        graph.addEdge("10", "1");
-        graph.addEdge("1", "8");
 
-        graph.printAllPaths("6", "1");
+        graph.addVertex("Taraz");
+        graph.addVertex("Almaty");
+        graph.addVertex("Karaganda");
+        graph.addVertex("Semey");
+        graph.addVertex("Ust'kamenogorsk");
+
+        graph.addEdge("Astana", "Kokshetau");
+        graph.addEdge("Astana", "Karaganda");
+        graph.addEdge("Astana", "Pavlodar");
+        graph.addEdge("Astana", "Kyzylorda");
+        graph.addEdge("Kokshetau", "Petropavl");
+        graph.addEdge("Kokshetau", "Kostanay");
+        graph.addEdge("Petropavl", "Kostanay");
+        graph.addEdge("Kostanay", "Uralsk");
+        graph.addEdge("Kostanay", "Aktobe");
+        graph.addEdge("Uralsk", "Aktobe");
+        graph.addEdge("Uralsk", "Atyrau");
+        graph.addEdge("Aktobe", "Atyrau");
+        graph.addEdge("Atyrau", "Aktau");
+        graph.addEdge("Aktau", "Kyzylorda");
+        graph.addEdge("Kyzylorda", "Shymkent");
+        graph.addEdge("Shymkent", "Taraz");
+        graph.addEdge("Taraz", "Almaty");
+        graph.addEdge("Almaty", "Karaganda");
+        graph.addEdge("Almaty", "Ust'kamenogorsk");
+        graph.addEdge("Ust'kamenogorsk", "Semey");
+        graph.addEdge("Semey", "Pavlodar");
+
         return graph;
     }
 }
