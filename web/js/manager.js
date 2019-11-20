@@ -13,10 +13,13 @@ function setNotify() {
     });
 }
 
-var employeeData;
+let employeeData;
+let trainData;
 function createListOfEmployees(items) {
-    let str = "";
+    $("#employee").show();
+    $("#trains").hide();
     employeeData = items;
+    let str = "";
     for (let i=0; i<items.length; i++) {
         str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i].first_name+"</th><td>"+ items[i].last_name +"</td><td>"+items[i].salary + "</td>";
         str +="<td>" + items[i].email + "</td><td>" + items[i].workingHours + "</td>";
@@ -24,6 +27,27 @@ function createListOfEmployees(items) {
     }
     $("#manager-agents").html("");
     $("#manager-agents").append(str);
+}
+
+function cancelRoute(index) {
+    //To do
+    //Take all required data from trainData and remove which is required
+    alert("route is cancelled!");
+}
+
+function createListOfTrains(items) {
+    $("#employee").hide();
+    $("#trains").show();
+    trainData = items;
+    let str = "";
+    for (let i=0; i<items.length; i++) {
+        let date = items[i][2].split(" ");
+        str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i][0]+"</th><td>"+ items[i][1] +"</td><td>"+items[i][3] + "</td>";
+        str +="<td>" + date[1].slice(0, -2) + "</td><td>" + date[0] + "</td>";
+        str +="<td><button type=\"submit\" onclick ='cancelRoute(" + i +");' class=\"btn btn-primary\">Cancel ticket</button></td></tr>";
+    }
+    $("#manager-trains").html("");
+    $("#manager-trains").append(str);
 }
 
 function payroll(index) {
@@ -116,8 +140,62 @@ function notify_form() {
     $("#main-block").html(str);
 }
 
+function readTextFile() {
+    $.ajax({
+        type: 'GET',
+        url: "/railway_station_service_war_exploded/services/items/getLogs",
+        success: function(out) {
+            out = out.replace("\"","");
+            out = out.replace("\"","");
+            console.log(out);
+            let arr = out.split("\\n");
+            let str = "";
+            for(let i=0; i<arr.length; i++){
+                str+= "<p class='logs_text'>" + arr[i] +"</p>"
+                if(arr[i].indexOf("ALMT") !== -1){
+                    str += "</br>";
+                }
+            }
+            $("#logs").append(str);
+        },
+        fail: function(err) {
+            console.log(err);
+        },
+        contentType: "application/json"
+    })
+}
+
+function listAllTrains() {
+    let url = "/railway_station_service_war_exploded/services/manager/secured/listOfTrains";
+
+    $.ajaxSetup({
+        headers:{
+            'Authorization': "Basic " + getCookie()
+        }
+    });
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (data) {
+            console.log(data);
+            createListOfTrains(JSON.parse(data));
+        },
+    });
+}
+
+function logging(){
+    if( document.getElementById("startLogs").checked === true){
+        readTextFile();
+    } else{
+        $("#logs").html("");
+    }
+}
+
 $(document).ready(function () {
-    getUserData();
+    // getUserData();
+
+    getProfile();
     ListOfEmployees();
     $("#makePayment").on('click', function () {
         ListOfEmployees();
@@ -129,4 +207,10 @@ $(document).ready(function () {
         notify_form();
     });
 
+    $("#look-agent").on('click', function () {
+        ListOfEmployees();
+    })
+    $("#look-routes").on('click', function () {
+        listAllTrains();
+    })
 });

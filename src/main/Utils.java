@@ -7,6 +7,7 @@ import org.glassfish.jersey.internal.util.Base64;
 import javax.servlet.ServletContext;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.net.Socket;
@@ -14,6 +15,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -33,6 +36,7 @@ public class Utils {
                     .entity("Don't have rights for this resource")
                     .build();
             requestContext.abortWith(unauthorizedStatus);
+          return "";
         }
         String authToken = authHeader.get(0);
         return authToken;
@@ -41,6 +45,7 @@ public class Utils {
 
     public static String getEmailFromToken(String authToken) {
         authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
+
         String decodedString = Base64.decodeAsString(authToken);
         StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
         String email = tokenizer.nextToken();
@@ -129,30 +134,87 @@ public class Utils {
     public static Graph initializeGraph() {
 
         Graph graph = new Graph();
-        graph.addVertex("6");
-        graph.addVertex("5");
-        graph.addVertex("2");
-        graph.addVertex("4");
-        graph.addVertex("3");
-        graph.addVertex("8");
-        graph.addVertex("1");
-        graph.addVertex("3");
-        graph.addVertex("7");
-        graph.addVertex("10");
-        graph.addVertex("9");
+        graph.addVertex("Astana");
+        graph.addVertex("Kokshetau");
+        graph.addVertex("Petropavl");
+        graph.addVertex("Kostanay");
+        graph.addVertex("Pavlodar");
+        graph.addVertex("Uralsk");
+        graph.addVertex("Aktobe");
+        graph.addVertex("Atyrau");
+        graph.addVertex("Aktobe");
+        graph.addVertex("Aktau");
+        graph.addVertex("Kyzylorda");
+        graph.addVertex("Shymkent");
 
-        graph.addEdge("6", "5");
-        graph.addEdge("5", "2");
-        graph.addEdge("2", "4");
-        graph.addEdge("4", "3");
-        graph.addEdge("3", "7");
-        graph.addEdge("3", "1");
-        graph.addEdge("6", "9");
-        graph.addEdge("9", "10");
-        graph.addEdge("10", "1");
-        graph.addEdge("1", "8");
 
-        graph.printAllPaths("6", "1");
+        graph.addVertex("Taraz");
+        graph.addVertex("Almaty");
+        graph.addVertex("Karaganda");
+        graph.addVertex("Semey");
+        graph.addVertex("Ust'kamenogorsk");
+
+        graph.addEdge("Astana", "Kokshetau");
+        graph.addEdge("Astana", "Karaganda");
+        graph.addEdge("Astana", "Pavlodar");
+        graph.addEdge("Astana", "Kyzylorda");
+        graph.addEdge("Kokshetau", "Petropavl");
+        graph.addEdge("Kokshetau", "Kostanay");
+        graph.addEdge("Petropavl", "Kostanay");
+        graph.addEdge("Kostanay", "Uralsk");
+        graph.addEdge("Kostanay", "Aktobe");
+        graph.addEdge("Uralsk", "Aktobe");
+        graph.addEdge("Uralsk", "Atyrau");
+        graph.addEdge("Aktobe", "Atyrau");
+        graph.addEdge("Atyrau", "Aktau");
+        graph.addEdge("Aktau", "Kyzylorda");
+        graph.addEdge("Kyzylorda", "Shymkent");
+        graph.addEdge("Shymkent", "Taraz");
+        graph.addEdge("Taraz", "Almaty");
+        graph.addEdge("Almaty", "Karaganda");
+        graph.addEdge("Almaty", "Ust'kamenogorsk");
+        graph.addEdge("Ust'kamenogorsk", "Semey");
+        graph.addEdge("Semey", "Pavlodar");
+
         return graph;
+    }
+    public static void makeLog(HttpHeaders headers, String message, String requestType, @Context ServletContext servletContext,String url){
+        String contentType = "";
+        if (headers.getRequestHeader(HttpHeaders.CONTENT_TYPE)==null){
+            contentType = "does not accept any content";
+        }else{
+            contentType = headers.getRequestHeader(HttpHeaders.CONTENT_TYPE).get(0);
+        }
+
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        String currentDate = formatter.format(date);
+
+
+
+        String path = servletContext.getRealPath("/");
+        String pathToRoot = new File(path).getParentFile().getParentFile().getParent();
+
+
+
+
+
+        try
+        {
+            String filename= pathToRoot + "/logger.txt";
+            System.out.println("MyF");
+            FileWriter fw = new FileWriter(filename,true); //the true will append the new data
+            fw.write(message + "\n" +
+                    "Request type: " + requestType + "\n" +
+                    "Content type: " + contentType + "\n" +
+                    "Date: " + currentDate+"\n" +
+                    "URL: "+ url +"\n\n");//appends the string to the file
+            fw.close();
+        }
+        catch(Exception ioe)
+        {
+            System.err.println("IOException: " + ioe.getMessage());
+        }
+
     }
 }

@@ -11,9 +11,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
 
 
 public class SqlUtils {
@@ -118,35 +122,41 @@ public class SqlUtils {
     }
 
 // Managers profile returns all info about manager and all agents
-    public static Response getManagerProfile(Connection connection, String authToken){
-
-        try{
-            String decodedString = Base64.decodeAsString(authToken);
-            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
-            String email = tokenizer.nextToken();
-
-            Statement st3 = connection.createStatement();
-
-            //sql query for getting all personal info by email
-            ResultSet res1 = st3.executeQuery("select u.first_name, u.last_name, u.phone, u.login from registered_user u where u.login = \"" + email + "\"");
-            res1.next();
-
-            Statement st = connection.createStatement();
-            ResultSet agents = st.executeQuery("select r.login, u.first_name, u.last_name, s.name as station, r.salary, r.schedule from registered_user u, regular_employee r, station s where s.id=r.stationN and u.id = r.id;");
-            ArrayList<Agent> allagents = new ArrayList<>();
-            while(agents.next()){
-                allagents.add(new Agent(agents.getString(2), agents.getString(3),agents.getString(1), agents.getString(6),agents.getString(5),agents.getString(4)));
-            }
-            Pair<Passenger, ArrayList<Agent>> result = new Pair<Passenger, ArrayList<Agent>>( new Passenger(res1.getString(1), res1.getString(2),agents.getString(3), agents.getString(4)), allagents);
-
-
-            Gson gson = new Gson();
-            return Response.ok(gson.toJson(result)).build();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return Response.ok().build();
-    }
+//    public static Response getUserManagerProfile(Connection connection, String authToken){
+//
+//        try{
+//            String decodedString = Base64.decodeAsString(authToken);
+//            StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
+//            String email = tokenizer.nextToken();
+//
+//            Statement st = connection.createStatement();
+//            ResultSet res = st.executeQuery("select u.first_name, u.last_name, u.phone, u.login, e.salary, e.schedule from registered_user u, regular_employee e where u.login = \"" + email + "\" and e.login = u.login");
+//            res.next();
+//            Agent agent = new Agent(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6));
+//            Gson gson = new Gson();
+//
+//            Statement st3 = connection.createStatement();
+//
+//            //sql query for getting all personal info by email
+//            ResultSet res1 = st3.executeQuery("select u.first_name, u.last_name, u.phone, u.login from registered_user u where u.login = \"" + email + "\"");
+//            res1.next();
+//
+//            Statement st = connection.createStatement();
+//            ResultSet agents = st.executeQuery("select r.login, u.first_name, u.last_name, s.name as station, r.salary, r.schedule from registered_user u, regular_employee r, station s where s.id=r.stationN and u.id = r.id;");
+//            ArrayList<Agent> allagents = new ArrayList<>();
+//            while(agents.next()){
+//                allagents.add(new Agent(agents.getString(2), agents.getString(3),agents.getString(1), agents.getString(6),agents.getString(5),agents.getString(4)));
+//            }
+//            Pair<Passenger, ArrayList<Agent>> result = new Pair<Passenger, ArrayList<Agent>>( new Passenger(res1.getString(1), res1.getString(2),agents.getString(3), agents.getString(4)), allagents);
+//
+//
+//            Gson gson = new Gson();
+//            return Response.ok(gson.toJson(result)).build();
+//        }catch (SQLException e){
+//            e.printStackTrace();
+//        }
+//        return Response.ok().build();
+//    }
 
     public static Response getAgentProfile (Connection connection) {
 
@@ -361,5 +371,68 @@ public class SqlUtils {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static String getTrainIdPlusOne (Connection connection) {
+        try{
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery("select max(train_id+1) from schedule");
+            res.next();
+            String train_id = res.getString(1);
+            return train_id;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public static String getRouteIdPlusOne (Connection connection) {
+        try{
+            Statement st = connection.createStatement();
+            ResultSet res = st.executeQuery("select max(route_id+1)from schedule;");
+            res.next();
+            String route_id = res.getString(1);
+            return route_id;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void putRouteIntoDb (Connection connection, String station1, String station2, String train_id, String route_id, String departure_time) {
+        try{
+            Statement st = connection.createStatement();
+//            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+//
+//            Date tempDate = formatter.parse(departure_time);
+//            Date currentDate = Date.from(tempDate.toInstant().plusMillis(TimeUnit.HOURS.toMillis(1)));
+//
+//            DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
+//            String arriveDate = dateFormat.format(currentDate);
+
+            String query = "insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, availability) \n" +
+                    "values ("+route_id+","+train_id+", (select id from station where name ='" + station1 + "'),(select id from station where name ='" +station2+"'), '" +departure_time+"', (DATE_FORMAT('"  + departure_time + "', REPLACE('%Y-%m-%d %H:%i:%s', '%H', hour('" + departure_time + "')+1))), 130);";
+
+            System.out.println(query);
+
+            st.executeUpdate(query);
+
+            System.out.println("INSERTED!");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void putTrainIdIntoDb(Connection connection, String train_id) {
+        String query = "insert into train (capacity, name1) values (" + 135 + ", 'Tulpar" + train_id  + "');";
+        System.out.println(query);
+        try {
+            Statement st = connection.createStatement();
+            st.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

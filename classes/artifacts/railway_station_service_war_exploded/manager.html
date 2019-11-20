@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -20,7 +20,6 @@
     <script src="js/jquery.cookie.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/manager.js"></script>
-
 
 </head>
 
@@ -55,7 +54,7 @@
         <!-- <div class="mx-auto"> -->
         <!-- <div class="container"> -->
         <div class="row mx-auto">
-            <div class="col-md-4 mx-auto">
+            <div class="col-md-4">
                 <div class="personal_details">
                     <h5>Personal details</h5>
                     <ul class="list-group">
@@ -65,8 +64,8 @@
                         <li class="list-group-item">Working hours: <span id="work-hours"></span></li>
                         <li class="list-group-item">Salary: <span id="salary"></span></li>
                         <div class="row">
-                            <button type="button" class="btn btn-primary mx-auto" id="paycheck">Pay&nbspcheck</button>
-                            <button type="button" class="btn btn-primary mx-auto" id="notify-button">Send notification</button>
+                            <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="paycheck">Pay&nbspcheck</button>
+                            <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="notifyAll">Send notification</button>
 
                         </div>
 
@@ -74,20 +73,20 @@
                 </div>
                 <ul class="list-group list-group-horizontal buttons-list">
                     <li class="list-group-item">
-                        <button type="button" class="btn btn-primary mx-auto" id="look-agent">Show agents</button>
+                        <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="look-agent">Show agents</button>
                     </li>
                     <li class="list-group-item">
-                        <button type="button" class="btn btn-primary mx-auto" id="look-routes">Show route</button>
+                        <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="create-route">Create route</button>
                     </li>
                     <li class="list-group-item">
-                        <a href="#" role="button" class="btn btn-primary mx-auto" id="create-route">Create route</a>
+                        <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="look-routes">Show routes</button>
                     </li>
 
                 </ul>
             </div>
 
             <div class="col-md-8">
-                <div class="agent-tickets" id="main-block">
+                <div class="agent-tickets" id="employee">
                     <table class="table table-bordered">
                         <thead class="thead-dark">
                         <tr>
@@ -104,6 +103,23 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="agent-tickets" id="trains">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Train Name</th>
+                            <th scope="col">Departure city</th>
+                            <th scope="col">Arrival city</th>
+                            <th scope="col">Departure time</th>
+                            <th scope="col">Departure date</th>
+                            <th scope="col">Cancel route</th>
+                        </tr>
+                        </thead>
+                        <tbody id="manager-trains" style="background-color: white">
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -114,24 +130,6 @@
 <!--        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis culpa cupiditate earum eos impedit itaque nemo reiciendis rem saepe, sint sunt veniam. Ad distinctio eum illum quisquam repellendus vel voluptatum.-->
 <!--    </span>-->
 <!--</div>-->
-
-
-<!--<div class="about-section">-->
-<!--    <div class="btn-group btn-group-toggle" data-toggle="buttons">-->
-<!--        <label class="btn btn-secondary active">-->
-<!--            <input type="radio" name="options" id="option1" autocomplete="off" checked> Turn off-->
-<!--        </label>-->
-<!--        <label class="btn btn-secondary">-->
-<!--            <input type="radio" name="options" id="option2" autocomplete="off"> Turn on-->
-<!--        </label>-->
-<!--    </div>-->
-<!--    <div class="container logs">-->
-<!--            <p id="logs-span">-->
-
-<!--            </p>-->
-<!--    </div>-->
-<!--</div>-->
-
 <div class="about-section">
     <div class="card">
         <div class="card-header">
@@ -139,20 +137,21 @@
         </div>
         <div class="card-body">
             <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" id="startLogs" onclick="logging()">
                 <span class="slider round"></span>
             </label>
-            <button type="button" class="btn btn-default btn-sm" id="refresh-btn">
-                <span class="glyphicon glyphicon-refresh"></span> Refresh
+            <button type="button" class="btn btn-secondary btn-sm" id="refresh-btn" onclick="readTextFile()">
+                Refresh
             </button>
             <div class="container logs">
-                <span id="logs-span">
+                <span id="logs">
 
                 </span>
             </div>
         </div>
     </div>
 </div>
+
 <!-- Footer -->
 <footer class="bg-black small text-center text-white-50">
     <div class="container">

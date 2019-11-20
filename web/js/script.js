@@ -3,21 +3,33 @@ let routeDate;
 function updateRoute(items) {
     let str = "<table class=\"table table-bordered\"><thead class=\'thead-dark\'><tr><th scope=\"col\">#</th>";
     str += "<th scope=\"col\">Departure</th><th scope=\"col\">Destination</th><th scope=\"col\">Time of Departure</th><th scope=\"col\">Date of Departure</th><th scope=\"col\">Time of Arrival</th>";
-    str += "<th scope=\"col\">Date of Arrival</th><th scope=\"col\">Capacity</th><th scope=\"col\">Route</th><th scope=\"col\"></th></tr></thead><tbody>";
+    str += "<th scope=\"col\">Date of Arrival</th><th scope=\"col\">Capacity</th><th scope=\"col\">Route</th>";
+
+    if(typeof getCookie() === "undefined"){
+        str += "</tr></thead><tbody>";
+    }else{
+        str += "<th id=\"buy\" scope=\"col\"></th></tr></thead><tbody>";
+    }
+
     routeDate = items;
     for (let i=0; i<items.length; i++) {
         str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i].train_id+"</th><td>"+ items[i].dep +"</td><td>"+items[i].des + "</td>";
         str +="<td>" + items[i].start_date.split(" ")[0] + "</td><td>" + items[i].start_date.split(" ")[1] + "</td>";
         str +="<td>" + items[i].end_date.split(" ")[0] + "</td><td>" + items[i].end_date.split(" ")[1] + "</td>";
         str +="<th scope=\"row\">"+items[i].capacity+"</th>";
-        str +="<td><button type=\"submit\" onclick ='showMap(" + i +");' class=\"btn btn-primary\">Show Map</button></td> <td><button type=\"submit\" onclick ='buyTicket(" + i +");' class=\"btn btn-primary\">Buy ticket</button></td></tr>";
+        str +="<td><button type=\"submit\" onclick ='showMap(" + i +");' class=\"btn btn-primary\">Show Map</button></td>";
+        if(typeof getCookie() === "undefined"){
+            str += "</tr>";
+        }else{
+            str += "<td><button type=\"submit\" onclick ='buyTicket(" + i +");' class=\"btn btn-primary\">Buy ticket</button></td></tr>";
+        }
     }
     str += "</tbody></table>";
     $("#table-table").html("");
     $("#table-table").append(str);
 }
 
-function showTickets() {
+function showTicketsMain() {
     $.ajax({
         type: "GET",
         url: getTicketsUrl(),
@@ -96,7 +108,7 @@ function buyTicket(index){
         }),
         success: function() {
             alert('Successful purchase!');
-            showTickets();
+            showTicketsMain();
         },
         fail: function(err) { alert(err) },
         contentType: "application/json"
@@ -134,9 +146,6 @@ $(document).ready(function () {
     getRCCLent();
     cookieCheck();
     $("#search-route").on('click', function() {
-        showTickets();
+        showTicketsMain();
     });
-
-
-
 });

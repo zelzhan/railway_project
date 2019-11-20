@@ -140,14 +140,10 @@ INSERT INTO regular_employee (Login, supervisor_id, salary, stationN, schedule, 
 INSERT INTO regular_employee (Login, supervisor_id, salary, stationN, schedule, id,firstDay) VALUES ('richard.agent@ex.com', 201521976,  150000, 12, 'M, T, W, R, F (9.00-18.00)', (SELECT id FROM registered_user WHERE Login = 'richard.agent@ex.com'),'January 1');
 INSERT INTO regular_employee (Login, supervisor_id, salary, stationN, schedule, id,firstDay) VALUES ('mona.manager@ex.com',null, 200000, 13, 'M, T, W, R, F (9.00-18.00)',  (SELECT id FROM registered_user WHERE Login = 'mona.manager@ex.com'),'January 1');
 INSERT INTO regular_employee (Login, supervisor_id, salary, stationN, schedule, id,firstDay) VALUES ('mao.manager@ex.com',null, 200000, 14, 'M, T, W, R, F (9.00-18.00)',  (SELECT id FROM registered_user WHERE Login = 'mao.manager@ex.com'),'January 1');
-insert into regular_employee (Login, supervisor_id, salary, stationN, schedule, id,firstDay) values ('keno', null, 200000,  15, 'M, T, W, R, F (9.00-18.00)', 201122333,'January 1');
 INSERT INTO regular_employee (login, supervisor_id, salary, stationN, schedule, id,firstDay) VALUES ('william.riker@ex.com', null,  1000, 15, 'M, T, W, R, F (9.00-18.00)', (SELECT id FROM registered_user WHERE Login = 'william.riker@ex.com'),'January 1') ;
 INSERT INTO regular_employee (login, supervisor_id, salary, stationN, schedule, id,firstDay) VALUES ('john.smith@ex.com', null, 1000, 15, 'M, T, W, R, F (9.00-18.00)', (SELECT id FROM registered_user WHERE Login = 'john.smith@ex.com'),'January 1');
 
 -- train
-insert into train (id, capacity, name1) values (560, 123, 'Tulpar01');
-insert into train (id, capacity, name1) values (561, 123, 'Tulpar02');
-insert into train (id, capacity, name1) values (562, 123, 'Tulpar03');
 insert into train (id, capacity, name1) values (563, 123, 'Tulpar04');
 insert into train (id, capacity, name1) values (564, 123, 'Tulpar05');
 insert into train (id, capacity, name1) values (565, 123, 'Tulpar06');

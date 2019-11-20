@@ -38,29 +38,6 @@ function getAllPaychecks() {
     });
 }
 
-function getProfile() {
-    $.ajaxSetup({
-        headers:{
-            'Authorization': "Basic " + getCookie()
-        }
-    });
-
-    $.ajax({
-        type: 'POST',
-        url: "/railway_station_service_war_exploded/services/agent/secured/userAgent",
-        success: function(out) {
-            let data = JSON.parse(out);
-            $("#full_name").append(data["first_name"]+" "+data["last_name"]);
-            $("#email").append(data["email"]);
-            $("#phone").append(data["phone"]);
-            $("#workHours").append(data["workingHours"]);
-            $("#salary").append(data["salary"]);
-        },
-        fail: function(err) { console.log(err) },
-        contentType: "application/json"
-    });
-}
-
 function getTickets() {
     $.ajaxSetup({
         headers:{
@@ -85,13 +62,17 @@ function getTickets() {
                     "<th scope=\"col\">" + dept[0] + "</th>\n" +
                     "<th scope=\"col\">" + dest[0] + "</th>\n" +
                     "<th scope=\"col\">" + dept[1].slice(0, -2) + "</th>\n" +
-                    "<th scope=\"col\">" + dest[1].slice(0, -2) + "</th>\n" +
-                    "<th scope=\"col\">" + "<button type=\"button\" onclick='updateTicket(" + ticket['id'] + ")' class=\"btn btn-primary\">Update Ticket</button>" + "</th>";
+                    "<th scope=\"col\">" + dest[1].slice(0, -2) + "</th>\n";
                 if (ticket['status'] !== "Cancelled") {
+                    appendText = appendText + "<th scope=\"col\">" + "<button type=\"button\" onclick='updateTicket(" + ticket['id'] + ")' class=\"btn btn-primary\">Update Ticket</button>" + "</th>";
                     appendText = appendText + "<th scope=\"col\">" + "<button type=\"button\" onclick='cancelTicket(" + ticket['id'] + ")' class=\"btn btn-primary\">Cancel Ticket</button>" + "</th></tr>";
-                    $("#agent-tickets").append(appendText);
+                }else{
+                    appendText = appendText + "<th scope=\"col\">-</th> <th scope=\"col\">" + "Ticket is cancelled." + "</th></tr>";
+
                 }
-                });
+                $("#agent-tickets").append(appendText);
+
+            });
             },
         fail: function(err) {
             console.log(err);

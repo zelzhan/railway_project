@@ -81,6 +81,12 @@ function cookieCheck() {
 }
 
 function cancelTicket(id) {
+    $.ajaxSetup({
+        headers:{
+            'Authorization': "Basic " + getCookie()
+        }
+    });
+
     $.ajax({
         type: "POST",
         url: encodeURI("/railway_station_service_war_exploded/services/items/cancelTicket?ticket_id=" + id),
@@ -136,7 +142,7 @@ function showTickets(buttonType) {
                         "<th scope=\"col\"><button type=\"submit\" onclick ='showMap(" + i + ");' class=\"btn btn-primary\">Show Map</button></th>";
                     if(buttonType==="createTicket"){
                         appendText+="<th scope=\"col\"><button type=\"button\" onclick='createTicket(" + i + ")' class=\"btn btn-primary\">Create Ticket</button></th></tr>";
-                    }else{
+                    }else if("updateTicket"){
                         appendText+="<th scope=\"col\"><button type=\"button\" onclick='updateTicket(" + i + ")' class=\"btn btn-primary\">Update Ticket</button></th></tr>";
                     }
                 });
