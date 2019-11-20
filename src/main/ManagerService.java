@@ -35,8 +35,6 @@ public class ManagerService extends HttpServlet {
         System.out.println("Manager service activated!");
     }
 
-
-
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/send_notify")
