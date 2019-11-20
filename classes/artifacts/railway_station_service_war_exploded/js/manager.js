@@ -113,6 +113,9 @@ function readTextFile() {
             let str = "";
             for(let i=0; i<arr.length; i++){
                 str+= "<p class='logs_text'>" + arr[i] +"</p>"
+                if(arr[i].indexOf("ALMT") !== -1){
+                    str += "</br>";
+                }
             }
             $("#logs").append(str);
         },
@@ -123,9 +126,17 @@ function readTextFile() {
     })
 }
 
+function logging(){
+    if( document.getElementById("startLogs").checked === true){
+        readTextFile();
+    } else{
+        $("#logs").html("");
+    }
+}
+
 $(document).ready(function () {
     // getUserData();
-    readTextFile();
+
     getProfile();
     ListOfEmployees();
     $("#notifyAll").on('click', function () {

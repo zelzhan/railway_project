@@ -29,7 +29,7 @@ function updateRoute(items) {
     $("#table-table").append(str);
 }
 
-function showTickets() {
+function showTicketsMain() {
     $.ajax({
         type: "GET",
         url: getTicketsUrl(),
@@ -37,6 +37,7 @@ function showTickets() {
             if (data === "") {
                 alert("Place doesn't exist");
             }
+            console.log(data);
             updateRoute(JSON.parse(data));
         },
     });
@@ -144,6 +145,6 @@ $(document).ready(function () {
     cookieCheck();
     getRCCLent();
     $("#search-route").on('click', function() {
-        showTickets();
+        showTicketsMain();
     });
 });
