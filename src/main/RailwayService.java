@@ -2,6 +2,7 @@ package main;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.internal.$Gson$Preconditions;
 import javafx.util.Pair;
 import jdk.nashorn.internal.parser.JSONParser;
 import main.graph.Graph;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
@@ -59,6 +61,7 @@ public class RailwayService extends HttpServlet {
     @Path("getRole")
     public Response getRole(@Context ContainerRequestContext requestContext) {
         String authToken = getTokenFromHeader(requestContext);
+        authToken = authToken.split(" ")[1];
         String email = getEmailFromToken(authToken);
         String role = getRoleFromEmail(connection, email);
         Gson gson = new Gson();
@@ -82,10 +85,22 @@ public class RailwayService extends HttpServlet {
                              @PathParam("dest") String dest,
                              @PathParam("date") String datey,
                              @PathParam("red") String dateh,
-                             @PathParam("route") int route) {
+                             @PathParam("route") int route,
+                               ContainerRequestContext requestContext,
+                               @Context HttpHeaders headers,
+                               @Context ServletContext servletContext) {
 
         String result = findMapRoute(connection, route, datey, depart, dest, this.din, this.dout);
         Gson gson = new Gson();
+        List<String> authHeader = requestContext.getHeaders().get("Authorization");
+        if (authHeader == null) {
+            makeLog(headers, "Unauthorized user ", "GET", servletContext, requestContext.getUriInfo().getPath());
+        }else{
+            String authToken = getTokenFromHeader(requestContext);
+            authToken = authToken.split(" ")[1];
+            String email = getEmailFromToken(authToken);
+            makeLog(headers, "Passenger with email "+ email, "GET",servletContext, requestContext.getUriInfo().getPath());
+        }
         return Response.ok(gson.toJson(result)).build();
     }
 
@@ -93,9 +108,22 @@ public class RailwayService extends HttpServlet {
     @Path("{depart}/{dest}/{date}")
     public Response getRouteData(@PathParam("depart") String depart,
                             @PathParam("dest") String dest,
-                            @PathParam("date") String date) {
+                            @PathParam("date") String date,
+                                 @Context HttpHeaders headers, ContainerRequestContext requestContext,
+                                 @Context ServletContext servletContext) {
 
         List<Route> params = findRoute(depart, dest, date, connection);
+        List<String> authHeader = requestContext.getHeaders().get("Authorization");
+        if (authHeader == null) {
+            makeLog(headers, "Unauthorized user ", "GET", servletContext, requestContext.getUriInfo().getPath());
+        } else {
+            String authToken = getTokenFromHeader(requestContext);
+            authToken = authToken.split(" ")[1];
+            String email = getEmailFromToken(authToken);
+            makeLog(headers, "Passenger with email "+ email, "GET", servletContext, requestContext.getUriInfo().getPath());
+        }
+
+
         Gson gson = new Gson();
         return Response.ok(gson.toJson(params)).build();
     }
@@ -127,41 +155,84 @@ public class RailwayService extends HttpServlet {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("registration")
     public Response postListItem(@FormParam("email") String email, @FormParam("password") String password, @FormParam("phone") String phone,
-                                 @FormParam("firstName") String firstName, @FormParam("lastName") String lastName) {
-
+                                 @FormParam("firstName") String firstName, @FormParam("lastName") String lastName,
+                                 @Context HttpHeaders headers, @Context ServletContext servletContext, ContainerRequestContext requestContext) {
+        makeLog(headers, "User with email " + email, "POST", servletContext, requestContext.getUriInfo().getPath());
         return register(connection, email, firstName, lastName, password, phone);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/userProfile")
-    public Response userProfile(ContainerRequestContext requestContext) {
+    public Response userProfile(ContainerRequestContext requestContext, @Context HttpHeaders headers, @Context ServletContext servletContext) {
         String authToken = getTokenFromHeader(requestContext);
+        authToken = authToken.split(" ")[1];
+        String email = getEmailFromToken(authToken);
+//        String authToken = headers.getRequestHeader(HttpHeaders.AUTHORIZATION).get(0);
+
+        makeLog(headers,"User with email " + email, "POST", servletContext, requestContext.getUriInfo().getPath());
         return getUserProfile(connection, getEmailFromToken(authToken));
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("buyTicket")
-    public Response postNewTickets(String js) {
+    public Response postNewTickets(String js, @Context HttpHeaders headers, @Context ServletContext servletContext, @Context ContainerRequestContext requestContext) {
         Gson gson  = new Gson();
         RouteBuyTicket route = gson.fromJson(js, RouteBuyTicket.class);
         buyTicket(connection, route);
+        makeLog(headers, "USer with email "+route.getEmail(), "POST", servletContext,requestContext.getUriInfo().getPath());
         return Response.ok().build();
     }
 
     @POST
     @Path("cancelTicket")
-    public Response cancelTicket(@QueryParam("ticket_id") int ticket_id){
+    public Response cancelTicket(@QueryParam("ticket_id") int ticket_id, @Context HttpHeaders headers, @Context ServletContext servletContext, ContainerRequestContext
+                                 requestContext){
         deleteTicket(connection, ticket_id);
+        String authToken = headers.getRequestHeader(HttpHeaders.AUTHORIZATION).get(0);
+        authToken = authToken.split(" ")[1];
+//        String authToken = getTokenFromHeader();
+        String email = getEmailFromToken(authToken);
+        makeLog(headers,"User with email " + email, "POST", servletContext,requestContext.getUriInfo().getPath());
         return Response.ok().build();
     }
 
     @GET
     @Path("secured/login")
     @Produces("text/html")
-    public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+    public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response, @Context HttpHeaders headers, ContainerRequestContext requestContext,
+                             @Context ServletContext servletContext) {
+        String authToken = getTokenFromHeader(requestContext);
+        authToken = authToken.split(" ")[1];
+        String email = getEmailFromToken(authToken);
+        makeLog(headers, "User with email "+email, "POST", servletContext, requestContext.getUriInfo().getPath());
         return Response.status(Response.Status.ACCEPTED).build();
+    }
+
+    @GET
+    @Path("getLogs")
+    @Produces("text/html")
+    public Response getLogs(){
+        Gson gson = new Gson();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("/home/sunnya/railway_project/logger.txt"));
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+            }
+            String logs = sb.toString();
+            br.close();
+            return Response.ok(gson.toJson(logs)).build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.ok(gson.toJson(e.getMessage())).build();
+        }
     }
 
     @GET

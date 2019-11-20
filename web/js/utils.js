@@ -81,6 +81,12 @@ function cookieCheck() {
 }
 
 function cancelTicket(id) {
+    $.ajaxSetup({
+        headers:{
+            'Authorization': "Basic " + getCookie()
+        }
+    });
+
     $.ajax({
         type: "POST",
         url: encodeURI("/railway_station_service_war_exploded/services/items/cancelTicket?ticket_id=" + id),
