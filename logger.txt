@@ -1,0 +1,312 @@
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:25:35 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:25:35 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 01:25:37 ALMT
+URL: items/cancelTicket
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:25:39 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:25:39 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:26:08 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:26:08 ALMT
+URL: agent/secured/getTicket/3
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:30:14 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:30:14 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:30:20 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:30:20 ALMT
+URL: agent/secured/getTicket/1
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:31:52 ALMT
+URL: agent/secured/getTicket/1
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:31:52 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:33:50 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:33:50 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:33:52 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:33:52 ALMT
+URL: agent/secured/getTicket/1
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 01:34:20 ALMT
+URL: items/secured/login
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:34:23 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:34:23 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:34:25 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:34:25 ALMT
+URL: agent/secured/getTicket/1
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:38:26 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:38:26 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:38:28 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:38:28 ALMT
+URL: agent/secured/getTicket/1
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:40:25 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:40:25 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:40:27 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:40:27 ALMT
+URL: agent/secured/getTicket/1
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 01:47:09 ALMT
+URL: items/Moskva/Aktobe/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 01:47:37 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 01:47:37 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 01:47:37 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 01:47:38 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 01:47:38 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 01:47:40 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 01:47:40 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 01:47:41 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 01:47:41 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 01:47:41 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:48:01 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:48:01 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:48:03 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:48:03 ALMT
+URL: agent/secured/getTicket/3
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 01:49:20 ALMT
+URL: items/Atyrau/Kostanay/2038-01-01
+
+USer with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:49:23 ALMT
+URL: items/buyTicket
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 01:49:25 ALMT
+URL: items/Atyrau/Kostanay/2038-01-01
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:49:28 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:49:28 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:49:32 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 01:49:32 ALMT
+URL: agent/secured/getTicket/7
+

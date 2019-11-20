@@ -37,7 +37,6 @@ function showTicketsMain() {
             if (data === "") {
                 alert("Place doesn't exist");
             }
-            console.log(data);
             updateRoute(JSON.parse(data));
         },
     });
@@ -109,7 +108,7 @@ function buyTicket(index){
         }),
         success: function() {
             alert('Successful purchase!');
-            showTickets();
+            showTicketsMain();
         },
         fail: function(err) { alert(err) },
         contentType: "application/json"

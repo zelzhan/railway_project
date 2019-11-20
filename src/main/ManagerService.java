@@ -125,7 +125,7 @@ public class ManagerService extends HttpServlet {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/secured/createRoute")
+    @Path("/createRoute")
     public Response createRoute(String js) {
         Gson gson  = new Gson();
         CreateRoute route = gson.fromJson(js, CreateRoute.class);

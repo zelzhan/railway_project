@@ -44,7 +44,7 @@ function createListOfTrains(items) {
         let date = items[i][2].split(" ");
         str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i][0]+"</th><td>"+ items[i][1] +"</td><td>"+items[i][3] + "</td>";
         str +="<td>" + date[1].slice(0, -2) + "</td><td>" + date[0] + "</td>";
-        str +="<td><button type=\"submit\" onclick ='cancelTicket(" + i +");' class=\"btn btn-primary\">Cancel ticket</button></td></tr>";
+        str +="<td><button type=\"submit\" onclick ='cancelRoute(" + i +");' class=\"btn btn-primary\">Cancel ticket</button></td></tr>";
     }
     $("#manager-trains").html("");
     $("#manager-trains").append(str);
