@@ -9,7 +9,7 @@ function logout() {
 function removeTicket(id) {
     $.ajaxSetup({
         headers: {
-            'Authorization': "Basic " + cookie
+            'Authorization': "Basic " + getCookie()
         }
     });
 
@@ -26,7 +26,7 @@ function getAllPaychecks() {
 
     $.ajaxSetup({
         headers:{
-            'Authorization': "Basic " + cookie
+            'Authorization': "Basic " + getCookie()
         }
     });
     let email = atob(cookie).split(":")[0];
@@ -47,7 +47,6 @@ function getAllPaychecks() {
         }
     });
 
-    console.log(cookie);
     if(typeof $.cookie('encrypted') === "undefined"){
         console.log("Cookie doesn't exists");
     } else{

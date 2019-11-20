@@ -66,7 +66,7 @@ function getAllPaychecks() {
 
     $.ajaxSetup({
         headers:{
-            'Authorization': "Basic " + cookie
+            'Authorization': "Basic " + getCookie()
         }
     });
     let email = atob(cookie).split(":")[0];

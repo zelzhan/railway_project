@@ -58,7 +58,7 @@ public class ManagerService extends HttpServlet {
 
     @GET
     @Path("/secured/paychecklist/{email}")
-    public Response paycheckList(@FormParam("email") String email) {
+    public Response paycheckList(@PathParam("email") String email) {
 
         findAllPaychecks(connection, email);
         Gson gson = new Gson();

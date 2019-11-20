@@ -7,7 +7,7 @@ function updateTicket(id){
 function cancelTicket(id) {
     $.ajaxSetup({
         headers: {
-            'Authorization': "Basic " + cookie
+            'Authorization': "Basic " + getCookie()
         }
     });
 
@@ -24,10 +24,10 @@ function getAllPaychecks() {
 
     $.ajaxSetup({
         headers:{
-            'Authorization': "Basic " + cookie
+            'Authorization': "Basic " + getCookie()
         }
     });
-    let email = atob(cookie).split(":")[0];
+    let email = atob(getCookie()).split(":")[0];
     let url = "/railway_station_service_war_exploded/services/agent/secured/paychecklist/" + email;
     $.ajax({
         type: "GET",
@@ -41,7 +41,7 @@ function getAllPaychecks() {
 function getProfile() {
     $.ajaxSetup({
         headers:{
-            'Authorization': "Basic " + cookie
+            'Authorization': "Basic " + getCookie()
         }
     });
 

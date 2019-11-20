@@ -1,4 +1,45 @@
 function getUserData() {
+let cookie = $.cookie('encrypted');
+
+function logout() {
+    $.removeCookie('encrypted', { path: '/'});
+    window.location.replace("/railway_station_service_war_exploded");
+}
+
+function removeTicket(id) {
+    $.ajaxSetup({
+        headers: {
+            'Authorization': "Basic " + getCookie()
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: encodeURI("/railway_station_service_war_exploded/services/items/cancelTicket?ticket_id=" + id),
+        success: function () {
+            alert("Ticket successfully cancelled!");
+            location.reload();
+        }
+    });
+}
+function getAllPaychecks() {
+
+    $.ajaxSetup({
+        headers:{
+            'Authorization': "Basic " + getCookie()
+        }
+    });
+    let email = atob(cookie).split(":")[0];
+    let url = "/railway_station_service_war_exploded/services/items/paychecklist/" + email;
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function () {
+            window.location.replace("paycheck.html");
+        },
+    });
+}
+
 
     $.ajaxSetup({
         headers:{
@@ -6,7 +47,6 @@ function getUserData() {
         }
     });
 
-    console.log(cookie);
     if(typeof $.cookie('encrypted') === "undefined"){
         console.log("Cookie doesn't exists");
     } else{
@@ -63,4 +103,7 @@ function getUserData() {
 
 $(document).ready(function () {
     getUserData();
+    $("#paycheck").on('click', function () {
+        getAllPaychecks();
+    });
 });
