@@ -4,23 +4,23 @@
 <head>
 
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
     <title>EVe booking</title>
 
     <!-- Bootstrap core CSS -->
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="styles/styles.css" rel="stylesheet">
 
-    <script crossorigin="anonymous" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="js/jquery.cookie.js"></script>
-    <script src="js/agent.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/createTicket.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -36,13 +36,13 @@
                     <a class="nav-link js-scroll-trigger" href="index.html">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+                    <a class="nav-link js-scroll-trigger" href="#">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="agent.html" id="agent.html">My Profile</a>
+                    <a class="nav-link" onclick="profile()" id="userprofile">My Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" id="singout" onclick="logout();">Sign out</a>
+                    <a class="nav-link" onclick="logout();" href="#" id="singout">Sign out</a>
                 </li>
             </ul>
         </div>
@@ -52,32 +52,37 @@
 <!-- Header -->
 <header class="top-header">
     <div class="d-flex align-items-center" style="padding-top: 100px;">
-        <!-- <div class="mx-auto"> -->
-        <!-- <div class="container"> -->
         <div class="row mx-auto">
             <div class="col-md-3">
                 <div class="personal_details">
-                    <h5>Personal details:</h5>
+                    <h5>Personal details</h5>
                     <ul class="list-group">
                         <li class="list-group-item">Full name: <span id="full_name"></span></li>
                         <li class="list-group-item">Email: <span id="email"></span></li>
                         <li class="list-group-item">Phone: <span id="phone"></span></li>
-                        <li class="list-group-item">Working hours: <span id="workHours"></span></li>
+                        <li class="list-group-item">Working hours: <span id="work-hours"></span></li>
                         <li class="list-group-item">Salary: <span id="salary"></span></li>
-                        <button class="btn btn-primary mx-auto" id="paycheck" type="button">Pay&nbspcheck</button>
+                        <div class="row">
+                            <button type="button" class="btn btn-primary mx-auto agent-button" id="paycheck">Pay&nbspcheck</button>
+                            <button type="button" class="btn btn-primary mx-auto agent-button" onclick="agent()" id="home-agent">My profile</button>
+                        </div>
                     </ul>
                 </div>
                 <div class="personal_details">
+                    <div class="form-group">
+                        <label>Passenger email</label>
+                        <input type="text" class="form-control" id="pass-email" placeholder="example@email.com">
+                    </div>
                     <form id="routeForm">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
                                     <label>Departure City</label>
-                                    <input class="form-control" id="dep" placeholder="Astana" type="text">
+                                    <input type="text" class="form-control" id="dep" placeholder="Astana">
                                 </div>
                                 <div class="col">
                                     <label>Destination City</label>
-                                    <input class="form-control" id="des" placeholder="Almaty" type="text">
+                                    <input type="text" class="form-control" id="des" placeholder="Almaty">
                                 </div>
                             </div>
                         </div>
@@ -85,7 +90,7 @@
                             <div class="row">
                                 <div class="col">
                                     <label>Day</label>
-                                    <input class="form-control" id="day-input" placeholder="Day" type="text">
+                                    <input type="text" class="form-control" id="day-input" placeholder="Enter day">
                                 </div>
                                 <div class="col">
                                     <label>Month</label>
@@ -107,33 +112,32 @@
                                 </div>
                                 <div class="col">
                                     <label>Year</label>
-                                    <input class="form-control" id="year-input" placeholder="Year" type="text">
+                                    <input type="text" class="form-control" id="year-input" placeholder="Year">
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary" id="search-route" type="submit">Search</button>
+                        <button type="button" class="btn btn-primary" id="search-route">Search</button>
                     </form>
                 </div>
             </div>
             <div class="col-md-9">
-
                 <div class="agent-tickets">
-                    <!-- <h2 class="title mx-auto">Trips</h2> -->
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-profile">
                         <thead class="thead-dark">
                         <tr>
+                            <th scope="col">#</th>
                             <th scope="col">Departure City</th>
                             <th scope="col">Destination City</th>
-                            <th scope="col">Departure time</th>
-                            <th scope="col">Departure Date</th>
-                            <th scope="col">Arrival time</th>
-                            <th scope="col">Arrival Date</th>
-                            <th scope="col">Update ticket</th>
-                            <th scope="col">Cancel ticket</th>
+                            <th scope="col">Date of Departure</th>
+                            <th scope="col">Time of Departure</th>
+                            <th scope="col">Date of Arrival</th>
+                            <th scope="col">Time of Arrival</th>
+                            <th scope="col">Capacity</th>
+                            <th scope="col">Route</th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
-                        <tbody id="agent-tickets">
-
+                        <tbody id="agent-tickets" class="table-profile">
                         </tbody>
                     </table>
                 </div>
@@ -143,6 +147,7 @@
         <!-- </div> -->
     </div>
 </header>
+
 
 <!-- Footer -->
 <footer class="bg-black small text-center text-white-50">
@@ -159,8 +164,6 @@
 <!-- Plugin JavaScript -->
 <script src="js/jquery-easing/jquery.easing.min.js"></script>
 
-<!-- Custom scripts for this template -->
-<script src="js/animation.js"></script>
 
 </body>
 

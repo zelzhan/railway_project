@@ -33,7 +33,7 @@ function updateRoute(items) {
 }
 
 function showTickets() {
-    let data = []
+    let data = [];
     $("form#routeForm :input").each(function () {
         var input = $(this); // This is the jquery object of the input, do what you will
         data.push(input.val());
@@ -51,7 +51,6 @@ function showTickets() {
             updateRoute(JSON.parse(data));
         },
     });
-
 }
 
 function showMap(index) {
@@ -111,12 +110,12 @@ function buyTicket(index){
     let dept_time = routeDate[index].end_date;
     let route_id = routeDate[index].route_id;
     let cookie = $.cookie('encrypted');
-
+    let email = atob(cookie).split(":")[0];
     $.ajax({
         type: 'POST',
         url: "/railway_station_service_war_exploded/services/items/buyTicket",
         data: JSON.stringify( {
-            authToken: cookie,
+            email: email,
             train_id: train_id,
             start_station: start_station,
             end_station: end_station,
@@ -131,7 +130,6 @@ function buyTicket(index){
         fail: function(err) { alert(err) },
         contentType: "application/json"
     })
-
 }
 
 $(document).ready(function () {
