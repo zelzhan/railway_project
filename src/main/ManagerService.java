@@ -44,7 +44,7 @@ public class ManagerService extends HttpServlet {
     public Response postNotification(@FormParam("login") String login, @FormParam("message") String message) {
         try {
             Statement st = connection.createStatement();
-            st.executeUpdate("Insert into message(manager_id, IssueDate, msg) values((select id from registered_user where login ="+login+"), now(),"+message+")");
+            st.executeUpdate("Insert into message(manager_id, IssueDate, msg) values((select id from registered_user where login ="+"'"+login+"'"+"), now(),"+"'"+message+"'"+")");
 
         } catch (SQLException e) {
             e.printStackTrace();}
@@ -67,11 +67,9 @@ public class ManagerService extends HttpServlet {
     }
 
     @GET
-    @Path("/secured/paychecklist/{email}")
+    @Path("/secured/payCheckList/{email}")
     public Response paycheckList(@PathParam("email") String email) {
-
         findAllPaychecks(connection, email);
-        Gson gson = new Gson();
         return Response.ok().build();
     }
 
@@ -103,15 +101,15 @@ public class ManagerService extends HttpServlet {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Path("/secured/{login}/{salary}")
+    @Path("/payroll/{login}/{salary}")
     public Response makePayroll(@Context ContainerRequestContext requestContext, @Context ServletContext servletContext,
-                                @Context HttpHeaders headers, @FormParam("authToken") String authToken, @FormParam("login") String login,
-                                @FormParam("salary") String salary) {
+                                @Context HttpHeaders headers, @PathParam("login") String login,
+                                @PathParam("salary") String salary) {
+        updateSalaryHistory(connection, login, salary);
+        String authToken = getTokenFromHeader(requestContext);
         String email = getEmailFromToken(authToken);
         makeLog(headers, "User with email "+email, "POST", servletContext, requestContext.getUriInfo().getPath());
 
-        updateSalaryHistory(connection, authToken, login, salary);
         return Response.ok().build();
 
     }

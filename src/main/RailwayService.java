@@ -135,8 +135,7 @@ public class RailwayService extends HttpServlet {
 
         try {
             Statement st = connection.createStatement();
-            ResultSet res = st.executeQuery("select u.login, m.IssueDate, m.msg from message m, registered_user u where m.manager_id=u.id and m.IssueDate>now()");
-            res.next();
+            ResultSet res = st.executeQuery("select u.login, m.IssueDate, m.msg from message m, registered_user u where m.manager_id=u.id");
 
             while (res.next()) {
                 Message msg = new Message(res.getString(1), res.getString(2), res.getString(3));

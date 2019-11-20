@@ -226,43 +226,47 @@ footer {
 
 /* css for reg, login, profile */
 .personal_details{
-  border-radius: 12px;
-  background-color: #364042;
-  padding: 15px;
+    border-radius: 12px;
+    background-color: #364042;
+    padding: 15px;
     margin-bottom: 10px;
-  color: #ffffff;
+    color: #ffffff;
 }
+.personal_details button, .buttons-list button, .buttons-list a{
+    padding: 12px 15px;
+}
+
 .buttons-list li{
     padding: 12px;
 }
 .tickets{
-  border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 20px;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
 }
 .personal_details ul li{
-  font-size: 14px;
-  margin: 2px;
-  padding: 0;
+    font-size: 14px;
+    margin: 2px;
+    padding: 0;
 }
 
 
 .title{
-  text-align: center;
-  color: #ffffff;
+    text-align: center;
+    color: #ffffff;
 }
 
 .list-group-item{
-  border: 0 !important;
-  background-color: transparent !important;
+    border: 0 !important;
+    background-color: transparent !important;
 }
 
 
 .form-div {
-  background-color: #364042;  
-  border-radius: 12px;
-  padding: 15px;
-  
+    background-color: #364042;
+    border-radius: 12px;
+    padding: 15px;
+
 }
 
 /* notification-box */
@@ -305,7 +309,14 @@ footer {
     min-height: 100px;
 }
 
+#refresh-btn {
+    float: right;
+    padding: 10px;
+}
 
+#main-block .card {
+    min-width: 48.5vw;
+}
 
 /* The switch - the box around the slider */
 .switch {
@@ -353,6 +364,21 @@ input:checked + .slider {
 
 input:focus + .slider {
     box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
 
 input:checked + .slider:before {

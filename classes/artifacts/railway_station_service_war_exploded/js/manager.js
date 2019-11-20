@@ -1,8 +1,8 @@
-function notify(items) {
-    var login = items['login'];
+function setNotify() {
+    var login = atob(getCookie()).split(":")[0];
     var message = $("#message").val();
 
-    $.post("/railway_station_service_war_exploded/services/items/send_notify", {
+    $.post("/railway_station_service_war_exploded/services/manager/secured/send_notify", {
         login: login,
         message: message
     }, function () {
@@ -18,11 +18,12 @@ let trainData;
 function createListOfEmployees(items) {
     $("#employee").show();
     $("#trains").hide();
+    $("#main-block").hide();
     employeeData = items;
     let str = "";
     for (let i=0; i<items.length; i++) {
         str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i].first_name+"</th><td>"+ items[i].last_name +"</td><td>"+items[i].salary + "</td>";
-        str +="<td>" + items[i].email + "</td><td>" + items[i].schedule + "</td>";
+        str +="<td>" + items[i].email + "</td><td>" + items[i].workingHours + "</td>";
         str +="<td><button type=\"submit\" onclick ='payroll(" + i +");' class=\"btn btn-primary\">Paycheck</button></td></tr>";
     }
     $("#manager-agents").html("");
@@ -37,6 +38,7 @@ function cancelRoute(index) {
 
 function createListOfTrains(items) {
     $("#employee").hide();
+    $("#main-block").hide();
     $("#trains").show();
     trainData = items;
     let str = "";
@@ -51,11 +53,15 @@ function createListOfTrains(items) {
 }
 
 function payroll(index) {
+    $.ajaxSetup({
+        headers:{
+            'Authorization': "Basic " + getCookie()
+        }
+    });
     let items = employeeData[index];
-    let url = "/railway_station_service_war_exploded/services/manager/secured/" + items['login'] + "/" + items['salary'];
-
+    let url = "/railway_station_service_war_exploded/services/manager/payroll/" + items['email'] + "/" + items['salary'];
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: url,
         success: function () {
         },
@@ -76,9 +82,7 @@ function getUserData() {
         $.post("/railway_station_service_war_exploded/services/manager/secured/managerProfile", {
             authToken: getCookie()
         }, function (out) {
-            console.log(out);
             let data = JSON.parse(out);
-            console.log(data);
             let first_name = data['first_name'];
             let last_name = data['last_name'];
             let phone = data['phone'];
@@ -96,7 +100,7 @@ function getAllPaychecks() {
         }
     });
     let email = atob(getCookie()).split(":")[0];
-    let url = "/railway_station_service_war_exploded/services/manager/secured/paychecklist/" + email;
+    let url = "/railway_station_service_war_exploded/services/manager/secured/payCheckList/" + email;
     $.ajax({
         type: "GET",
         url: url,
@@ -119,11 +123,26 @@ function ListOfEmployees() {
         type: "GET",
         url: url,
         success: function (data) {
-            console.log(data);
             createListOfEmployees(JSON.parse(data));
         },
     });
 
+}
+
+function notify_form() {
+    $("#employee").hide();
+    $("#trains").hide();
+    $("#main-block").show();
+    let str = " <div class=\"card\">\n" +
+        "        <div class=\"card-header\">\n" +
+        "            <h5>Notification</h5>\n" +
+        "        </div>\n" +
+        "        <div class=\"card-body\"><div class=\"input-group input-group-lg\">\n" +
+        "  <input type=\"text\" class=\"form-control\" aria-label=\"Large\" aria-describedby=\"inputGroup-sizing-sm\" id =\"message\">\n" +
+        "</div><button type=\"button\" class=\"btn btn-primary\" id=\"create-notify\" onclick='setNotify();'>Submit</button></div>\n" +
+        "    </div>\n" +
+        "</div>";
+    $("#main-block").html(str);
 }
 
 function readTextFile() {
@@ -183,15 +202,16 @@ $(document).ready(function () {
 
     getProfile();
     ListOfEmployees();
-    $("#notifyAll").on('click', function () {
-        notify();
-    });
     $("#makePayment").on('click', function () {
         ListOfEmployees();
     });
     $("#paycheck").on('click', function () {
         getAllPaychecks();
     });
+    $("#notify-button").on('click', function () {
+        notify_form();
+    });
+
     $("#look-agent").on('click', function () {
         ListOfEmployees();
     })

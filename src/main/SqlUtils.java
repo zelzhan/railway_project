@@ -112,10 +112,10 @@ public class SqlUtils {
         }
     }
 
-    public static void updateSalaryHistory(Connection connection, String authToken, String login, String salary){
+    public static void updateSalaryHistory(Connection connection, String login, String salary){
         try {
             Statement st = connection.createStatement();
-            st.executeQuery("insert into salaryHistory(employee_id, payrollDate, salary) values("+login+", now(), "+salary+")");
+            st.executeUpdate("insert into salaryHistory(employee_id, payrollDate, salary) values((select id from registered_user where login = "+"'"+login+"'"+"), now(), "+"'" + salary + "')");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -250,8 +250,8 @@ public class SqlUtils {
                     "from registered_user u, regular_employee e where\n" +
                     "u.id = e.id ");
             while (res.next()) {
-                Agent employee = new Agent(res.getString(1), res.getString(2),
-                        res.getString(4), res.getString(5), res.getString(3), res.getString(6));
+                Agent employee = new Agent(res.getString(1), res.getString(2), "2565445",
+                        res.getString(4), res.getString(3), res.getString(5));
                 employees.add(employee);
             };
         } catch (SQLException e) {
@@ -290,18 +290,21 @@ public class SqlUtils {
         String str = "<!DOCTYPE html><html><head><meta " +
                 "charset=\"UTF-8\"><link rel=\"stylesheet\" type=\"text/css\" " +
                 "href=\"style.css\"></head><body><div>\n";
-        str += "<table class=\"table table-bordered\"><thead class=\'thead-dark\'><tr><th scope=\"col\">#</th>";
-        str += "<th scope=\"col\">Amount Paid</th><th scope=\"col\">Date of transaction</th><th scope=\"col\">Bank Name</th>";
+        str += "<table class=\"table table-bordered\"><thead class=\'thead-dark\'><tr><th scope=\"col\">Salary</th>";
+        str += "<th scope=\"col\">Date of Payment</th><th scope=\"col\">Bank</th><th scope=\"col\"></th></tr></thead><tbody>";
         try {
             st = connection.createStatement();
-            ResultSet res = st.executeQuery("select s.id, s.payrolldate, s.salary\n" +
-                    "from regular_employee e, salaryHistory s\n" +
-                    "where e.id=s.employee_id and e.login="+email+"and" +
-                    "u.id = e.id ");
+            ResultSet res = st.executeQuery("select s.id, s.payrolldate, s.salary " +
+                    "from regular_employee e, salaryHistory s " +
+                    "where e.id=s.employee_id and e.login="+"'" + email + "'");
+            int i = 1;
             while (res.next()) {
-                str +="<tr id=\"" + res.getString(3) + "\"><th scope=\"row\">"+res.getString(2)+"</th><td>Jysan Bank</td>";
+                str +="<tr id=\"" + i + "\"><th scope=\"row\">"+res.getString(3) + "</th>";
+                str += "<td>" + res.getString(2) + "</td><td>Jysan Bank</td>";
+            i++;
             };
-            BufferedWriter writer = new BufferedWriter(new FileWriter("paycheck.html"));
+            str += " \n</tbody></table> \n</div></body></html>";
+            BufferedWriter writer = new BufferedWriter(new FileWriter("/home/stayal0ne/railway_project/railway_project/classes/artifacts/railway_station_service_war_exploded/paycheck.html"));
             writer.write(str);
             writer.close();
 

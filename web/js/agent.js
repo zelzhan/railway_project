@@ -28,7 +28,7 @@ function getAllPaychecks() {
         }
     });
     let email = atob(getCookie()).split(":")[0];
-    let url = "/railway_station_service_war_exploded/services/agent/secured/paychecklist/" + email;
+    let url = "/railway_station_service_war_exploded/services/agent/secured/payCheckList/" + email;
     $.ajax({
         type: "GET",
         url: url,
