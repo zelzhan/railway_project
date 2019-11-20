@@ -80,7 +80,14 @@ function ListOfEmployees() {
     });
 
 }
+// notification form 
+function notify_form() {
+    let str = "<div class=\"input-group input-group-lg\">\n" +
+        "  <input type=\"text\" class=\"form-control\" aria-label=\"Large\" aria-describedby=\"inputGroup-sizing-sm\">\n" +
+        "</div>";
+    $("#main-block").html(str);
 
+    
 $(document).ready(function () {
     // getUserData();
     ListOfEmployees();
@@ -89,5 +96,8 @@ $(document).ready(function () {
     });
     $("#makePayment").on('click', function () {
         ListOfEmployees();
+    });
+    $("#notify-button").on('click', function () {
+        notify_form();
     });
 });
