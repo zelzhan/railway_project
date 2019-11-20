@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static main.SqlUtils.*;
+import static main.Utils.*;
 
 @Path("manager")
 public class ManagerService extends HttpServlet {
@@ -54,11 +56,23 @@ public class ManagerService extends HttpServlet {
         return Response.ok(gson.toJson(result)).build();
     }
 
+    @GET
+    @Path("/secured/listOfTrains")
+    public Response allTrains() {
+
+        List<ArrayList<String>> result = findAllTrains(connection);
+        Gson gson = new Gson();
+        System.out.println(result);
+        return Response.ok(gson.toJson(result)).build();
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/managerProfile")
-    public Response managerProfile(@FormParam("authToken") String authToken) {
+    public Response managerProfile(@FormParam("authToken") String authToken, @Context HttpHeaders headers) {
 
+        String email = getEmailFromToken(authToken);
+        makeLog(headers,"Manager with email "+email, "POST");
         return getManagerProfile(connection, authToken);
 
     }
@@ -66,7 +80,11 @@ public class ManagerService extends HttpServlet {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path("/secured/updateSchedule")
-    public Response updateScheduleManager(@FormParam("authToken") String authToken, @FormParam("schedule") String schedule, @FormParam("agentEmail") String agentEmail) {
+    public Response updatScheduleManager(@FormParam("authToken") String authToken, @FormParam("schedule") String schedule, @FormParam("agentEmail") String agentEmail,
+                                         @Context HttpHeaders headers) {
+
+        String email = getEmailFromToken(authToken);
+        makeLog(headers,"Manager with email "+email, "POST");
         updateSchedule(connection, authToken, schedule, agentEmail);
         return Response.ok().build();
     }

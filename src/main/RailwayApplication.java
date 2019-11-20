@@ -4,17 +4,17 @@ import main.graph.Graph;
 import main.security.SecureFilter;
 import main.security.SecuredService;
 
+
+import javax.servlet.ServletContext;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Context;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
-
-import javax.servlet.ServletContext;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.Context;
 
 import static main.Utils.initializeDatabase;
 import static main.Utils.initializeGraph;

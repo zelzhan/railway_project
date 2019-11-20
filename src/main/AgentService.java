@@ -1,6 +1,7 @@
 package main;
 
 import com.google.gson.Gson;
+
 import main.wrappers.RouteBuyTicket;
 import org.glassfish.jersey.internal.util.Base64;
 
@@ -39,6 +40,7 @@ public class AgentService extends HttpServlet {
     public Response agentNewTickets(String js) {
         Gson gson  = new Gson();
         RouteBuyTicket route = gson.fromJson(js, RouteBuyTicket.class);
+
         buyTicket(connection, route);
         return Response.ok().build();
     }
