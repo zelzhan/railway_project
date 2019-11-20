@@ -17,7 +17,6 @@ import static main.SqlUtils.*;
 @Path("agent")
 public class AgentService extends HttpServlet {
 
-
     private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
     private static final String AUTHORIZATION_HEADER_PREFIX = "Basic ";
 
@@ -59,6 +58,15 @@ public class AgentService extends HttpServlet {
     @Path("/secured/getTicket/{ticketID}")
     public Response getUserTicket(ContainerRequestContext requestContext, @PathParam("ticketID") String ticketID) {
         return getTicket(connection, ticketID);
+    }
+
+    @GET
+    @Path("/secured/paychecklist/{email}")
+    public Response paycheckList(@FormParam("email") String email) {
+
+        findAllPaychecks(connection, email);
+        Gson gson = new Gson();
+        return Response.ok().build();
     }
 }
 

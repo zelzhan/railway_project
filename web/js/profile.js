@@ -21,6 +21,23 @@ function removeTicket(id) {
         }
     });
 }
+function getAllPaychecks() {
+
+    $.ajaxSetup({
+        headers:{
+            'Authorization': "Basic " + cookie
+        }
+    });
+    let email = atob(cookie).split(":")[0];
+    let url = "/railway_station_service_war_exploded/services/items/paychecklist/" + email;
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function () {
+            window.location.replace("paycheck.html");
+        },
+    });
+}
 
 function getUserData() {
 
@@ -87,4 +104,7 @@ function getUserData() {
 
 $(document).ready(function () {
     getUserData();
+    $("#paycheck").on('click', function () {
+        getAllPaychecks();
+    });
 });

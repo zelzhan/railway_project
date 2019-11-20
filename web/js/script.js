@@ -132,15 +132,37 @@ function buyTicket(index){
     })
 }
 
+function showNotification(items) {
+    let str = "";
+    for (let i=0; i<items.length; i++) {
+        str +="<br>" + items.login + "<span class=\"lv0\"></span>);";
+        str +="<br>" + items.data + "<span class=\"lv1\"></span>);";
+        str +="<br>" + items.message + "<span class=\"lv2\"></span>);";
+        }
+    $("#blabla").html("");
+    $("#blabla").append(str);
+}
+
+function getRCCLent() {
+    let url = "/railway_station_service_war_exploded/services/items/get_notify"
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (data) {
+            showNotification(JSON.parse(data));
+        },
+    });
+}
+
 $(document).ready(function () {
     $.get("/railway_station_service_war_exploded/services/items/initialize", {}, function () {
         console.log("Successfully initialized!");
     });
     cookieCheck();
+    getRCCLent();
     $("#search-route").on('click', function() {
         showTickets();
     });
-
 
 
 

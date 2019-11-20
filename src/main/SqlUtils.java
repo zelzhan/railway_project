@@ -5,12 +5,8 @@ import javafx.util.Pair;
 import main.wrappers.*;
 import org.glassfish.jersey.internal.util.Base64;
 
-import javax.swing.*;
 import javax.ws.rs.core.Response;
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileWriter;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -262,6 +258,32 @@ public class SqlUtils {
         return employees;
     }
 
+    public static void findAllPaychecks(Connection connection, String email) {
+        Statement st;
+        String str = "<!DOCTYPE html><html><head><meta " +
+                "charset=\"UTF-8\"><link rel=\"stylesheet\" type=\"text/css\" " +
+                "href=\"style.css\"></head><body><div>\n";
+        str += "<table class=\"table table-bordered\"><thead class=\'thead-dark\'><tr><th scope=\"col\">#</th>";
+        str += "<th scope=\"col\">Amount Paid</th><th scope=\"col\">Date of transaction</th><th scope=\"col\">Bank Name</th>";
+        try {
+            st = connection.createStatement();
+            ResultSet res = st.executeQuery("select s.id, s.payrolldate, s.salary\n" +
+                    "from regular_employee e, salaryHistory s\n" +
+                    "where e.id=s.employee_id and e.login="+email+"and" +
+                    "u.id = e.id ");
+            while (res.next()) {
+                str +="<tr id=\"" + res.getString(3) + "\"><th scope=\"row\">"+res.getString(2)+"</th><td>Jysan Bank</td>";
+            };
+            BufferedWriter writer = new BufferedWriter(new FileWriter("paycheck.html"));
+            writer.write(str);
+            writer.close();
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static String findMapRoute(Connection connection, int route, String datey, String depart, String dest, DataInputStream din, DataOutputStream dout) {
 
         List<Route> params = new ArrayList();
@@ -269,7 +291,7 @@ public class SqlUtils {
         String str = null;
         try {
             Statement st = connection.createStatement();
-            ResultSet res = st.executeQuery("select * from (select distinct t2.name1 as d, t1.name1 as f, s1.departure_time, s2.arrival_time, s2.route_id, s1.availability from schedule s1, schedule s2, station d1, station d2, train t1, train t2 where  d1.name = \""+depart+"\" and date(s1.departure_time) = \""+datey+"\"  and d1.id = s1.station_i and s1.train_id = t1.id and d2.id = s2.station_f  and d2.name = \'"+dest+"\' and s2.train_id = t2.id) t where t.d = t.f");
+            ResultSet res = st.executeQuery("select distinct s1.name, s2.name from schedule, station s1, station s2 where s1.id=station_i and s2.id=station_f and route_id=" + route + "");
             while (res.next()) {
                 Route r = new Route(res.getString(1), res.getString(2), "blabla",
                         res.getString(3), res.getString(4), route, res.getInt(5));

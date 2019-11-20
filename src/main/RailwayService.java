@@ -155,4 +155,13 @@ public class RailwayService extends HttpServlet {
     public Response redirect(@Context HttpServletRequest request, @Context HttpServletResponse response) {
         return Response.status(Response.Status.ACCEPTED).build();
     }
+
+    @GET
+    @Path("paychecklist/{email}")
+    public Response paycheckList(@FormParam("email") String email) {
+
+        findAllPaychecks(connection, email);
+        Gson gson = new Gson();
+        return Response.ok().build();
+    }
 }
