@@ -42,7 +42,7 @@
                     <a class="nav-link js-scroll-trigger" href="#">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" onclick="profile()" id="userprofile">My Profile</a>
+                    <a class="nav-link" href="agent.html" id="userprofile">My Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" onclick="logout();" href="#" id="singout">Sign out</a>
@@ -53,8 +53,8 @@
 </nav>
 
 <!-- Header -->
-<div class="div-profile">
-    <div class="d-flex h-100 align-items-center">
+<header class="top-header">
+    <div class="d-flex align-items-center" style="padding-top: 100px;">
         <div class="row mx-auto">
             <div class="col-md-3">
                 <div class="personal_details">
@@ -69,7 +69,7 @@
                             <button type="button" class="btn btn-primary mx-auto agent-button" id="paycheck">
                                 Pay&nbspcheck
                             </button>
-                            <button type="button" class="btn btn-primary mx-auto agent-button" onclick="createTicketPage()"
+                            <button type="button" class="btn btn-primary mx-auto agent-button" onclick="createTicket()"
                                     id="createTicket">Create&nbspticket
                             </button>
                         </div>
@@ -81,7 +81,6 @@
                     <table class="table table-bordered">
                         <thead class="thead-dark">
                         <tr>
-                            <th scope="col">ticket owner</th>
                             <th scope="col">Departure City</th>
                             <th scope="col">Destination City</th>
                             <th scope="col">Departure time</th>
@@ -100,7 +99,7 @@
             </div>
         </div>
     </div>
-</div>
+</header>
 
 <!-- Footer -->
 <footer class="bg-black small text-center text-white-50">
@@ -115,8 +114,5 @@
 
 <!-- Plugin JavaScript -->
 <script src="js/jquery-easing/jquery.easing.min.js"></script>
-
-<script src="js/animation.js"></script>
-
 </body>
 </html>
