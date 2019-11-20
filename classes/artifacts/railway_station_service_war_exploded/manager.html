@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -54,7 +54,7 @@
         <!-- <div class="mx-auto"> -->
         <!-- <div class="container"> -->
         <div class="row mx-auto">
-            <div class="col-md-4">
+            <div class="col-md-4 mx-auto">
                 <div class="personal_details">
                     <h5>Personal details</h5>
                     <ul class="list-group">
@@ -64,8 +64,8 @@
                         <li class="list-group-item">Working hours: <span id="work-hours"></span></li>
                         <li class="list-group-item">Salary: <span id="salary"></span></li>
                         <div class="row">
-                            <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="paycheck">Pay&nbspcheck</button>
-                            <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="notifyAll">Send notification</button>
+                            <button type="button" class="btn btn-primary mx-auto" id="paycheck">Pay&nbspcheck</button>
+                            <button type="button" class="btn btn-primary mx-auto" id="notify-button">Send notification</button>
 
                         </div>
 
@@ -73,20 +73,24 @@
                 </div>
                 <ul class="list-group list-group-horizontal buttons-list">
                     <li class="list-group-item">
-                        <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="look-agent">Show agents</button>
+                        <button type="button" class="btn btn-primary mx-auto" id="look-agent">Show agents</button>
                     </li>
                     <li class="list-group-item">
-                        <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="create-route">Create route</button>
+                        <button type="button" class="btn btn-primary mx-auto" id="look-routes">Show route</button>
                     </li>
                     <li class="list-group-item">
-                        <button type="button" style="padding: 12px 15px;" class="btn btn-primary mx-auto" id="look-routes">Show routes</button>
+                        <a href="#" role="button" class="btn btn-primary mx-auto" id="create-route">Create route</a>
                     </li>
 
                 </ul>
             </div>
 
             <div class="col-md-8">
+                <div class="agent-tickets" id="main-block">
+                </div>
+                
                 <div class="agent-tickets" id="employee">
+
                     <table class="table table-bordered">
                         <thead class="thead-dark">
                         <tr>

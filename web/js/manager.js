@@ -18,6 +18,7 @@ let trainData;
 function createListOfEmployees(items) {
     $("#employee").show();
     $("#trains").hide();
+    $("#main-block").hide();
     employeeData = items;
     let str = "";
     for (let i=0; i<items.length; i++) {
@@ -37,6 +38,7 @@ function cancelRoute(index) {
 
 function createListOfTrains(items) {
     $("#employee").hide();
+    $("#main-block").hide();
     $("#trains").show();
     trainData = items;
     let str = "";
@@ -128,6 +130,9 @@ function ListOfEmployees() {
 }
 
 function notify_form() {
+    $("#employee").hide();
+    $("#trains").hide();
+    $("#main-block").show();
     let str = " <div class=\"card\">\n" +
         "        <div class=\"card-header\">\n" +
         "            <h5>Notification</h5>\n" +

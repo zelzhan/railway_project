@@ -103,9 +103,10 @@ public class ManagerService extends HttpServlet {
     @POST
     @Path("/payroll/{login}/{salary}")
     public Response makePayroll(@Context ContainerRequestContext requestContext, @Context ServletContext servletContext,
-                                @Context HttpHeaders headers, @FormParam("authToken") String authToken, @FormParam("login") String login,
-                                @FormParam("salary") String salary) {
+                                @Context HttpHeaders headers, @PathParam("login") String login,
+                                @PathParam("salary") String salary) {
         updateSalaryHistory(connection, login, salary);
+        String authToken = getTokenFromHeader(requestContext);
         String email = getEmailFromToken(authToken);
         makeLog(headers, "User with email "+email, "POST", servletContext, requestContext.getUriInfo().getPath());
 

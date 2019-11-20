@@ -304,7 +304,7 @@ public class SqlUtils {
             i++;
             };
             str += " \n</tbody></table> \n</div></body></html>";
-            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\abyl\\Desktop\\Fall 2019\\Software Engineering\\railway_project\\classes\\artifacts\\railway_station_service_war_exploded\\paycheck.html"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("/home/stayal0ne/railway_project/railway_project/classes/artifacts/railway_station_service_war_exploded/paycheck.html"));
             writer.write(str);
             writer.close();
 
