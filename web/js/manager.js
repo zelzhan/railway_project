@@ -1,8 +1,8 @@
-function notify(items) {
-    var login = items['login'];
+function setNotify() {
+    var login = atob(getCookie()).split(":")[0];
     var message = $("#message").val();
 
-    $.post("/railway_station_service_war_exploded/services/items/send_notify", {
+    $.post("/railway_station_service_war_exploded/services/manager/secured/send_notify", {
         login: login,
         message: message
     }, function () {
@@ -13,13 +13,13 @@ function notify(items) {
     });
 }
 
-let employeeData;
+var employeeData;
 function createListOfEmployees(items) {
     let str = "";
     employeeData = items;
     for (let i=0; i<items.length; i++) {
         str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i].first_name+"</th><td>"+ items[i].last_name +"</td><td>"+items[i].salary + "</td>";
-        str +="<td>" + items[i].email + "</td><td>" + items[i].schedule + "</td>";
+        str +="<td>" + items[i].email + "</td><td>" + items[i].workingHours + "</td>";
         str +="<td><button type=\"submit\" onclick ='payroll(" + i +");' class=\"btn btn-primary\">Paycheck</button></td></tr>";
     }
     $("#manager-agents").html("");
@@ -27,11 +27,15 @@ function createListOfEmployees(items) {
 }
 
 function payroll(index) {
+    $.ajaxSetup({
+        headers:{
+            'Authorization': "Basic " + getCookie()
+        }
+    });
     let items = employeeData[index];
-    let url = "/railway_station_service_war_exploded/services/manager/secured/" + items['login'] + "/" + items['salary'];
-
+    let url = "/railway_station_service_war_exploded/services/manager/payroll/" + items['email'] + "/" + items['salary'];
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: url,
         success: function () {
         },
@@ -69,8 +73,8 @@ function getAllPaychecks() {
             'Authorization': "Basic " + getCookie()
         }
     });
-    let email = atob(cookie).split(":")[0];
-    let url = "/railway_station_service_war_exploded/services/manager/secured/paychecklist/" + email;
+    let email = atob(getCookie()).split(":")[0];
+    let url = "/railway_station_service_war_exploded/services/manager/secured/payCheckList/" + email;
     $.ajax({
         type: "GET",
         url: url,
@@ -99,16 +103,30 @@ function ListOfEmployees() {
 
 }
 
+function notify_form() {
+    let str = " <div class=\"card\">\n" +
+        "        <div class=\"card-header\">\n" +
+        "            <h5>Notification</h5>\n" +
+        "        </div>\n" +
+        "        <div class=\"card-body\"><div class=\"input-group input-group-lg\">\n" +
+        "  <input type=\"text\" class=\"form-control\" aria-label=\"Large\" aria-describedby=\"inputGroup-sizing-sm\" id =\"message\">\n" +
+        "</div><button type=\"button\" class=\"btn btn-primary\" id=\"create-notify\" onclick='setNotify();'>Submit</button></div>\n" +
+        "    </div>\n" +
+        "</div>";
+    $("#main-block").html(str);
+}
+
 $(document).ready(function () {
     getUserData();
     ListOfEmployees();
-    $("#notifyAll").on('click', function () {
-        notify();
-    });
     $("#makePayment").on('click', function () {
         ListOfEmployees();
     });
     $("#paycheck").on('click', function () {
         getAllPaychecks();
     });
+    $("#notify-button").on('click', function () {
+        notify_form();
+    });
+
 });
