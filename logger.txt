@@ -792,241 +792,517 @@ URL: agent/secured/agentProfile
 
 User with email mona.manager@ex.com
 Request type: POST
-Content type: does not accept any content
-Date: 2019-11-21 at 10:15:11 ALMT
-URL: items/secured/login
-
-User with email mona.manager@ex.com
-Request type: POST
 Content type: application/json
-Date: 2019-11-21 at 10:15:14 ALMT
+Date: 2019-11-21 at 12:52:13 ALMT
 URL: agent/secured/userAgent
 
 User with email mona.manager@ex.com
 Request type: POST
 Content type: does not accept any content
-Date: 2019-11-21 at 10:15:14 ALMT
+Date: 2019-11-21 at 12:52:13 ALMT
 URL: manager/secured/listOfEmployees
 
 User with email mona.manager@ex.com
 Request type: POST
 Content type: does not accept any content
-Date: 2019-11-21 at 10:15:23 ALMT
+Date: 2019-11-21 at 12:52:18 ALMT
+URL: manager/payroll/mona.manager@ex.com/200000
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 12:52:18 ALMT
+URL: manager/payroll/mona.manager@ex.com/200000
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 12:52:18 ALMT
+URL: manager/payroll/mona.manager@ex.com/200000
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 12:52:18 ALMT
+URL: manager/payroll/mona.manager@ex.com/200000
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 12:52:18 ALMT
+URL: manager/payroll/mona.manager@ex.com/200000
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 12:52:31 ALMT
+URL: agent/secured/userAgent
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 12:52:31 ALMT
 URL: manager/secured/listOfEmployees
 
 User with email mona.manager@ex.com
 Request type: POST
 Content type: application/json
-Date: 2019-11-21 at 10:15:34 ALMT
+Date: 2019-11-21 at 12:52:45 ALMT
 URL: agent/secured/userAgent
 
 User with email mona.manager@ex.com
 Request type: POST
 Content type: does not accept any content
-Date: 2019-11-21 at 10:15:34 ALMT
+Date: 2019-11-21 at 12:52:45 ALMT
 URL: manager/secured/listOfEmployees
-
-User with email mona.manager@ex.com
-Request type: POST
-Content type: does not accept any content
-Date: 2019-11-21 at 12:38:09 ALMT
-URL: items/secured/login
-
-User with email mona.manager@ex.com
-Request type: POST
-Content type: application/json
-Date: 2019-11-21 at 12:38:12 ALMT
-URL: agent/secured/userAgent
-
-User with email mona.manager@ex.com
-Request type: POST
-Content type: does not accept any content
-Date: 2019-11-21 at 12:38:12 ALMT
-URL: manager/secured/listOfEmployees
-
-User with email mona.manager@ex.com
-Request type: POST
-Content type: does not accept any content
-Date: 2019-11-21 at 12:38:14 ALMT
-URL: manager/secured/listOfTrains
-
-User with email mona.manager@ex.com
-Request type: POST
-Content type: does not accept any content
-Date: 2019-11-21 at 12:38:17 ALMT
-URL: manager/secured/listOfEmployees
-
-User with email mona.manager@ex.com
-Request type: POST
-Content type: application/json
-Date: 2019-11-21 at 12:38:25 ALMT
-URL: agent/secured/userAgent
-
-User with email mona.manager@ex.com
-Request type: POST
-Content type: application/json
-Date: 2019-11-21 at 12:38:25 ALMT
-URL: agent/secured/agentProfile
-
-User with email sean.employee@ex.com
-Request type: POST
-Content type: application/json
-Date: 2019-11-21 at 12:45:54 ALMT
-URL: agent/secured/agentProfile
-
-User with email sean.employee@ex.com
-Request type: POST
-Content type: application/json
-Date: 2019-11-21 at 12:45:54 ALMT
-URL: agent/secured/userAgent
-
-User with email sean.employee@ex.com
-Request type: POST
-Content type: application/json
-Date: 2019-11-21 at 12:55:28 ALMT
-URL: agent/secured/agentProfile
-
-User with email sean.employee@ex.com
-Request type: POST
-Content type: application/json
-Date: 2019-11-21 at 12:55:28 ALMT
-URL: agent/secured/userAgent
 
 Unauthorized user 
 Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 13:15:46 ALMT
-URL: items/Atyrau/Kostanay/2038-01-01
+Date: 2019-11-21 at 12:53:34 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
 
 Unauthorized user 
 Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 13:16:48 ALMT
+Date: 2019-11-21 at 12:53:44 ALMT
+URL: items/Almaty/Shymkent/2019-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 12:54:19 ALMT
+URL: items/Almaty/Shymkent/2019-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 12:54:20 ALMT
+URL: items/Almaty/Shymkent/2019-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 12:54:20 ALMT
+URL: items/Almaty/Shymkent/2019-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 12:54:20 ALMT
+URL: items/Almaty/Shymkent/2019-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 12:54:20 ALMT
+URL: items/Almaty/Shymkent/2019-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 12:55:30 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 12:56:25 ALMT
+URL: items/Moskva/Aktobe/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 12:56:25 ALMT
+URL: items/Moskva/Aktobe/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 12:56:26 ALMT
+URL: items/Moskva/Aktobe/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 12:56:31 ALMT
+URL: items/Moskva/Aktobe/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:10:50 ALMT
+URL: items/Moscow/Aktobe/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:10:56 ALMT
+URL: items/Moscow/Aktobe/2038-01-20
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:10:56 ALMT
+URL: items/Moscow/Aktobe/2038-01-20
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:10:56 ALMT
+URL: items/Moscow/Aktobe/2038-01-20
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:10:57 ALMT
+URL: items/Moscow/Aktobe/2038-01-20
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:11:18 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:11:19 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:11:19 ALMT
+URL: items/Almaty/Shymkent/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:12:11 ALMT
+URL: items/Moscow/Astana/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:12:11 ALMT
+URL: items/Moscow/Astana/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:12:11 ALMT
+URL: items/Moscow/Astana/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:12:12 ALMT
+URL: items/Moscow/Astana/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:12:15 ALMT
+URL: items/Moscow/Astana/2038-01-20
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:12:15 ALMT
+URL: items/Moscow/Astana/2038-01-20
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:12:16 ALMT
+URL: items/Moscow/Astana/2038-01-20
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:13:28 ALMT
+URL: items/Moscow/Aktau/2038-01-17
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:13:28 ALMT
+URL: items/Moscow/Aktau/2038-01-17
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:13:28 ALMT
+URL: items/Moscow/Aktau/2038-01-17
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:13:47 ALMT
+URL: items/Moscow/Aktau/2038-01-17
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:13:47 ALMT
+URL: items/Moscow/Aktau/2038-01-17
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:13:47 ALMT
+URL: items/Moscow/Aktau/2038-01-17
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:13:47 ALMT
+URL: items/Moscow/Aktau/2038-01-17
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:13:48 ALMT
+URL: items/Moscow/Aktau/2038-01-17
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:13:48 ALMT
+URL: items/Moscow/Aktau/2038-01-17
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:13:48 ALMT
+URL: items/Moscow/Aktau/2038-01-17
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:13:48 ALMT
+URL: items/Moscow/Aktau/2038-01-17
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:14:53 ALMT
+URL: items/Moscow/Aktau/2038-01-17
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:15:11 ALMT
+URL: items/Moscow/Aktau/2038-01-17
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:17:15 ALMT
 URL: items/Karaganda/Pavlodar/2038-01-19
 
-User with email mona.manager@ex.com
-Request type: POST
+Unauthorized user 
+Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 13:53:28 ALMT
-URL: items/secured/login
+Date: 2019-11-21 at 13:17:18 ALMT
+URL: items/Karaganda/Pavlodar/undefined/undefined/5
 
-User with email mona.manager@ex.com
-Request type: POST
+Unauthorized user 
+Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 13:53:31 ALMT
-URL: manager/secured/listOfEmployees
+Date: 2019-11-21 at 13:21:00 ALMT
+URL: items/Karaganda/Aktau/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:21:10 ALMT
+URL: items/Karaganda/Pavlodar/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:21:18 ALMT
+URL: items/Karaganda/Pavlodar/undefined/undefined/5
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:24:52 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:25:07 ALMT
+URL: items/Shymkent/Moscow/undefined/undefined/6
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:31:18 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:31:20 ALMT
+URL: items/Shymkent/Moscow/undefined/undefined/6
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:37:57 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:37:59 ALMT
+URL: items/Shymkent/Moscow/undefined/undefined/6
 
 User with email mona.manager@ex.com
 Request type: POST
 Content type: application/json
-Date: 2019-11-21 at 13:53:31 ALMT
+Date: 2019-11-21 at 13:38:49 ALMT
 URL: agent/secured/userAgent
 
 User with email mona.manager@ex.com
 Request type: POST
 Content type: does not accept any content
-Date: 2019-11-21 at 13:53:33 ALMT
-URL: manager/secured/listOfTrains
-
-User with email mona.manager@ex.com
-Request type: POST
-Content type: does not accept any content
-Date: 2019-11-21 at 13:54:21 ALMT
+Date: 2019-11-21 at 13:38:49 ALMT
 URL: manager/secured/listOfEmployees
 
-User with email mona.manager@ex.com
-Request type: POST
+Unauthorized user 
+Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 13:54:22 ALMT
-URL: manager/secured/listOfTrains
+Date: 2019-11-21 at 13:39:07 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
 
-User with email mona.manager@ex.com
-Request type: POST
+Unauthorized user 
+Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 13:58:05 ALMT
-URL: items/secured/login
+Date: 2019-11-21 at 13:39:43 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
 
-User with email mona.manager@ex.com
-Request type: POST
+Unauthorized user 
+Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 13:58:08 ALMT
-URL: manager/secured/listOfEmployees
+Date: 2019-11-21 at 13:41:01 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
 
-User with email mona.manager@ex.com
-Request type: POST
-Content type: application/json
-Date: 2019-11-21 at 13:58:08 ALMT
-URL: agent/secured/userAgent
-
-User with email mona.manager@ex.com
-Request type: POST
-Content type: application/json
-Date: 2019-11-21 at 13:58:40 ALMT
-URL: agent/secured/userAgent
-
-User with email mona.manager@ex.com
-Request type: POST
+Unauthorized user 
+Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 13:58:40 ALMT
-URL: manager/secured/listOfEmployees
+Date: 2019-11-21 at 13:41:05 ALMT
+URL: items/Shymkent/Moscow/undefined/undefined/6
 
-User with email mona.manager@ex.com
-Request type: POST
+Unauthorized user 
+Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 13:58:44 ALMT
-URL: manager/secured/listOfTrains
+Date: 2019-11-21 at 13:44:57 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
 
-User with email mona.manager@ex.com
-Request type: POST
+Unauthorized user 
+Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 14:02:37 ALMT
-URL: items/secured/login
+Date: 2019-11-21 at 13:45:02 ALMT
+URL: items/Shymkent/Moscow/undefined/undefined/6
 
-User with email mona.manager@ex.com
-Request type: POST
-Content type: application/json
-Date: 2019-11-21 at 14:02:41 ALMT
-URL: agent/secured/userAgent
-
-User with email mona.manager@ex.com
-Request type: POST
+Unauthorized user 
+Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 14:02:41 ALMT
-URL: manager/secured/listOfEmployees
+Date: 2019-11-21 at 13:46:40 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
 
-User with email mona.manager@ex.com
-Request type: POST
+Unauthorized user 
+Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 14:04:15 ALMT
-URL: items/secured/login
+Date: 2019-11-21 at 13:47:38 ALMT
+URL: items/Shymkent/Moscow/-Choose-12
 
-User with email mona.manager@ex.com
-Request type: POST
-Content type: application/json
-Date: 2019-11-21 at 14:04:19 ALMT
-URL: agent/secured/userAgent
-
-User with email mona.manager@ex.com
-Request type: POST
+Unauthorized user 
+Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 14:04:19 ALMT
-URL: manager/secured/listOfEmployees
+Date: 2019-11-21 at 13:47:43 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
 
-User with email mona.manager@ex.com
-Request type: POST
-Content type: application/json
-Date: 2019-11-21 at 14:04:38 ALMT
-URL: agent/secured/userAgent
-
-User with email mona.manager@ex.com
-Request type: POST
+Unauthorized user 
+Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 14:04:38 ALMT
-URL: manager/secured/listOfEmployees
+Date: 2019-11-21 at 13:47:48 ALMT
+URL: items/Shymkent/Moscow/undefined/undefined/6
 
-User with email mona.manager@ex.com
-Request type: POST
+Unauthorized user 
+Request type: GET
 Content type: does not accept any content
-Date: 2019-11-21 at 14:04:40 ALMT
-URL: manager/secured/listOfTrains
+Date: 2019-11-21 at 13:48:27 ALMT
+URL: items/Karaganda/Pavlodar/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:48:32 ALMT
+URL: items/Karaganda/Pavlodar/undefined/undefined/5
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:51:40 ALMT
+URL: items/Karaganda/Pavlodar/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:51:46 ALMT
+URL: items/Karaganda/Pavlodar/undefined/undefined/5
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:53:35 ALMT
+URL: items/Shymkent/Kyzylorda/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:53:38 ALMT
+URL: items/Shymkent/Kyzylorda/undefined/undefined/8
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:56:12 ALMT
+URL: items/Shymkent/Kyzylorda/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:56:16 ALMT
+URL: items/Shymkent/Kyzylorda/undefined/undefined/8
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:00:36 ALMT
+URL: items/Shymkent/Kyzylorda/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:00:40 ALMT
+URL: items/Shymkent/Kyzylorda/undefined/undefined/8
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:01:06 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:01:10 ALMT
+URL: items/Shymkent/Moscow/undefined/undefined/6
 

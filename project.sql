@@ -162,7 +162,7 @@ insert into station (id,name) values (2,'Astana');
 insert into station (id,name) values (3,'Shymkent');
 insert into station (id,name) values (4,'Karaganda');
 insert into station (id,name) values (5,'Aktobe');
-insert into station (id,name) values (6,'Moskva');
+insert into station (id,name) values (6,'Moscow');
 insert into station (id,name) values (7,'Tashkent');
 insert into station (id,name) values (8,'Semey');
 insert into station (id,name) values (9,'Aktau');
