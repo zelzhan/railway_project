@@ -202,7 +202,6 @@ public class Utils {
         try
         {
             String filename= pathToRoot + "/logger.txt";
-            System.out.println("MyF");
             FileWriter fw = new FileWriter(filename,true); //the true will append the new data
             fw.write(message + "\n" +
                     "Request type: " + requestType + "\n" +

@@ -167,8 +167,6 @@ public class RailwayService extends HttpServlet {
         String authToken = getTokenFromHeader(requestContext);
         authToken = authToken.split(" ")[1];
         String email = getEmailFromToken(authToken);
-//        String authToken = headers.getRequestHeader(HttpHeaders.AUTHORIZATION).get(0);
-
         makeLog(headers,"User with email " + email, "POST", servletContext, requestContext.getUriInfo().getPath());
         return getUserProfile(connection, getEmailFromToken(authToken));
     }
@@ -191,7 +189,6 @@ public class RailwayService extends HttpServlet {
         deleteTicket(connection, ticket_id);
         String authToken = headers.getRequestHeader(HttpHeaders.AUTHORIZATION).get(0);
         authToken = authToken.split(" ")[1];
-//        String authToken = getTokenFromHeader();
         String email = getEmailFromToken(authToken);
         makeLog(headers,"User with email " + email, "POST", servletContext,requestContext.getUriInfo().getPath());
         return Response.ok().build();
