@@ -51,7 +51,7 @@ function showMap(index) {
         type: "GET",
         url: url,
         success: function () {
-            window.location.replace("map.html");
+            splashOpen("map.html");
         },
     });
 }
@@ -137,6 +137,17 @@ function getRCCLent() {
             showNotification(JSON.parse(data));
         },
     });
+}
+
+function splashOpen(url)
+{
+    var winFeatures = 'screenX=0,screenY=0,top=0,left=0,scrollbars,width=100,height=100';
+    var winName = 'window';
+    var win = window.open(url,winName, winFeatures);
+    var extraWidth = win.screen.availWidth - win.outerWidth;
+    var extraHeight = win.screen.availHeight - win.outerHeight;
+    win.resizeBy(extraWidth, extraHeight);
+    return win;
 }
 
 $(document).ready(function () {

@@ -26,20 +26,30 @@ function createListOfEmployees(items) {
         "                            <th scope=\"col\">First&nbspname</th>\n" +
         "                            <th scope=\"col\">Last&nbspname</th>\n" +
         "                            <th scope=\"col\">Salary</th>\n" +
-        "                            <th scope=\"col\">First&nbspday&nbspat&nbspwork</th>\n" +
+        "                            <th scope=\"col\">Email&nbspaddress</th>\n" +
         "                            <th scope=\"col\">Working hours</th>\n" +
         "                            <th scope=\"col\">Pay&nbspcheck</th>\n" +
+        "                            <th scope=\"col\">Adjustments</th>\n" +
+
         "                        </tr>\n" +
         "                        </thead>\n" +
         "                        <tbody id=\"manager-agents\" >";
     for (let i=0; i<items.length; i++) {
         str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i].first_name+"</th><td>"+ items[i].last_name +"</td><td>"+items[i].salary + "</td>";
-        str +="<td>" + items[i].email + "</td><td>" + items[i].workingHours + "</td>";
-        str +="<td><button type=\"submit\" onclick ='payroll(" + i +");' class=\"btn btn-primary\">Paycheck</button></td></tr>";
+        str +="<td>" + items[i].email + "</td><td>" + "<span id=\"adj" + i +"\">" + items[i].workingHours + "</span><input type=\"text\" id=\"adjust" + i +"\" placeholder=\""+items[i].workingHours+"\" /></td>";
+        str +="<td><button type=\"submit\" onclick ='payroll(" + i +");' class=\"btn btn-primary\">Payroll</button></td>";
+        str += "<td><button type=\"submit\" onclick ='adjust(" + i +");' class=\"btn btn-primary\" id=\"edit" + i + "\">Adjust working hours</button><button type=\"submit\" id=\"save" + i + "\" onclick ='ajaxAdjust(" + i +");' class=\"btn btn-primary\">Save working hours</button></td></tr>";
     }
+
+
     str += "</tbody></table>";
     $("#main-block").html("");
     $("#main-block").append(str);
+
+    for(let i=0; i<items.length; i++){
+        $("#adjust"+i).hide();
+        $("#save"+i).hide();
+    }
 }
 
 function cancelRoute(i) {
@@ -115,6 +125,38 @@ function payroll(index) {
     });
 }
 
+function adjust(index) {
+    $("#adj"+index).hide();
+    $("#adjust"+index).show();
+    $("#edit"+index).hide();
+    $("#save"+index).show();
+}
+
+function ajaxAdjust(index) {
+    $.ajaxSetup({
+        headers:{
+            'Authorization': "Basic " + getCookie()
+        }
+    });
+
+    let new_schedule = $("#adjust"+index).val();
+    let items = employeeData[index];
+    let url = "/railway_station_service_war_exploded/services/manager/adjustHours/" + items['email'] + "/" + new_schedule;
+    $.ajax({
+        type: "POST",
+        url: url,
+        success: function () {
+            $("#adj"+index).show();
+            $("#adjust"+index).hide();
+            $("#edit"+index).show();
+            $("#save"+index).hide();
+
+            ListOfEmployees();
+
+            },
+    });
+}
+
 function getUserData() {
 
     $.ajaxSetup({
@@ -177,13 +219,13 @@ function ListOfEmployees() {
 }
 
 function notify_form() {
-    let str = "    <div class=\"card\">\n" +
+    let str = " <div class=\"card\">\n" +
         "        <div class=\"card-header\">\n" +
         "            <h5>Notification</h5>\n" +
         "        </div>\n" +
         "        <div class=\"card-body\"><div class=\"input-group input-group-lg\">\n" +
-        "  <input type=\"text\" class=\"form-control\" aria-label=\"Large\" aria-describedby=\"inputGroup-sizing-sm\">\n" +
-        "</div><button type=\"button\" class=\"btn btn-primary\" id=\"\">Submit</button></div>\n" +
+        "  <input type=\"text\" class=\"form-control\" aria-label=\"Large\" aria-describedby=\"inputGroup-sizing-sm\" id =\"message\">\n" +
+        "</div><button type=\"button\" class=\"btn btn-primary\" id=\"create-notify\" onclick='setNotify();'>Submit</button></div>\n" +
         "    </div>\n" +
         "</div>";
     $("#main-block").html(str);

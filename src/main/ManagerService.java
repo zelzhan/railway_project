@@ -179,4 +179,13 @@ public class ManagerService extends HttpServlet {
         return Response.ok().build();
     }
 
+
+    @POST
+    @Path("/adjustHours/{login}/{hours}")
+    public Response adjustHours(@PathParam("hours") String hours, @PathParam("login") String login) {
+
+        adjustHoursSql(connection, hours, login);
+        return Response.ok().build();
+    }
+
 }

@@ -134,7 +134,7 @@ public class Utils {
     public static Graph initializeGraph() {
 
         Graph graph = new Graph();
-        graph.addVertex("Astana");
+        graph.addVertex("Nur-Sultan");
         graph.addVertex("Kokshetau");
         graph.addVertex("Petropavl");
         graph.addVertex("Kostanay");
@@ -151,13 +151,13 @@ public class Utils {
         graph.addVertex("Taraz");
         graph.addVertex("Almaty");
         graph.addVertex("Karaganda");
-        graph.addVertex("Semey");
-        graph.addVertex("Ust'kamenogorsk");
+        graph.addVertex("Semipalatinsk");
+        graph.addVertex("Ust-kamenogorsk");
 
-        graph.addEdge("Astana", "Kokshetau");
-        graph.addEdge("Astana", "Karaganda");
-        graph.addEdge("Astana", "Pavlodar");
-        graph.addEdge("Astana", "Kyzylorda");
+        graph.addEdge("Nur-Sultan", "Kokshetau");
+        graph.addEdge("Nur-Sultan", "Karaganda");
+        graph.addEdge("Nur-Sultan", "Pavlodar");
+        graph.addEdge("Nur-Sultan", "Kyzylorda");
         graph.addEdge("Kokshetau", "Petropavl");
         graph.addEdge("Kokshetau", "Kostanay");
         graph.addEdge("Petropavl", "Kostanay");
@@ -172,9 +172,9 @@ public class Utils {
         graph.addEdge("Shymkent", "Taraz");
         graph.addEdge("Taraz", "Almaty");
         graph.addEdge("Almaty", "Karaganda");
-        graph.addEdge("Almaty", "Ust'kamenogorsk");
-        graph.addEdge("Ust'kamenogorsk", "Semey");
-        graph.addEdge("Semey", "Pavlodar");
+        graph.addEdge("Almaty", "Ust-kamenogorsk");
+        graph.addEdge("Ust-kamenogorsk", "Semipalatinsk");
+        graph.addEdge("Semipalatinsk", "Pavlodar");
 
         return graph;
     }

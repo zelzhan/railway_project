@@ -12,7 +12,10 @@ def show_map(data):
     Kazakhstan.zoom_start = 18
     path = []
     for i, s in enumerate(data):
-        loc = Nominatim(user_agent="my-application").geocode(s, timeout=1000)
+        if s == "Nur-Sultan":
+            loc = Nominatim(user_agent="my-application").geocode("Astana", timeout=1000)
+        else:
+            loc = Nominatim(user_agent="my-application").geocode(s, timeout=1000)
         if i == 0:
             spiced = folium.Marker((loc.latitude, loc.longitude), popup='Departure city',
                                    icon=folium.Icon(icon='fire',

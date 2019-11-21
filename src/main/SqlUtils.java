@@ -225,7 +225,7 @@ public class SqlUtils {
             ResultSet res = st.executeQuery("SELECT EXISTS (select login from registered_user where login =\"" + email + "\")"); //sql query for checking an email for uniqueness
             res.next();
             if (res.getString(1).equals("0")) { //sql query to insert an email and password of the new user
-                st.executeUpdate("INSERT INTO registered_user (login, first_name, last_name, password, phone) VALUES ( '" + email + "', '" + firstName + "', '" + lastName + "', '"  + password +  "', '" + phone + "')");
+                st.executeUpdate("INSERT INTO registered_user (login, first_name, last_name, password, phone, role) VALUES ( '" + email + "', '" + firstName + "', '" + lastName + "', '"  + password +  "', '" + phone + "', 'passenger')");
                 Statement st1 = connection.createStatement();
                 ResultSet res1 = st1.executeQuery("SELECT EXISTS (select login from registered_user where login =\"" + email + "\")"); //sql query for checking an email for uniqueness
                 res1.next();
@@ -350,7 +350,7 @@ public class SqlUtils {
             dout.writeUTF(s);
             dout.flush();
             str = din.readUTF();
-            BufferedWriter writer = new BufferedWriter(new FileWriter("/home/stayal0ne/swe/Karina/railway_project/web/map.html"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("/home/stayal0ne/railway_project/railway_project/classes/artifacts/railway_station_service_war_exploded/map.html"));
             writer.write(str);
             writer.close();
         } catch (Exception e) {
@@ -442,6 +442,18 @@ public class SqlUtils {
             Statement st = connection.createStatement();
             st.executeUpdate(query);
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void adjustHoursSql(Connection connection, String hours, String login) {
+        String query = "update regular_employee\n" +
+                "set schedule='" +hours+ "'\n" +
+                "where login='" + login+ "';";
+        try {
+            Statement st = connection.createStatement();
+            st.executeUpdate(query);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

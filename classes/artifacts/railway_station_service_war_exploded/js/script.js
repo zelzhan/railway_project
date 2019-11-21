@@ -51,7 +51,7 @@ function showMap(index) {
         type: "GET",
         url: url,
         success: function () {
-            window.location.replace("map.html");
+            splashOpen("map.html");
         },
     });
 }
@@ -119,7 +119,7 @@ function showNotification(items) {
     console.log(items)
     let str = "";
     for (let i=0; i<items.length; i++) {
-        str +="<br>" + "<span class=\"lv0\">"+ items[i].login + "</span>";
+        str +="" + "<span class=\"lv0\">"+ items[i].login + "</span>";
         str +="<br>" + "<span class=\"lv1\">"+ items[i].data + "</span>";
         str +="<br>" + "<span class=\"lv2\">" + items[i].message +"</span>";
         }
@@ -137,6 +137,17 @@ function getRCCLent() {
             showNotification(JSON.parse(data));
         },
     });
+}
+
+function splashOpen(url)
+{
+    var winFeatures = 'screenX=0,screenY=0,top=0,left=0,scrollbars,width=100,height=100';
+    var winName = 'window';
+    var win = window.open(url,winName, winFeatures);
+    var extraWidth = win.screen.availWidth - win.outerWidth;
+    var extraHeight = win.screen.availHeight - win.outerHeight;
+    win.resizeBy(extraWidth, extraHeight);
+    return win;
 }
 
 $(document).ready(function () {
