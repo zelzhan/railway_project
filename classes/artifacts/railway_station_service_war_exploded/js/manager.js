@@ -30,10 +30,32 @@ function createListOfEmployees(items) {
     $("#manager-agents").append(str);
 }
 
-function cancelRoute(index) {
+function cancelRoute(i) {
     //To do
     //Take all required data from trainData and remove which is required
-    alert("route is cancelled!");
+    $.ajaxSetup({
+        headers:{
+            'Authorization': "Basic " + getCookie()
+        }
+    });
+    let date  = trainData[i][2].split(" ");
+    $.ajax({
+        type: "POST",
+        url: encodeURI("/railway_station_service_war_exploded/services/manager/cancelRoute/" + trainData[i][0]+"/"+trainData[i][1]+"/"+date[0]+"/"+date[1]+"/"+trainData[i][3]),
+        success: function () {
+            alert("Route successfully cancelled!");
+            //location.reload();
+
+        }
+
+    })
+    $.ajax({
+        type: "GET",
+        url: "/railway_station_service_war_exploded/services/manager/secured/listOfTrains",
+        success: function (data) {
+            createListOfTrains(JSON.parse(data));
+        },
+    });
 }
 
 function createListOfTrains(items) {
@@ -46,7 +68,8 @@ function createListOfTrains(items) {
         let date = items[i][2].split(" ");
         str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i][0]+"</th><td>"+ items[i][1] +"</td><td>"+items[i][3] + "</td>";
         str +="<td>" + date[1].slice(0, -2) + "</td><td>" + date[0] + "</td>";
-        str +="<td><button type=\"submit\" onclick ='cancelRoute(" + i +");' class=\"btn btn-primary\">Cancel ticket</button></td></tr>";
+        console.log(items[i]);
+        str +="<td><button type=\"button\" onclick ='cancelRoute(" + i +");' class=\"btn btn-primary\">Cancel route</button></td></tr>";
     }
     $("#manager-trains").html("");
     $("#manager-trains").append(str);
@@ -183,7 +206,6 @@ function listAllTrains() {
         type: "GET",
         url: url,
         success: function (data) {
-            console.log(data);
             createListOfTrains(JSON.parse(data));
         },
     });

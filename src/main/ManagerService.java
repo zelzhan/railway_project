@@ -161,4 +161,22 @@ public class ManagerService extends HttpServlet {
         return Response.ok().build();
     }
 
+    @POST
+
+    @Path("cancelRoute/{train_name}/{start_station}/{date}/{hours}/{end_station}")
+    public Response cancelRoute(@PathParam("train_name") String train_name,
+                                @PathParam("start_station") String start_station,
+            @PathParam("date") String date, @PathParam("hours") String hours, @PathParam("end_station") String end_station,
+            @Context HttpHeaders headers, @Context ServletContext servletContext, ContainerRequestContext
+            requestContext){
+        deleteRoute(connection, train_name, start_station, date, hours);
+        String authToken = getTokenFromHeader(requestContext);
+        authToken = authToken.split(" ")[1];
+        String email = getEmailFromToken(authToken);
+        makeLog(headers,"User with email " + email, "POST", servletContext,requestContext.getUriInfo().getPath());
+        deleteTicketfromRoute(connection, train_name, start_station,end_station);
+
+        return Response.ok().build();
+    }
+
 }
