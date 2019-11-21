@@ -403,13 +403,6 @@ public class SqlUtils {
     public static void putRouteIntoDb (Connection connection, String station1, String station2, String train_id, String route_id, String departure_time) {
         try{
             Statement st = connection.createStatement();
-//            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-//
-//            Date tempDate = formatter.parse(departure_time);
-//            Date currentDate = Date.from(tempDate.toInstant().plusMillis(TimeUnit.HOURS.toMillis(1)));
-//
-//            DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
-//            String arriveDate = dateFormat.format(currentDate);
 
             String query = "insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, availability) \n" +
                     "values ("+route_id+","+train_id+", (select id from station where name ='" + station1 + "'),(select id from station where name ='" +station2+"'), '" +departure_time+"', (DATE_FORMAT('"  + departure_time + "', REPLACE('%Y-%m-%d %H:%i:%s', '%H', hour('" + departure_time + "')+1))), 130);";

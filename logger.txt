@@ -790,3 +790,243 @@ Content type: application/json
 Date: 2019-11-21 at 02:30:32 ALMT
 URL: agent/secured/agentProfile
 
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 10:15:11 ALMT
+URL: items/secured/login
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 10:15:14 ALMT
+URL: agent/secured/userAgent
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 10:15:14 ALMT
+URL: manager/secured/listOfEmployees
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 10:15:23 ALMT
+URL: manager/secured/listOfEmployees
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 10:15:34 ALMT
+URL: agent/secured/userAgent
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 10:15:34 ALMT
+URL: manager/secured/listOfEmployees
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 12:38:09 ALMT
+URL: items/secured/login
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 12:38:12 ALMT
+URL: agent/secured/userAgent
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 12:38:12 ALMT
+URL: manager/secured/listOfEmployees
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 12:38:14 ALMT
+URL: manager/secured/listOfTrains
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 12:38:17 ALMT
+URL: manager/secured/listOfEmployees
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 12:38:25 ALMT
+URL: agent/secured/userAgent
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 12:38:25 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 12:45:54 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 12:45:54 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 12:55:28 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 12:55:28 ALMT
+URL: agent/secured/userAgent
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:15:46 ALMT
+URL: items/Atyrau/Kostanay/2038-01-01
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 13:16:48 ALMT
+URL: items/Karaganda/Pavlodar/2038-01-19
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 13:53:28 ALMT
+URL: items/secured/login
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 13:53:31 ALMT
+URL: manager/secured/listOfEmployees
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 13:53:31 ALMT
+URL: agent/secured/userAgent
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 13:53:33 ALMT
+URL: manager/secured/listOfTrains
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 13:54:21 ALMT
+URL: manager/secured/listOfEmployees
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 13:54:22 ALMT
+URL: manager/secured/listOfTrains
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 13:58:05 ALMT
+URL: items/secured/login
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 13:58:08 ALMT
+URL: manager/secured/listOfEmployees
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 13:58:08 ALMT
+URL: agent/secured/userAgent
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 13:58:40 ALMT
+URL: agent/secured/userAgent
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 13:58:40 ALMT
+URL: manager/secured/listOfEmployees
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 13:58:44 ALMT
+URL: manager/secured/listOfTrains
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 14:02:37 ALMT
+URL: items/secured/login
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 14:02:41 ALMT
+URL: agent/secured/userAgent
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 14:02:41 ALMT
+URL: manager/secured/listOfEmployees
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 14:04:15 ALMT
+URL: items/secured/login
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 14:04:19 ALMT
+URL: agent/secured/userAgent
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 14:04:19 ALMT
+URL: manager/secured/listOfEmployees
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 14:04:38 ALMT
+URL: agent/secured/userAgent
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 14:04:38 ALMT
+URL: manager/secured/listOfEmployees
+
+User with email mona.manager@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 14:04:40 ALMT
+URL: manager/secured/listOfTrains
+

@@ -20,10 +20,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static main.SqlUtils.*;
 import static main.Utils.*;
@@ -124,7 +125,7 @@ public class ManagerService extends HttpServlet {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/createRoute")
-    public Response createRoute(String js) {
+    public Response createRoute(String js) throws ParseException {
         Gson gson  = new Gson();
         CreateRoute route = gson.fromJson(js, CreateRoute.class);
         ArrayList<String> stations = route.getStations();
@@ -148,8 +149,14 @@ public class ManagerService extends HttpServlet {
 
             putRouteIntoDb(connection, station1, station2, train_id, route_id, date);
 
-        }
 
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+            Date tempDate = formatter.parse(date);
+            Date currentDate = Date.from(tempDate.toInstant().plusMillis(TimeUnit.HOURS.toMillis(3)));
+            DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
+            date = dateFormat.format(currentDate);
+
+        }
 
         return Response.ok().build();
     }
