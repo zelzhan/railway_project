@@ -16,18 +16,30 @@ function setNotify() {
 let employeeData;
 let trainData;
 function createListOfEmployees(items) {
-    $("#employee").show();
-    $("#trains").hide();
-    $("#main-block").hide();
+    // $("#employee").show();
+    // $("#trains").hide();
+    // $("#main-block").hide();
     employeeData = items;
-    let str = "";
+    let str = "<table class=\"table table-bordered\">\n" +
+        "                        <thead class=\"thead-dark\">\n" +
+        "                        <tr>\n" +
+        "                            <th scope=\"col\">First&nbspname</th>\n" +
+        "                            <th scope=\"col\">Last&nbspname</th>\n" +
+        "                            <th scope=\"col\">Salary</th>\n" +
+        "                            <th scope=\"col\">First&nbspday&nbspat&nbspwork</th>\n" +
+        "                            <th scope=\"col\">Working hours</th>\n" +
+        "                            <th scope=\"col\">Pay&nbspcheck</th>\n" +
+        "                        </tr>\n" +
+        "                        </thead>\n" +
+        "                        <tbody id=\"manager-agents\" >";
     for (let i=0; i<items.length; i++) {
         str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i].first_name+"</th><td>"+ items[i].last_name +"</td><td>"+items[i].salary + "</td>";
         str +="<td>" + items[i].email + "</td><td>" + items[i].workingHours + "</td>";
         str +="<td><button type=\"submit\" onclick ='payroll(" + i +");' class=\"btn btn-primary\">Paycheck</button></td></tr>";
     }
-    $("#manager-agents").html("");
-    $("#manager-agents").append(str);
+    str += "</tbody></table>";
+    $("#main-block").html("");
+    $("#main-block").append(str);
 }
 
 function cancelRoute(i) {
@@ -59,11 +71,22 @@ function cancelRoute(i) {
 }
 
 function createListOfTrains(items) {
-    $("#employee").hide();
-    $("#main-block").hide();
-    $("#trains").show();
+    // $("#employee").hide();
+    // $("#main-block").hide();
+    // $("#trains").show();
     trainData = items;
-    let str = "";
+    let str = "<table class=\"table table-bordered\">\n" +
+        "                        <thead class=\"thead-dark\">\n" +
+        "                        <tr>\n" +
+        "                            <th scope=\"col\">Train Name</th>\n" +
+        "                            <th scope=\"col\">Departure city</th>\n" +
+        "                            <th scope=\"col\">Arrival city</th>\n" +
+        "                            <th scope=\"col\">Departure time</th>\n" +
+        "                            <th scope=\"col\">Departure date</th>\n" +
+        "                            <th scope=\"col\">Cancel route</th>\n" +
+        "                        </tr>\n" +
+        "                        </thead>\n" +
+        "                        <tbody id=\"manager-trains\">";
     for (let i=0; i<items.length; i++) {
         let date = items[i][2].split(" ");
         str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i][0]+"</th><td>"+ items[i][1] +"</td><td>"+items[i][3] + "</td>";
@@ -71,8 +94,9 @@ function createListOfTrains(items) {
         console.log(items[i]);
         str +="<td><button type=\"button\" onclick ='cancelRoute(" + i +");' class=\"btn btn-primary\">Cancel route</button></td></tr>";
     }
-    $("#manager-trains").html("");
-    $("#manager-trains").append(str);
+    str += "</tbody></table>";
+    $("#main-block").html("");
+    $("#main-block").append(str);
 }
 
 function payroll(index) {
@@ -153,16 +177,13 @@ function ListOfEmployees() {
 }
 
 function notify_form() {
-    $("#employee").hide();
-    $("#trains").hide();
-    $("#main-block").show();
-    let str = " <div class=\"card\">\n" +
+    let str = "    <div class=\"card\">\n" +
         "        <div class=\"card-header\">\n" +
         "            <h5>Notification</h5>\n" +
         "        </div>\n" +
         "        <div class=\"card-body\"><div class=\"input-group input-group-lg\">\n" +
-        "  <input type=\"text\" class=\"form-control\" aria-label=\"Large\" aria-describedby=\"inputGroup-sizing-sm\" id =\"message\">\n" +
-        "</div><button type=\"button\" class=\"btn btn-primary\" id=\"create-notify\" onclick='setNotify();'>Submit</button></div>\n" +
+        "  <input type=\"text\" class=\"form-control\" aria-label=\"Large\" aria-describedby=\"inputGroup-sizing-sm\">\n" +
+        "</div><button type=\"button\" class=\"btn btn-primary\" id=\"\">Submit</button></div>\n" +
         "    </div>\n" +
         "</div>";
     $("#main-block").html(str);

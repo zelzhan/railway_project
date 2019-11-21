@@ -20,6 +20,7 @@
     <script src="js/jquery.cookie.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/manager.js"></script>
+    <script src="js/script.js"></script>
 
 </head>
 
@@ -66,7 +67,6 @@
                         <div class="row">
                             <button type="button" class="btn btn-primary mx-auto" id="paycheck">Pay&nbspcheck</button>
                             <button type="button" class="btn btn-primary mx-auto" id="notify-button">Send notification</button>
-
                         </div>
 
                     </ul>
@@ -86,8 +86,8 @@
             </div>
 
             <div class="col-md-8">
-                <div class="agent-tickets" id="employee">
-<!--                <div class="agent-tickets" id="main-block">-->
+<!--                <div class="agent-tickets" id="employee">-->
+                <div class="agent-tickets" id="main-block">
                     <table class="table table-bordered">
                         <thead class="thead-dark">
                         <tr>
@@ -99,24 +99,7 @@
                             <th scope="col">Pay&nbspcheck</th>
                         </tr>
                         </thead>
-                        <tbody id="manager-agents" style="background-color: white">
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="agent-tickets" id="trains">
-                    <table class="table table-bordered">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Train Name</th>
-                            <th scope="col">Departure city</th>
-                            <th scope="col">Arrival city</th>
-                            <th scope="col">Departure time</th>
-                            <th scope="col">Departure date</th>
-                            <th scope="col">Cancel route</th>
-                        </tr>
-                        </thead>
-                        <tbody id="manager-trains" style="background-color: white">
+                        <tbody id="manager-agents">
 
                         </tbody>
                     </table>

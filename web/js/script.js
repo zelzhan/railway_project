@@ -119,7 +119,7 @@ function showNotification(items) {
     console.log(items)
     let str = "";
     for (let i=0; i<items.length; i++) {
-        str +="<br>" + "<span class=\"lv0\">"+ items[i].login + "</span>";
+        str +="" + "<span class=\"lv0\">"+ items[i].login + "</span>";
         str +="<br>" + "<span class=\"lv1\">"+ items[i].data + "</span>";
         str +="<br>" + "<span class=\"lv2\">" + items[i].message +"</span>";
         }
