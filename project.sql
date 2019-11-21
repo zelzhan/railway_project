@@ -89,7 +89,7 @@ create table if not exists message(
                                       manager_id bigint(20) not null,
                                       IssueDate datetime not null,
                                       msg varchar(255) not null,
-                                      foreign key (manager_id) references registered_user(id)
+                                      foreign key (manager_id) references regular_employee(id)
 );
 drop table if exists salaryHistory;
 create table if not exists salaryHistory(
@@ -97,7 +97,7 @@ create table if not exists salaryHistory(
                                             employee_id bigint(20) not null,
                                             PayrollDate datetime not null,
                                             Salary bigint(20) not null,
-                                            foreign key (employee_id) references registered_user(id)
+                                            foreign key (employee_id) references regular_employee(id)
 );
 
 -- add some data
@@ -114,7 +114,7 @@ INSERT INTO registered_user (login, password, first_name,last_name, phone, role)
 INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ('gigi.employee@ex.com', 'gigiemployee123', 'Gigi', 'Employee', '87654566776', 'agent');
 INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ('robert.employee@ex.com', 'robertemployee123', 'Robert', 'Employee', '89998887766', 'agent');
 INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ('michael.employee@ex.com', 'michaelemployee123', 'Michael', 'Employee', '89009998880', 'agent');
-INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ( 'sean.employee@ex.com', 'seanemployee123', 'Sean', 'Jones', '85675675667', 'agent');
+INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ('sean.employee@ex.com', 'seanemployee123', 'Sean', 'Jones', '85675675667', 'agent');
 INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ('mark.employee@ex.com', 'markemployee123', 'Mark', 'Employee', '83455433445', 'agent');
 INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ('ellen.agent@ex.com', 'ellenagent123', 'Ellen', 'Agent', '87776667766', 'agent');
 INSERT INTO registered_user (login, password, first_name,last_name, phone, role) VALUES ('richard.agent@ex.com', 'richardagent123', 'Richard', 'Agent', '89998887766', 'agent');
@@ -140,10 +140,14 @@ INSERT INTO regular_employee (Login, supervisor_id, salary, stationN, schedule, 
 INSERT INTO regular_employee (Login, supervisor_id, salary, stationN, schedule, id,firstDay) VALUES ('richard.agent@ex.com', 201521976,  150000, 12, 'M, T, W, R, F (9.00-18.00)', (SELECT id FROM registered_user WHERE Login = 'richard.agent@ex.com'),'January 1');
 INSERT INTO regular_employee (Login, supervisor_id, salary, stationN, schedule, id,firstDay) VALUES ('mona.manager@ex.com',null, 200000, 13, 'M, T, W, R, F (9.00-18.00)',  (SELECT id FROM registered_user WHERE Login = 'mona.manager@ex.com'),'January 1');
 INSERT INTO regular_employee (Login, supervisor_id, salary, stationN, schedule, id,firstDay) VALUES ('mao.manager@ex.com',null, 200000, 14, 'M, T, W, R, F (9.00-18.00)',  (SELECT id FROM registered_user WHERE Login = 'mao.manager@ex.com'),'January 1');
+insert into regular_employee (Login, supervisor_id, salary, stationN, schedule, id,firstDay) values ('keno', null, 200000,  15, 'M, T, W, R, F (9.00-18.00)', 201122333,'January 1');
 INSERT INTO regular_employee (login, supervisor_id, salary, stationN, schedule, id,firstDay) VALUES ('william.riker@ex.com', null,  1000, 15, 'M, T, W, R, F (9.00-18.00)', (SELECT id FROM registered_user WHERE Login = 'william.riker@ex.com'),'January 1') ;
 INSERT INTO regular_employee (login, supervisor_id, salary, stationN, schedule, id,firstDay) VALUES ('john.smith@ex.com', null, 1000, 15, 'M, T, W, R, F (9.00-18.00)', (SELECT id FROM registered_user WHERE Login = 'john.smith@ex.com'),'January 1');
 
 -- train
+insert into train (id, capacity, name1) values (560, 123, 'Tulpar01');
+insert into train (id, capacity, name1) values (561, 123, 'Tulpar02');
+insert into train (id, capacity, name1) values (562, 123, 'Tulpar03');
 insert into train (id, capacity, name1) values (563, 123, 'Tulpar04');
 insert into train (id, capacity, name1) values (564, 123, 'Tulpar05');
 insert into train (id, capacity, name1) values (565, 123, 'Tulpar06');
@@ -162,12 +166,12 @@ insert into station (id,name) values (2,'Astana');
 insert into station (id,name) values (3,'Shymkent');
 insert into station (id,name) values (4,'Karaganda');
 insert into station (id,name) values (5,'Aktobe');
-insert into station (id,name) values (6,'Moscow');
+insert into station (id,name) values (6,'Moskva');
 insert into station (id,name) values (7,'Tashkent');
-insert into station (id,name) values (8,'Semipalatinsk');
+insert into station (id,name) values (8,'Semey');
 insert into station (id,name) values (9,'Aktau');
 insert into station (id, name) values (10, 'Kyzylorda');
-insert into station (id,name) values (11,'Ust-kamenogorsk');
+insert into station (id,name) values (11,'Ustkamenogorsk');
 insert into station (id,name) values (12,'Kostanay');
 insert into station (id,name) values (13,'Taraz');
 insert into station (id,name) values (14,'Pavlodar');
@@ -176,6 +180,9 @@ insert into station (id,name) values (16,'Atyrau');
 insert into station (id,name) values (17,'Petropavl');
 insert into station (id,name) values (18,'Kokshetau');
 insert into station (id,name) values (19,'Nur-Sultan');
+insert into station (id,name) values (20,'Minsk');
+insert into station (id,name) values (21,'Kiev');
+
 
 
 -- MESSAGE
@@ -183,10 +190,10 @@ insert into message (manager_id, IssueDate, msg) values ((SELECT id FROM registe
 
 -- TICKET
 
-insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, ReservStatus) values(201521971, 561, 1, 3, '2038-01-12 00:00:00', '2038-01-19 00:00:00', 'Booked');
-insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, ReservStatus) values(201521971, 561, 1, 3, '2019-01-01 00:00:00', '2019-01-02 00:00:00', 'Booked');
-insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, ReservStatus) values(201521971, 561, 6, 5, '2019-12-19 17:14:00', '2019-12-20 10:15:07', 'Booked');
-insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, ReservStatus) values(201521971, 561, 5, 2, '2019-01-10 00:00:00', '2019-01-11 08:14:07', 'Booked');
+insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, ReservStatus) values(201521971, 561, 6, 5, '2038-01-19 17:14:00', '2038-01-20 10:15:07', 'Booked');
+insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, ReservStatus) values(201521971, 561, 5, 3, '2038-01-20 10:25:07', '2038-01-22 18:10:07', 'Booked');
+insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, ReservStatus) values(201521971, 561, 2, 4, '2038-01-21 08:30:07', '2038-01-21 12:14:07', 'Booked');
+insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, ReservStatus) values(201521971, 561, 5, 2, '2038-01-20 10:25:07', '2038-01-21 08:14:07', 'Booked');
 insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, ReservStatus) values(201521971, 561, 6, 2, '2019-01-10 17:14:00', '2019-01-11 08:14:07', 'Booked');
 insert into ticket (client_id, train_id, start_station_id, end_station_id, departure_time, arrival_time, ReservStatus) values(201521979, 571, 18, 12, '2019-09-01 12:00:00', '2019-09-01 15:00:00', 'Booked');
 
@@ -209,7 +216,7 @@ insert into schedule (route_id, train_id, station_i, station_f, departure_time, 
 -- Astana -- Karaganda -- Almaty
 insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, availability) values (4, 563, 2, 4, '2038-01-19 14:14:07', '2038-01-19 18:14:07', 130);
 insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, availability) values (4, 563, 4, 1, '2038-01-19 18:25:07', '2038-01-20 06:04:07', 130);
--- Astana-- Pavlodar -- Semey -- UStkamenogorsk
+-- Karaganda-- Pavlodar -- Semey -- UStkamenogorsk
 insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, availability) values (5, 564, 4, 14, '2038-01-19 15:14:07', '2038-01-19 23:14:07', 130);
 insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, availability) values (5, 564, 14, 8, '2038-01-19 23:34:07', '2038-01-20 07:14:07', 130);
 insert into schedule (route_id, train_id, station_i, station_f, departure_time, arrival_time, availability) values (5, 564, 8, 11, '2038-01-20 07:30:07', '2038-01-20 12:14:07', 130);

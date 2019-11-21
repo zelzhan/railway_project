@@ -2698,3 +2698,237 @@ Content type: does not accept any content
 Date: 2019-11-21 at 17:00:40 ALMT
 URL: manager/secured/listOfEmployees
 
+User with email sean.employee@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 17:03:41 ALMT
+URL: items/secured/login
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:03:44 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:03:44 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:03:46 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:03:46 ALMT
+URL: agent/secured/getTicket/1
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:04:19 ALMT
+URL: items/Shymkent/19/2038-01-19
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:04:20 ALMT
+URL: items/Shymkent/19/2038-01-19
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:04:27 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:04:28 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:05:04 ALMT
+URL: items/Nur-Sultan/Kokshetau/2038-01-19
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:05:05 ALMT
+URL: items/Nur-Sultan/Kokshetau/2038-01-19
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:05:48 ALMT
+URL: items/Nur-Sultan/Kokshetau/2038-11-22
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:05:52 ALMT
+URL: items/Nur-Sultan/Kokshetau/2019-11-22
+
+USer with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:05:58 ALMT
+URL: items/buyTicket
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 17:05:59 ALMT
+URL: items/cancelTicket
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:05:59 ALMT
+URL: items/Nur-Sultan/Kokshetau/2019-11-22
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:05:59 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:05:59 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 17:06:11 ALMT
+URL: items/cancelTicket
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:06:14 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:06:14 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:06:15 ALMT
+URL: agent/secured/getTicket/4
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:06:15 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 17:08:12 ALMT
+URL: items/secured/login
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:08:14 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:08:14 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:08:16 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:08:16 ALMT
+URL: agent/secured/getTicket/1
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:08:43 ALMT
+URL: items/Nur-Sultan/Kokshetau/2019-11-22
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:08:55 ALMT
+URL: items/Nur-Sultan/Petropavl/2019-11-22
+
+USer with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:08:58 ALMT
+URL: items/buyTicket
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:09:00 ALMT
+URL: items/Nur-Sultan/Petropavl/2019-11-22
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: does not accept any content
+Date: 2019-11-21 at 17:09:00 ALMT
+URL: items/cancelTicket
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:09:00 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:09:00 ALMT
+URL: agent/secured/agentProfile
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:09:36 ALMT
+URL: agent/secured/userAgent
+
+User with email sean.employee@ex.com
+Request type: POST
+Content type: application/json
+Date: 2019-11-21 at 17:09:36 ALMT
+URL: agent/secured/getTicket/2
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:09:54 ALMT
+URL: items/Nur-Sultan/Kokshetau/2019-01-19
+
+Passenger with email sean.employee@ex.com
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 17:10:00 ALMT
+URL: items/Nur-Sultan/Kokshetau/2019-11-22
+

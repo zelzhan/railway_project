@@ -138,8 +138,8 @@ function showTickets(buttonType) {
                         "<th scope=\"col\">" + dept[1].slice(0, -2) + "</th>\n" +
                         "<th scope=\"col\">" + dest[0] + "</th>\n" +
                         "<th scope=\"col\">" + dest[1].slice(0, -2) + "</th>\n" +
-                        "<th scope=\"col\">" + ticket['capacity'] + "</th>\n" +
-                        "<th scope=\"col\"><button type=\"submit\" onclick ='showMap(" + i + ");' class=\"btn btn-primary\">Show Map</button></th>";
+                        "<th scope=\"col\">" + ticket['capacity'] + "</th>\n";
+                        // "<th scope=\"col\"><button type=\"submit\" onclick ='showMap(" + i + ");' class=\"btn btn-primary\">Show Map</button></th>";
                     if(buttonType==="createTicket"){
                         appendText+="<th scope=\"col\"><button type=\"button\" onclick='createTicket(" + i + ")' class=\"btn btn-primary\">Create Ticket</button></th></tr>";
                     }else if("updateTicket"){
