@@ -1030,3 +1030,69 @@ Content type: does not accept any content
 Date: 2019-11-21 at 14:04:40 ALMT
 URL: manager/secured/listOfTrains
 
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:38:28 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:39:31 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:39:37 ALMT
+URL: items/Shymkent/Moscow/undefined/undefined/6
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:40:11 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:40:17 ALMT
+URL: items/Shymkent/Moscow/undefined/undefined/8
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:43:38 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:43:44 ALMT
+URL: items/Shymkent/Moscow/undefined/undefined/6
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:45:50 ALMT
+URL: items/Shymkent/Almaty/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:45:51 ALMT
+URL: items/Shymkent/Almaty/undefined/undefined/8
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:47:05 ALMT
+URL: items/Shymkent/Moscow/2038-01-19
+
+Unauthorized user 
+Request type: GET
+Content type: does not accept any content
+Date: 2019-11-21 at 14:47:22 ALMT
+URL: items/Shymkent/Moscow/undefined/undefined/6
+
