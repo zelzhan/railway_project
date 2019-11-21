@@ -41,7 +41,7 @@ function cancelRoute(i) {
     let date  = trainData[i][2].split(" ");
     $.ajax({
         type: "POST",
-        url: encodeURI("/railway_station_service_war_exploded/services/manager/cancelRoute/" + trainData[i][0]+"/"+trainData[i][1]+"/"+date[0]+"/"+date[1]),
+        url: encodeURI("/railway_station_service_war_exploded/services/manager/cancelRoute/" + trainData[i][0]+"/"+trainData[i][1]+"/"+date[0]+"/"+date[1]+"/"+trainData[i][3]),
         success: function () {
             alert("Route successfully cancelled!");
             //location.reload();
@@ -69,7 +69,7 @@ function createListOfTrains(items) {
         str +="<tr id=\"" + i + "\"><th scope=\"row\">"+items[i][0]+"</th><td>"+ items[i][1] +"</td><td>"+items[i][3] + "</td>";
         str +="<td>" + date[1].slice(0, -2) + "</td><td>" + date[0] + "</td>";
         console.log(items[i]);
-        str +="<td><button type=\"button\" onclick ='cancelRoute(" + i +");' class=\"btn btn-primary\">Cancel ticket</button></td></tr>";
+        str +="<td><button type=\"button\" onclick ='cancelRoute(" + i +");' class=\"btn btn-primary\">Cancel route</button></td></tr>";
     }
     $("#manager-trains").html("");
     $("#manager-trains").append(str);

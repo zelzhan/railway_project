@@ -73,6 +73,15 @@ public class SqlUtils {
         }
     }
 
+    public static void deleteTicketfromRoute(Connection connection, String train_name, String start_station, String end_station){
+        try {
+            Statement st = connection.createStatement();
+            st.executeUpdate("update ticket set ReservStatus='Cancelled' where train_id=(select id from train where name1= \""+train_name+"\") and (start_station_id=(select id from station where name= \""+start_station+"\") or end_station_id=(select id from station where name= \""+end_station+"\"));");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public static Response getUserProfile (Connection connection, String email) {
 
         try {
