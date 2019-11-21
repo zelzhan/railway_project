@@ -304,7 +304,7 @@ public class SqlUtils {
             i++;
             };
             str += " \n</tbody></table> \n</div></body></html>";
-            BufferedWriter writer = new BufferedWriter(new FileWriter("/home/stayal0ne/railway_project/railway_project/classes/artifacts/railway_station_service_war_exploded/paycheck.html"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\abyl\\Desktop\\Fall 2019\\railway_project\\classes\\artifacts\\railway_station_service_war_exploded\\paycheck.html"));
             writer.write(str);
             writer.close();
 
@@ -315,25 +315,25 @@ public class SqlUtils {
     }
 
     public static String findMapRoute(Connection connection, int route, String datey, String depart, String dest, DataInputStream din, DataOutputStream dout) {
-
-        List<Route> params = new ArrayList();
         String s = "";
+        String temp = "";
         String str = null;
         try {
             Statement st = connection.createStatement();
-            ResultSet res = st.executeQuery("select distinct s1.name, s2.name from schedule, station s1, station s2 where s1.id=station_i and s2.id=station_f and route_id=" + route + "");
+            ResultSet res = st.executeQuery("select distinct s1.name, s2.name from schedule, station s1, station s2 where s1.id=station_i and s2.id=station_f and route_id="+route+"");
             while (res.next()) {
-                Route r = new Route(res.getString(1), res.getString(2), "blabla",
-                        res.getString(3), res.getString(4), route, res.getInt(5));
-                params.add(r);
                 s += res.getString(1) + ", ";
+                temp = res.getString(2);
+                if (res.getString(2).compareTo(dest) == 0) {
+                    break;
+                }
             }
-            s += depart + ", ";
-            s += dest;
+            s += temp;
             dout.writeUTF(s);
             dout.flush();
             str = din.readUTF();
-            BufferedWriter writer = new BufferedWriter(new FileWriter("/home/stayal0ne/swe/Karina/railway_project/web/map.html"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\abyl\\Desktop\\Fall 2019\\railway_project" +
+                    "\\classes\\artifacts\\railway_station_service_war_exploded\\map.html"));
             writer.write(str);
             writer.close();
         } catch (Exception e) {
